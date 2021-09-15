@@ -11,27 +11,27 @@
 
                                                     // We must check to see if we are compiling with g++
 #ifdef __cplusplus                                  // C++ does name mangling to enable overloading, and we thus
-extern "C" {                                        // need the extern "C" statement, for the linker to be able to
-#endif                                              // find the proper function to link. In addition it is needed
-                                                    // since name mangling can cause issues when using C-bindings
+    extern "C" {                                        // need the extern "C" statement, for the linker to be able to
+    #endif                                              // find the proper function to link. In addition it is needed
+                                                        // since name mangling can cause issues when using C-bindings
 
-    class ccd {
-        private:
+        class ccd {
+            private:
 
-        public:
-            EXPORT_SYMBOL double test(int arr_len, void *arr);
-    };
+            public:
+                EXPORT_SYMBOL double sum_array(int array_length, void* array);
+        };
 
-    EXPORT_SYMBOL void* CreateInstanceOfClass( void );
+        EXPORT_SYMBOL void* constructor_wrapper(void);
 
-    EXPORT_SYMBOL void DeleteInstanceOfClass (void *ptr);
+        EXPORT_SYMBOL void destructor_wrapper(void* ptr);
 
-    EXPORT_SYMBOL double CallMemberTest(void *ptr, int arr_len, void *arr);
+        EXPORT_SYMBOL double sum_array_wrapper(void* ptr, int array_length, void* array);
 
 
-#ifdef __cplusplus
-}
-#endif
+    #ifdef __cplusplus
+    }
+    #endif
 
 
 

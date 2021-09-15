@@ -1,36 +1,36 @@
 #include <iostream>
 #include <iomanip>
-#include <new> //For std::nothrow
+#include <new>      //For std::nothrow
 #include "ccd.hpp"
 
 extern "C"  //Tells the compile to use C-linkage for the next scope.
 {
     //Note: The interface this linkage region needs to use C only.
-    void * CreateInstanceOfClass( void )
+    void* constructor_wrapper( void )
     {
-        // Note: Inside the function body, I can use C++.
+        // Note: Inside the function body, we can use C++.
         return new(std::nothrow) ccd;
     }
 
-    void DeleteInstanceOfClass (void *ptr)
+    void destructor_wrapper (void *self_ptr)
     {
-        free(ptr);
+        free(self_ptr);
     }
 
-    double ccd::test(int arr_len, void *arr) {
-
-        int* intarr = reinterpret_cast<int*>(arr); // this is a pointer to arr, reintepreted in intarr
+    double ccd::sum_array(int array_length, void *array)
+    {
+        int* int_array = reinterpret_cast<int*>(array); // this is a pointer to arr, reintepreted in intarr
         double sum = 0;
-        for (int id = 0; id < arr_len; id++){
-            sum += intarr[id];
+        for (int id = 0; id < array_length; id++)
+        {
+            sum += int_array[id];
         }
 
         return sum;
     }
 
-    double CallMemberTest(void *ptr, int arr_len, void *arr)
+    double sum_array_wrapper(void *self_ptr, int array_length, void *array)
     {
-
         // Note: A downside here is the lack of type safety.
         // You could always internally(in the C++ library) save a reference to all
         // pointers created of type MyClass and verify it is an element in that
@@ -38,9 +38,9 @@ extern "C"  //Tells the compile to use C-linkage for the next scope.
         // We should avoid throwing exceptions.
         try
         {
-            ccd* ref = reinterpret_cast<ccd*>(ptr);
-            int res = ref->test(arr_len, arr);
-            free(ref);
+            ccd* ref = reinterpret_cast<ccd*>(self_ptr);
+            int res = ref -> sum_array(array_length, array);
+
             return res;
         }
         catch(...)
