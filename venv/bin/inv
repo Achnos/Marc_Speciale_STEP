@@ -1,4 +1,4 @@
-#!/home/marc/Dropbox/STEP_Speciale_Marc/venv/bin/python3
+#!/home/marc/Dropbox/STEP_Speciale_Marc/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

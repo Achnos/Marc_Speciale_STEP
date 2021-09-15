@@ -9,4 +9,4 @@ read  COMMIT 				# to input the commit text
 git init
 git add --all
 git commit --all -m "$COMMIT"
-git push speciale master
+git push Marc_Speciale_STEP
