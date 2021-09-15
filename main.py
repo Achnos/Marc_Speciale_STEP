@@ -2,30 +2,35 @@ import os
 import ctypes
 import sys
 import pathlib
+import numpy as np
 
-import CCD
+import ccd
+import libc_builder
 
 if __name__ == '__main__':
-    os.system("invoke build-libccd")
 
-    lookingAt = 'focus_3/focus_9.fits' # 'saturn2.fits'
+    ccd_lib = libc_builder.cpp_build("libccd")
 
-    #test_camera = CCD.CCD("test_name")
-    #test_camera.__linearity("/home/marc/Dropbox/STEP_Speciale_Marc/FITS/focus_3/")
+    scalelimit = 300
+    looking_at = "/FITS/saturn2.fits"
+    path_here = pathlib.Path().absolute()
+    filepath = ccd.get_path(str(path_here) + looking_at)
+    hdulist, header, imagedata = ccd.fits_handler(filepath, scalelimit)
+    imagedata_list = (np.ndarray.flatten(imagedata)).tolist()
+    imagedata_list_len = len(imagedata_list)
+    arr_to_c = (ctypes.c_int * imagedata_list_len)(*imagedata_list)
 
-    libname = pathlib.Path().absolute()
-    print("libname: ", libname)
+    Class_ctor_wrapper = ccd_lib.CreateInstanceOfClass
+    Class_ctor_wrapper.restype = ctypes.c_void_p
+    spam = ctypes.c_void_p(Class_ctor_wrapper())
 
-    # Load the shared library into c types.
-    if sys.platform.startswith("win"):
-        c_lib = ctypes.CDLL(libname / "ccd.dll")
-    else:
-        c_lib = ctypes.CDLL(libname / "libccd.so")
+    # [outputs the pointer address of the element]
+    ccd_lib.CallMemberTest.restype = ctypes.c_double
+    value = ccd_lib.CallMemberTest(spam, imagedata_list_len, arr_to_c)
+    print(value)
 
-    # Sample data for our call:
-    x, y = 6, 2.3
+    # Class_ctor_wrapper_del = ccd_lib.DeleteInstanceOfClass
+    # Class_ctor_wrapper_del.restype = ctypes.c_void_p
+    # spam_del = ctypes.c_void_p(Class_ctor_wrapper_del())
 
-    # You need tell ctypes that the function returns a float
-    c_lib.cppmult.restype = ctypes.c_float
-    answer = c_lib.cppmult(x, ctypes.c_float(y))
-    print(f"    In Python: int: {x} float {y:.1f} return val {answer:.1f}")
+

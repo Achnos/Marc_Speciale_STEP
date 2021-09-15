@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 
-def get_file(path):
+
+def get_path(path):
     """
     This function returns the absolute path of a file
 
@@ -43,14 +44,14 @@ def fits_handler(filepath, scalelimit):
     header = hdulist[0].header
     imagedata = hdulist[0].data
 
-    print(repr(header))  # For printing the header of the HDU
+    # print(repr(header))  # For printing the header of the HDU
     print("The largest numerical value in the image is: " + str(repr(max(np.ndarray.flatten(imagedata)))))
 
     # norm_vmax = max(data[:])
 
-    #plt.imshow(imagedata, vmin=0, vmax=scalelimit, cmap='gray')
-    #plt.colorbar()
-    #plt.show()
+    # plt.imshow(imagedata, vmin=0, vmax=scalelimit, cmap='gray')
+    # plt.colorbar()
+    # plt.show()
 
     return hdulist, header, imagedata
 
@@ -67,7 +68,7 @@ class CCD:
         print("Initiallizing characterization of CCD...")
 
         self.noise()
-        #self.linearity()
+        # self.linearity()
         self.charge_transfer_efficiency()
         self.charge_diffusion()
         self.quantum_efficiency()
@@ -89,11 +90,11 @@ class CCD:
 
         for file in data_series:
             scaleLimit = 223
-            filePath = get_file(path_of_data + file)
+            filePath = get_path(path_of_data + file)
 
             hdul, hdr, data = fits_handler(filePath, scaleLimit)
             hdul.close()
-        
+
         print("Characterizing linearity...")
 
     __linearity = linearity
@@ -106,5 +107,3 @@ class CCD:
 
     def quantum_efficiency(self):
         print("Testing quantum efficiency")
-
-
