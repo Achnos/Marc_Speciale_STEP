@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/STEP_Speciale_Marc.dir/ccd.cpp.o -o STEP_Speciale_Marc 
