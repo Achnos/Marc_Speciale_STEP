@@ -36,7 +36,7 @@ def build_libccd(c):
     """Build the shared library for the sample C++ code"""
     print_banner("invoke: Building C++ Library")
     invoke.run(
-        "g++ -O3 -Wall -Werror -shared -std=c++11 -fPIC ccd.cpp "
+        "g++ -O3 -Wall -Werror -shared -I /usr/include/python3.8 -L -lpython38 -std=c++11 -fPIC ccd.cpp "
         "-o libccd.so "
     )
     print("* Complete")
@@ -73,12 +73,12 @@ def build_libccd(c):
 @invoke.task(build_libccd)
 def main(c):
     """Run the script to test ctypes"""
-    print_banner("invoke: Running main.py")
+    print_banner("invoke: Running main.py ")
     # pty and python3 didn't work for me (win).
     if on_win:
-        invoke.run("python main.py")
+        invoke.run("python3 main.py libccd build")
     else:
-        invoke.run("python3 main.py", pty=True)
+        invoke.run("python3 main.py libccd build", pty=True)
 
     """
         Having invoke run commands doesn't always behave exactly as it would, had we done it

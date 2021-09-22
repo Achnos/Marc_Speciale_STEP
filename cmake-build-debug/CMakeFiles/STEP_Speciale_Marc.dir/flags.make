@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/usr/include/python3.8
 
 CXX_FLAGS = -g -std=gnu++14
 

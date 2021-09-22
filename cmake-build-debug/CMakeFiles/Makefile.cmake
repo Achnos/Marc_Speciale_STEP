@@ -16,6 +16,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeCommonLanguageInclude.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeFindCodeBlocks.cmake"
+  "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeFindFrameworks.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeGenericSystem.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeInitializeConfigs.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/CMakeLanguageInformation.cmake"
@@ -25,12 +26,16 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Compiler/GNU-C.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Compiler/GNU-CXX.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Compiler/GNU.cmake"
+  "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/FindPackageHandleStandardArgs.cmake"
+  "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/FindPackageMessage.cmake"
+  "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/FindPythonLibs.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Platform/Linux-GNU-C.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Platform/Linux-GNU-CXX.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Platform/Linux-GNU.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Platform/Linux.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/Platform/UnixPaths.cmake"
   "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/ProcessorCount.cmake"
+  "/snap/clion/163/bin/cmake/linux/share/cmake-3.20/Modules/SelectLibraryConfigurations.cmake"
   )
 
 # The corresponding makefile is:

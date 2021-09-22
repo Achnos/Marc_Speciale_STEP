@@ -17,7 +17,6 @@ def cpp_build(whichlib):
 
     print("Building libraries...")
     # Start by calling invoke using tasks.py to build C/C++ libraries with gcc/g++
-    os.system("invoke build-" + whichlib)
 
     libname = pathlib.Path().absolute()
     print("libname: ", libname)
@@ -31,6 +30,5 @@ def cpp_build(whichlib):
         return_lib = ctypes.CDLL(libname / libstr)
 
     print("Got C/C++ library: ", libstr)
-
 
     return return_lib

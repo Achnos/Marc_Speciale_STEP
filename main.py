@@ -3,37 +3,33 @@ import ctypes
 import sys
 import pathlib
 import numpy as np
+import matplotlib.pyplot as plt
+import pubplot as pp
 
 import ccd
 import libc_builder
 
 if __name__ == '__main__':
-
-    ccd_lib = libc_builder.cpp_build("libccd")
-
-    scalelimit = 300
-    looking_at = "/FITS/saturn2.fits"
     path_here = pathlib.Path().absolute()
-    filepath = ccd.get_path(str(path_here) + looking_at)
+    atik_camera = ccd.CCD("Atik 414EX mono")
 
-    hdulist, header, imagedata = ccd.fits_handler(filepath, scalelimit)
+    bias_sequence = str(path_here) + "/bias_sequence/"
+    bias_image = atik_camera.master_bias_image(bias_sequence)
+    plt.figure("bias_image_fig")
+    plt.imshow(bias_image, vmin=0, cmap='gray')
+    plt.colorbar()
+    pp.pubplot("Bias image: " + atik_camera.name, "x", "y", "bias_image.png", legend=False, grid=False)
 
-    imagedata_list = (np.ndarray.flatten(imagedata)).tolist()
-    imagedata_list_len = len(imagedata_list)
-    array_to_c = (ctypes.c_int * imagedata_list_len)(*imagedata_list)
+    readout_noise_estimate = atik_camera.readout_noise_estimation(bias_sequence)
+    print(readout_noise_estimate)
 
-    class_ctor_wrapper = ccd_lib.constructor_wrapper
-    class_ctor_wrapper.restype = ctypes.c_void_p
-    return_ptr = ctypes.c_void_p(class_ctor_wrapper())
+    dark_current_sequence = str(path_here) + "/temperature_sequence/"
+    dark_current_data = atik_camera.dark_current_vs_temperature(dark_current_sequence)
+    plt.plot(dark_current_data[:, 0], dark_current_data[:, 1], label=atik_camera.name)
+    pp.pubplot("Dark current", "Temperature [C°]", "Mean ADU/pixel", "dark_current_versus_temperature.png", legendlocation="upper left")
 
-    # [outputs the pointer address of the element]
-    ccd_lib.sum_array_wrapper.restype = ctypes.c_double
-    value = ccd_lib.sum_array_wrapper(return_ptr, imagedata_list_len, array_to_c)
-    print("Value from test function: ", value)
-    print("Note to self: Result is overflown, but this was expected. Else works as intended.")
-
-    # Class_ctor_wrapper_del = ccd_lib.DeleteInstanceOfClass
-    # Class_ctor_wrapper_del.restype = ctypes.c_void_p
-    # spam_del = ctypes.c_void_p(Class_ctor_wrapper_del())
-
+    linearity_sequence = str(path_here) + "/linearity/"
+    linearity_data = atik_camera.linearity_estimation(linearity_sequence, 10, 10)
+    plt.plot(linearity_data[:, 0], linearity_data[:, 1], ls='--', c='k', lw=1.5, marker='o', label=atik_camera.name)
+    pp.pubplot("Linearity", "Exposure time [s]", "Mean ADU/pixel", "linearity.png", legendlocation="upper left")
 
