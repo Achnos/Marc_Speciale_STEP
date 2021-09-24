@@ -116,7 +116,7 @@ class CCD:
         corrected_image = np.subtract(image_to_be_corrected, self.master_bias)
         return corrected_image
 
-    def master_dark_current_image(self, path_of_data_series: str):
+    def master_dark_current_image(self, path_of_data_series: str, exposure_time: float):
         """
         Method that will set the class member np.ndarray master_dark
 
@@ -124,14 +124,35 @@ class CCD:
             - A string representing the path to the directory
               containing the data series used to construct the
               master dark current image
+        :param exposure_time:
+            - The exposure time in seconds of the data_series
         """
         print("Constructing the master dark current correction image...")
 
         data_series         =   util.list_data(path_of_data_series)
-        mean_image_return   =   util.mean_image(data_series, path_of_data_series)
-        mean_image_return   =   self.bias_correction(mean_image_return)
+        dim_path            =   util.get_path(path_of_data_series + data_series[0])
+        image_shape         =   util.get_dims(dim_path)
+        mean_image_array    =   np.zeros(image_shape)
+        number_of_images    =   len(data_series)
 
-        self.master_dark = mean_image_return
+        for imageid in data_series:
+            filepath                    =   util.get_path(path_of_data_series + imageid)
+            hdul, header, imagedata     =   util.fits_handler(filepath)
+            imagedata                   =   self.bias_correction(imagedata)
+
+            # Check for consistency
+            if header['EXPTIME'] == exposure_time:
+                imagedata   =   np.divide(imagedata, exposure_time)
+            else:
+                print("master_dark_current_image(): Error, exposure time does not match up")
+                print("master_dark_current_image(): Exposure time was: ", header['EXPTIME'])
+
+            mean_image_array += imagedata
+            hdul.close()
+
+        mean_image_array   /=   number_of_images
+
+        self.master_dark    =   mean_image_array
 
     def dark_current_correction(self, image_to_be_corrected: np.ndarray):
         """
@@ -144,7 +165,7 @@ class CCD:
         corrected_image = np.subtract(image_to_be_corrected, self.master_dark)
         return corrected_image
 
-    def dark_current_vs_temperature(self, path_of_data_series: str):
+    def dark_current_vs_temperature(self, path_of_data_series: str, exposure_time: float):
         """
         Method which will compute the dark current levels as a function
         of temperature, which it returns as a list, and fills the member
@@ -166,6 +187,8 @@ class CCD:
         :parameter str path_of_data_series:
             - A string representing the path to the directory
               containing the data series used to construct the data points
+        :param exposure_time:
+            - The exposure time in seconds of the data_series
         :returns np.ndarray dark_current_versus_temperature_return:
             - A numpy array of data points of the form (temperature, value)
         """
@@ -177,19 +200,29 @@ class CCD:
         for imageid in data_series:
             filepath                    =   util.get_path(path_of_data_series + imageid)
             hdul, header, imagedata     =   util.fits_handler(filepath)
+            imagedata                   =   self.bias_correction(imagedata)
+            print(imagedata)
 
             # The temperature as a string
             temp = float(imageid[-12:-10] + '.' + imageid[-9])
             if imageid[-14] == "m":
                 temp *= -1
 
-            tmplist.append([temp, np.mean(imagedata)])
+            # Check for consistency
+            if header['EXPTIME'] == exposure_time:
+                dark_per_time_per_pixel = (np.mean(imagedata) * self.gain_factor) / exposure_time
+                tmplist.append([temp, dark_per_time_per_pixel])
+            else:
+                print("dark_current_vs_temperature(): Error, exposure times do not match up")
+                print("dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
 
             hdul.close()
 
         tmparray = np.sort(np.asarray(tmplist), axis=0)
-        self.dark_current_versus_temperature = tmparray
-        dark_current_versus_temperature_return = tmparray
+
+        self.dark_current_versus_temperature    = tmparray
+        dark_current_versus_temperature_return  = tmparray
+
         return dark_current_versus_temperature_return
 
     def master_flat_field_image(self, path_of_data_series: str):
@@ -206,20 +239,22 @@ class CCD:
         data_series         =   util.list_data(path_of_data_series)
         dim_path            =   util.get_path(path_of_data_series + data_series[0])
         image_shape         =   util.get_dims(dim_path)
-        number_of_images    =   len(path_of_data_series)
+        number_of_images    =   len(data_series)
         meaned_flat         =   np.zeros(image_shape)
 
         for imageid in data_series:
             filepath                    =   util.get_path(path_of_data_series + imageid)
             hdul, header, imagedata     =   util.fits_handler(filepath)
-            # imagedata                   =    self.bias_correction(imagedata)
+            imagedata                   =   self.bias_correction(imagedata)
 
-            corrected_image     = imagedata   # self.dark_current_correction(imagedata)
-            meaned_flat        += corrected_image
+            corrected_image             =   self.dark_current_correction(imagedata)
+            meaned_flat                +=   corrected_image
 
             hdul.close()
 
-        meaned_flat /= (1 / number_of_images)
+        meaned_flat /= number_of_images
+        meaned_flat /= np.max(meaned_flat)  # Normalize
+
         self.master_flat = meaned_flat
 
     def flat_field_correction(self, image_to_be_corrected: np.ndarray):
@@ -233,28 +268,35 @@ class CCD:
         corrected_image = np.divide(image_to_be_corrected, self.master_flat)
         return corrected_image
 
-    def readout_noise_estimation(self, path_of_data_series: str):
+    def readout_noise_estimation(self, path_of_data_series: str, temperature: float):
         # Consider a row, plot the ADU as a function of
         # column number. Add all rows in an area that is
         # consistent, and mean. Fit power law, and noise
         # is then the width of the fit distribution.
         print("Computing readout noise level...")
 
-        data_series = util.list_data(path_of_data_series)
-        tmp_std = np.zeros([1, len(data_series)])
-        tmp_mean = np.zeros([1, len(data_series)])
+        data_series         =   util.list_data(path_of_data_series)
+        number_of_images    =   len(data_series)
+        tmp_std             =   np.zeros(number_of_images)
+        tmp_mean            =   np.zeros(number_of_images)
+
         it = 0
         for imageid in data_series:
-            filepath = util.get_path(path_of_data_series + imageid)
-            hdul, header, imagedata = util.fits_handler(filepath)
-            noise_deviation = np.subtract(self.master_bias, imagedata)
-            tmp_std[it] = np.std(noise_deviation) / np.sqrt(2)
-            tmp_mean[it] = np.mean(noise_deviation)
+            filepath                    =   util.get_path(path_of_data_series + imageid)
+            hdul, header, imagedata     =   util.fits_handler(filepath)
+
+            # Check for consistency
+            if header['CCD-TEMP'] == temperature:
+                noise_deviation     =   np.subtract(self.master_bias, imagedata) * self.gain_factor
+                tmp_std[it]         =   np.std(noise_deviation) / np.sqrt(2)
+                tmp_mean[it]        =   np.mean(noise_deviation)
+
             hdul.close()
+            it += 1
 
-        readout_noise = np.mean(tmp_std) * self.gain_factor
-        print("The readout noise level is", readout_noise, "mean electrons per pixel.")
+        readout_noise  =  np.sqrt(np.mean(np.square(tmp_std)))
 
+        print(f"The readout noise level is {readout_noise:.3f} RMS electrons per pixel.")
         self.readout_noise_level = readout_noise
 
     def readout_noise_vs_temperature(self):
@@ -305,14 +347,22 @@ class CCD:
                 index = 0
 
         for repeat_sequence in reordered_data:
-            repeat_sequence_meaned = self.flat_field_correction(self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series)))
-            #   repeat_sequence_meaned = self.bias_correction(mean_image(repeat_sequence, path_of_data_series))
+            repeat_sequence_meaned  =  self.flat_field_correction(self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series)))
 
-            exposure_time = float(repeat_sequence[0][14] + '.' + repeat_sequence[0][15:17])  # time in s
-            tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])
+            filepath                    =   util.get_path(path_of_data_series + repeat_sequence[0])
+            hdul, header, imagedata     =   util.fits_handler(filepath)
+            exposure_time               =   float(repeat_sequence[0][14] + '.' + repeat_sequence[0][15:17])  # time in s
 
-        linearity_array = np.asarray(tmplist)
-        self.linearity = linearity_array
+            # Check for consistency
+            if header['EXPTIME'] == exposure_time:
+                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])
+            else:
+                print("linearity_estimation(): Error, exposure times do not match up")
+                print("linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
+
+        linearity_array     =   np.asarray(tmplist)
+        self.linearity      =   linearity_array
+
         return linearity_array
 
     def charge_transfer_efficiency(self):

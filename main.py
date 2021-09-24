@@ -23,11 +23,11 @@ if __name__ == '__main__':
     linearity_sequence      =   util.complete_path("linearity")
 
     atik_camera.master_bias_image(bias_sequence)
-    atik_camera.master_dark_current_image(bias_sequence)
+    atik_camera.master_dark_current_image(bias_sequence, exposure_time=0.001)
     atik_camera.master_flat_field_image(flat_sequence)
-    atik_camera.readout_noise_estimation(bias_sequence)
+    atik_camera.readout_noise_estimation(bias_sequence, temperature=23.6)
 
-    dark_current_data       =   atik_camera.dark_current_vs_temperature(dark_current_sequence)
+    dark_current_data       =   atik_camera.dark_current_vs_temperature(dark_current_sequence, exposure_time=10)
     linearity_data          =   atik_camera.linearity_estimation(linearity_sequence, 10, 10)
 
     pp.plot_image(atik_camera.master_bias, "master_bias_fig")

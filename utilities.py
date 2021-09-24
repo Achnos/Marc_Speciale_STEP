@@ -144,5 +144,5 @@ def mean_image(filelist: list, dirpath: str):
 
         hdul.close()
 
-    mean_image_array /= (1 / number_of_images)
+    mean_image_array /= number_of_images
     return mean_image_array
