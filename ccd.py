@@ -4,7 +4,7 @@
 # -----       By Marc Breiner Sørensen        ----- #
 # ------------------------------------------------- #
 # ----- Implemented:           August    2021 ----- #
-# ----- Last edit:         23. September 2021 ----- #
+# ----- Last edit:          5. October   2021 ----- #
 # ------------------------------------------------- #
 #####################################################
 """
@@ -207,10 +207,10 @@ class CCD:
 
         tmplist         =   []
         data_series     =   util.list_data(path_of_data_series)
-        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints=num_of_temperatures,
+        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints_input=num_of_temperatures,
                                                                 num_of_repeats_input=num_of_repeats,
                                                                 where_is_repeat_num_in_string=[6, 9],
-                                                                data_series_list=data_series            )
+                                                                data_series_list=data_series)
 
         for repeat_sequence in reordered_data:
             repeat_sequence_meaned      =   self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series))
@@ -220,7 +220,6 @@ class CCD:
             temperature                 =   float(float(repeat_sequence[0][15:17] + '.' + repeat_sequence[0][18]))  # time in s
             if repeat_sequence[0][13] == "m":
                 temperature *= -1
-            print(int(temperature))
 
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
@@ -298,9 +297,10 @@ class CCD:
         print("Looking for hot pixels...")
 
         data_series     =   util.list_data(path_of_data_series)
-        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints=2, num_of_repeats_input=num_of_repeats,
+        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints_input=2,
+                                                                num_of_repeats_input=num_of_repeats,
                                                                 where_is_repeat_num_in_string=[7, 8],
-                                                                data_series_list=data_series                                )
+                                                                data_series_list=data_series          )
 
         # Construct the two images from the data files in the path
         short_exposure_image    =   util.mean_image(reordered_data[0].tolist(), path_of_data_series)
@@ -317,10 +317,9 @@ class CCD:
         smallest_measurable_dark_current = 2 * ((self.readout_noise_level / math.sqrt(num_of_repeats)) / exposure_time[0])
         potential_hot_pixels = long_exposure_image > smallest_measurable_dark_current
 
-        plt.figure()
-        plt.plot(short_exposure_image[potential_hot_pixels].flatten(), long_exposure_image[potential_hot_pixels].flatten(), '.', label='Data')
-        plt.plot([0, 1e3], [0, 1e3], label='Ideal relationship')
-        pp.pubplot("Hot pixels", "dark current ($e^-$/sec), 90 sec exposure time", "dark current ($e^-$/sec), 1000 sec exposure time", "hot_pixels_test.png", xlim=[0.5, 100], ylim=[0.5, 20], legendlocation="lower right")
+        plt.plot(short_exposure_image[potential_hot_pixels].flatten(), long_exposure_image[potential_hot_pixels].flatten(), '.', c="k", label='Data')
+        plt.plot([0, 1e3], [0, 1e3], c="dodgerblue", label='Ideal relationship')
+        pp.pubplot("Hot pixels", "dark current ($e^-$/sec), 90 sec exposure time", "dark current ($e^-$/sec), 1000 sec exposure time", "hot_pixels_test.png", xlim=[0.5, 100.0], ylim=[0.5, 20], legendlocation="lower right")
 
         hot_pixels = (short_exposure_image > 7.5)
         print("No. of hot pixels:", hot_pixels.sum())
@@ -384,9 +383,9 @@ class CCD:
         data_series         =   util.list_data(path_of_data_series)
         tmp_std             =   np.zeros(num_of_repeats)
         tmp_mean            =   np.zeros(num_of_repeats)
-        reordered_data      =   util.repeat_sequence_ordered_data(  num_of_temperatures, num_of_repeats,
-                                                                    where_is_repeat_num_in_string=[6, 9],
-                                                                    data_series_list=data_series            )
+        reordered_data      = util.repeat_sequence_ordered_data(num_of_temperatures, num_of_repeats,
+                                                                where_is_repeat_num_in_string=[6, 9],
+                                                                data_series_list=data_series)
 
         readout_noise = []
         for repeat_sequence in reordered_data:
@@ -394,8 +393,6 @@ class CCD:
             temperature = float(repeat_sequence[0][16:18] + '.' + repeat_sequence[0][19])  # time in s
             if repeat_sequence[0][14] == "m":
                 temperature *= -1
-
-            print(int(temperature))
 
             it = 0
             for imageid in repeat_sequence:
@@ -453,18 +450,48 @@ class CCD:
         tmplist = []
 
         data_series     =   util.list_data(path_of_data_series)
-        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints=num_of_exposures,
+        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints_input=num_of_exposures,
                                                                 num_of_repeats_input=num_of_repeats,
                                                                 where_is_repeat_num_in_string=[10, 13],
-                                                                data_series_list=data_series            )
+                                                                data_series_list=data_series)
 
+        stabillity_data =   self.test_lightsource_stabillity(path_of_data_series, num_of_exposures, num_of_repeats)
+
+        first_it = 0
+        second_it = 0
         for repeat_sequence in reordered_data:
-            repeat_sequence_meaned      =   self.flat_field_correction(self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series)))  # util.mean_image(repeat_sequence, path_of_data_series)
+            # repeat_sequence_meaned      =   util.mean_image(repeat_sequence, path_of_data_series)
+            dim_path = util.get_path(path_of_data_series + repeat_sequence[0])
+            image_shape = util.get_dims(dim_path)
+            number_of_images = len(repeat_sequence)
+            mean_image_array = np.zeros(image_shape)
 
+            for imageid in repeat_sequence:
+                filepath                        =   util.get_path(path_of_data_series + imageid)
+                hdul, header, imagedata         =   util.fits_handler(filepath)
+                imagedata_meaned                =   self.bias_correction(imagedata)
+                imagedata_meaned_and_corrected  =   np.divide(imagedata_meaned, (stabillity_data[first_it, second_it] / 100 + 1))
+
+                mean_image_array += imagedata_meaned_and_corrected
+
+                hdul.close()
+                second_it += 1
+                if second_it == num_of_repeats:
+                    second_it = 0
+
+            first_it += 1
+
+            mean_image_array /= number_of_images
+
+            # repeat_sequence_meaned      =   self.bias_correction(repeat_sequence_meaned)  # self.flat_field_correction(  ,   util.mean_image(repeat_sequence, path_of_data_series)
+
+            repeat_sequence_meaned      =   mean_image_array
             filepath                    =   util.get_path(path_of_data_series + repeat_sequence[0])
             hdul, header, imagedata     =   util.fits_handler(filepath)
             exposure_time               =   float(repeat_sequence[0][-7:-4])  # time in s
-            print(int(exposure_time), "%")
+
+            # Treat hot pixels
+            repeat_sequence_meaned[np.where(self.hot_pixel_mask)] = np.mean(repeat_sequence_meaned[np.where(np.logical_not(self.hot_pixel_mask))])
 
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
@@ -476,25 +503,59 @@ class CCD:
                 tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])\
 
         linearity_array     =   np.asarray(tmplist)
+
+        print("Done! Data constructed from linearity measurements:")
         print(linearity_array)
+
         self.linearity      =   linearity_array
 
         return linearity_array
 
-    def test_lightsource_stabillity(self, path_of_data_series: str):
+    def test_lightsource_stabillity(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats:int):
+        print("Testing light source stabillity...")
+        data_series     =   util.list_data(path_of_data_series)
+        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints_input=num_of_data_points,
+                                                                num_of_repeats_input=num_of_repeats,
+                                                                where_is_repeat_num_in_string=[10, 13],
+                                                                data_series_list=data_series                )
 
-        pass
+        plot_data   =   np.empty([num_of_data_points, num_of_repeats])
 
+        data_point  =   0
+        repeat      =   0
+        for sequence in reordered_data:
+            for image in sequence:
+                filepath = util.get_path(path_of_data_series + image)
+                hdul, header, imagedata = util.fits_handler(filepath)
+                if data_point > 0:
+                    self.bias_correction(imagedata)
+                mean_adu = np.mean(imagedata)
+
+                plot_data[data_point, repeat] = mean_adu
+                repeat += 1
+                if repeat == num_of_repeats:
+                    repeat = 0
+
+            data_point += 1
+
+        thismean = np.mean(plot_data, axis=1, keepdims=True)
+        plot_data = np.multiply(np.divide(np.abs(plot_data - thismean), thismean), 100)
+
+        return plot_data
 
     def linearity_precision(self):
-        linearity_data = self.linearity[:, 1]
-        query_points = self.linearity[:, 0]
-        reference_point = self.linearity[1, 1]
-        ideal_slope = reference_point / query_points[1]
-        ideal_offset = 0
-        ideal_linearity = np.add(np.multiply(query_points, ideal_slope), ideal_offset)
-        deviations = np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
-        deviations[0] = np.subtract(ideal_linearity[0], linearity_data[0])
+        print("Testing the precision of the linearity measurement...")
+        linearity_data      =   self.linearity[:, 1]
+        query_points        =   self.linearity[:, 0]
+        reference_point     =   self.linearity[1, 1]
+
+        ideal_slope         =   reference_point / query_points[1]
+        ideal_offset        =   0
+
+        ideal_linearity     =   np.add(np.multiply(query_points, ideal_slope), ideal_offset)
+        deviations          =   np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
+        deviations[0]       =   np.subtract(ideal_linearity[0], linearity_data[0])
+
         return ideal_linearity, deviations
 
     def charge_transfer_efficiency(self):

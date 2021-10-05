@@ -32,6 +32,21 @@ def produce_plots():
     plt.plot(linearity_data[:-3, 0], linearity_deviations[:-3], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name)
     plt.plot(linearity_data[:-3, 0], np.zeros(len(linearity_data[:-3])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
     pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Exposure time [s]", "Percentage deviation ", "linearity_deviations.png", legendlocation="upper left")
+
+    params = {'legend.fontsize': 7,
+              'legend.handlelength': 2}
+    plt.rcParams.update(params)
+    new = 0
+    for exposure in range(0, 11):
+        if exposure - 7 >= 0:
+            new = 1
+
+        if new == 0:
+            plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls='-', lw=1, label=str(exposure * 10) + "s")
+        else:
+            plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls='--', lw=1, label=str(exposure * 10) + "s")
+
+    pp.pubplot("$\mathbf{Lightsource\;\;stabillity}$", "Repeat no.", "\%- dev. from seq. mean", "lightsource.png", legendlocation="upper right")
     return
 
 
@@ -57,6 +72,7 @@ if __name__ == '__main__':
     dark_current_data       =   atik_camera.dark_current_vs_temperature(dark_current_sequence  , exposure_time=10   , num_of_repeats=100, num_of_temperatures=16)
     readout_noise_data      =   atik_camera.readout_noise_vs_temperature(readout_noise_sequence, exposure_time=0.001, num_of_repeats=100, num_of_temperatures=16)
     linearity_data          =   atik_camera.linearity_estimation(linearity_sequence, num_of_exposures=11, num_of_repeats=100)
+    stabillity_data         =   atik_camera.test_lightsource_stabillity(linearity_sequence, num_of_data_points=11, num_of_repeats=100)
 
     ideal_linear_relation, linearity_deviations = atik_camera.linearity_precision()
 

@@ -120,9 +120,9 @@ def list_data(dirpath: PureWindowsPath or PurePosixPath):
     return data_list
 
 
-def repeat_sequence_ordered_data(num_of_datapoints: int, num_of_repeats_input: int, where_is_repeat_num_in_string: list,
-                                 data_series_list: list):
-    reordered_data = np.empty([num_of_datapoints, num_of_repeats_input], dtype=object)
+def repeat_sequence_ordered_data(num_of_datapoints_input: int, num_of_repeats_input: int,
+                                 where_is_repeat_num_in_string: list, data_series_list: list):
+    reordered_data = np.empty([num_of_datapoints_input, num_of_repeats_input], dtype=object)
 
     from_id_in_str  =   where_is_repeat_num_in_string[0]
     to_id_in_str    =   where_is_repeat_num_in_string[1]
@@ -131,7 +131,7 @@ def repeat_sequence_ordered_data(num_of_datapoints: int, num_of_repeats_input: i
         repeat_num = int(imageid[from_id_in_str : to_id_in_str])
         reordered_data[index][repeat_num] = str(imageid)
         index += 1
-        if index == num_of_datapoints:
+        if index == num_of_datapoints_input:
             index = 0
 
     return reordered_data

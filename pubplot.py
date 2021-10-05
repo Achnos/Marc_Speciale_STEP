@@ -28,7 +28,7 @@ def plot_image(image: np.ndarray , figure_name: str = None, scale: float = None)
         - A cutoff above which data will not be included in the plot.
     """
     plt.figure(figure_name, figsize=(10, 10))
-    plt.imshow(image, vmin=0, vmax=scale, cmap='gray')
+    plt.imshow(image, cmap='gray')
     plt.colorbar()
 
 
@@ -38,11 +38,11 @@ def pubplot(title           : str           ,
             ylabel          : str           ,
             filename        : str           ,
             show            : bool  = False ,
-            xlim            : tuple = None  ,
-            ylim            : tuple = None  ,
+            xlim            : list  = None  ,
+            ylim            : list  = None  ,
             legend          : bool  = True  ,
             legendlocation  : str   = None  ,
-            grid            : bool  = True      ):
+            grid            : bool  = True   ):
     """
 
     :parameter str title:
@@ -86,7 +86,6 @@ def pubplot(title           : str           ,
         plt.legend(loc=legendlocation, fancybox=False, framealpha=1, edgecolor='inherit')
     if grid:
         plt.grid(b=True, which='major', axis='both', alpha=0.3)  # Include a grid!
-    #plt.ticklabel_format(axis='y', style='sci', scilimits=(5, 6), useOffset=True)  # set scientific notation.
     if show:
         plt.show()
     else:
