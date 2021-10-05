@@ -8,12 +8,10 @@
 # ------------------------------------------------- #
 #####################################################
 """
-import math
+
 import os
 import numpy as np
 import utilities as util
-import matplotlib.pyplot as plt
-import pubplot as pp
 
 
 class CCD:
@@ -36,8 +34,6 @@ class CCD:
     :parameter np.ndarray master_flat:
         - Numpy array representing the master flat field image
           for use in corrections
-    :parameter np.ndarray hot_pixel_mask:
-        - A mask array of indices of hot pixels in the camera
     :parameter np.ndarray linearity:
         - Numpy array of data from the CCD linearity test
     :parameter np.ndarray dark_current_versus_temperature:
@@ -53,8 +49,6 @@ class CCD:
     master_bias: np.ndarray = []
     master_dark: np.ndarray = []
     master_flat: np.ndarray = []
-
-    hot_pixel_mask: np.ndarray = []
 
     linearity: np.ndarray = []
 
@@ -130,7 +124,7 @@ class CCD:
             - A string representing the path to the directory
               containing the data series used to construct the
               master dark current image
-        :parameter exposure_time:
+        :param exposure_time:
             - The exposure time in seconds of the data_series
         """
         print("Constructing the master dark current correction image...")
@@ -171,61 +165,53 @@ class CCD:
         corrected_image = np.subtract(image_to_be_corrected, self.master_dark)
         return corrected_image
 
-    def dark_current_vs_temperature(self, path_of_data_series: str, exposure_time: float, num_of_repeats: int, num_of_temperatures: int,):
+    def dark_current_vs_temperature(self, path_of_data_series: str, exposure_time: float):
         """
         Method which will compute the dark current levels as a function
         of temperature, which it returns as a list, and fills the member
         dark_current_versus_temperature with as well. Implies a certain
         file naming convention of the type
 
-            noise_rrr_dc_s_tt_d.fit
+            nnn_s_tt_d_rrr.fit
 
               - where nnn is an arbitrary descriptive string, s is
-                a character representing the sign of the temperature
+                a character representing the sign of the tempreature
                 either m or p, representing plus or minus (degrees),
                 tt is the temperature in degrees, while d is the decimal.
                 rrr represents the repeat number of the given data file.
 
             An example of this:
 
-            noise_000_dc_m_04_9.fit
+            thermal_noise_celcius_m_04_9_000.fit
 
         :parameter str path_of_data_series:
             - A string representing the path to the directory
               containing the data series used to construct the data points
-        :parameter exposure_time:
+        :param exposure_time:
             - The exposure time in seconds of the data_series
-        :parameter int num_of_repeats:
-            - Integer representing the total number of repeats of the data sequence
-        :parameter int num_of_temperatures:
-            - Integer representing the number of different temperatures
-              in the data sequence
         :returns np.ndarray dark_current_versus_temperature_return:
             - A numpy array of data points of the form (temperature, value)
         """
         print("Computing dark current as a function of temperature...")
 
-        tmplist         =   []
-        data_series     =   util.list_data(path_of_data_series)
-        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints=num_of_temperatures,
-                                                                num_of_repeats_input=num_of_repeats,
-                                                                where_is_repeat_num_in_string=[6, 9],
-                                                                data_series_list=data_series            )
+        data_series = os.listdir(path_of_data_series)
+        tmplist = []
 
-        for repeat_sequence in reordered_data:
-            repeat_sequence_meaned      =   self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series))
-
-            filepath                    =   util.get_path(path_of_data_series + repeat_sequence[0])
+        for imageid in data_series:
+            filepath                    =   util.get_path(path_of_data_series + imageid)
             hdul, header, imagedata     =   util.fits_handler(filepath)
-            temperature                 =   float(float(repeat_sequence[0][15:17] + '.' + repeat_sequence[0][18]))  # time in s
-            if repeat_sequence[0][13] == "m":
-                temperature *= -1
-            print(int(temperature))
+            imagedata                   =   self.bias_correction(imagedata)
+            #print(imagedata)
+
+            # The temperature as a string
+            temp = float(imageid[-12:-10] + '.' + imageid[-9])
+            if imageid[-14] == "m":
+                temp *= -1
 
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
-                dark_per_time_per_pixel = np.mean(np.divide(np.multiply(repeat_sequence_meaned, self.gain_factor), exposure_time))
-                tmplist.append([temperature, dark_per_time_per_pixel])
+                dark_per_time_per_pixel = (np.mean(imagedata) * self.gain_factor) / exposure_time
+                tmplist.append([temp, dark_per_time_per_pixel])
             else:
                 print("dark_current_vs_temperature(): Error, exposure times do not match up")
                 print("dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
@@ -282,74 +268,11 @@ class CCD:
         corrected_image = np.divide(image_to_be_corrected, self.master_flat)
         return corrected_image
 
-    def hot_pixel_estimation(self, path_of_data_series: str, num_of_repeats: int, exposure_time: list):
-        """
-        Method to find hot pixels qualitatively, and then construct a mask used to remove them
-
-        :parameter str path_of_data_series:
-            - A string representing the path to the directory
-              containing the data series used to construct the
-              master flat field image
-        :parameter int num_of_repeats:
-            - Integer representing the total number of repeats of the data sequence
-        :parameter list exposure_time:
-            - list of shape [exposure time of short exposure image, exposure time of long exposure image]
-        """
-        print("Looking for hot pixels...")
-
-        data_series     =   util.list_data(path_of_data_series)
-        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints=2, num_of_repeats_input=num_of_repeats,
-                                                                where_is_repeat_num_in_string=[7, 8],
-                                                                data_series_list=data_series                                )
-
-        # Construct the two images from the data files in the path
-        short_exposure_image    =   util.mean_image(reordered_data[0].tolist(), path_of_data_series)
-        long_exposure_image     =   util.mean_image(reordered_data[1].tolist(), path_of_data_series)
-
-        # Apply bias correction
-        short_exposure_image    =   self.bias_correction(short_exposure_image)
-        long_exposure_image     =   self.bias_correction(long_exposure_image)
-
-        # Convert ADU to dark current
-        short_exposure_image    =   np.divide(np.multiply(short_exposure_image, self.gain_factor), exposure_time[0])
-        long_exposure_image     =   np.divide(np.multiply(long_exposure_image , self.gain_factor), exposure_time[1])
-
-        smallest_measurable_dark_current = 2 * ((self.readout_noise_level / math.sqrt(num_of_repeats)) / exposure_time[0])
-        potential_hot_pixels = long_exposure_image > smallest_measurable_dark_current
-
-        plt.figure()
-        plt.plot(short_exposure_image[potential_hot_pixels].flatten(), long_exposure_image[potential_hot_pixels].flatten(), '.', label='Data')
-        plt.plot([0, 1e3], [0, 1e3], label='Ideal relationship')
-        pp.pubplot("Hot pixels", "dark current ($e^-$/sec), 90 sec exposure time", "dark current ($e^-$/sec), 1000 sec exposure time", "hot_pixels_test.png", xlim=[0.5, 100], ylim=[0.5, 20], legendlocation="lower right")
-
-        hot_pixels = (short_exposure_image > 7.5)
-        print("No. of hot pixels:", hot_pixels.sum())
-
-        self.hot_pixel_mask = hot_pixels
-
-    def hot_pixel_correction(self, image_to_be_corrected: np.ndarray):
-        """
-        Method that will apply the hot pixel correction to an image
-        by subtracting the hot pixel correction mask
-
-        :parameter np.ndarray image_to_be_corrected:
-            - A numpy array which is the image data to be corrected
-        """
-        corrected_image = np.subtract(image_to_be_corrected, image_to_be_corrected[self.hot_pixel_mask])
-        return corrected_image
-
     def readout_noise_estimation(self, path_of_data_series: str, temperature: float):
-        """
-        Method to compute the readout noise level at a given temperature
-
-        :parameter str path_of_data_series:
-            - A string representing the path to the directory
-              containing the data series used to construct the
-              master flat field image
-        :parameter float temperature:
-            - Integer representing the temperature at which the data series
-              was acquired
-        """
+        # Consider a row, plot the ADU as a function of
+        # column number. Add all rows in an area that is
+        # consistent, and mean. Fit power law, and noise
+        # is then the width of the fit distribution.
         print("Computing readout noise level...")
 
         data_series         =   util.list_data(path_of_data_series)
@@ -363,13 +286,10 @@ class CCD:
             hdul, header, imagedata     =   util.fits_handler(filepath)
 
             # Check for consistency
-            check_temperature = (temperature*1.1 <= header['CCD-TEMP'] <= temperature*0.9) or (temperature*1.1 >= header['CCD-TEMP'] >= temperature*0.9)
-            if check_temperature:
+            if header['CCD-TEMP'] == temperature:
                 noise_deviation     =   np.subtract(self.master_bias, imagedata) * self.gain_factor
                 tmp_std[it]         =   np.std(noise_deviation) / np.sqrt(2)
                 tmp_mean[it]        =   np.mean(noise_deviation)
-            else:
-                print(header['CCD-TEMP'])
 
             hdul.close()
             it += 1
@@ -379,46 +299,9 @@ class CCD:
         print(f"The readout noise level is {readout_noise:.3f} RMS electrons per pixel.")
         self.readout_noise_level = readout_noise
 
-    def readout_noise_vs_temperature(self, path_of_data_series, num_of_temperatures, num_of_repeats, exposure_time):
+    def readout_noise_vs_temperature(self):
         print("Computing readout noise as a function of temperature...")
-        data_series         =   util.list_data(path_of_data_series)
-        tmp_std             =   np.zeros(num_of_repeats)
-        tmp_mean            =   np.zeros(num_of_repeats)
-        reordered_data      =   util.repeat_sequence_ordered_data(  num_of_temperatures, num_of_repeats,
-                                                                    where_is_repeat_num_in_string=[6, 9],
-                                                                    data_series_list=data_series            )
-
-        readout_noise = []
-        for repeat_sequence in reordered_data:
-
-            temperature = float(repeat_sequence[0][16:18] + '.' + repeat_sequence[0][19])  # time in s
-            if repeat_sequence[0][14] == "m":
-                temperature *= -1
-
-            print(int(temperature))
-
-            it = 0
-            for imageid in repeat_sequence:
-                filepath = util.get_path(path_of_data_series + imageid)
-                hdul, header, imagedata = util.fits_handler(filepath)
-
-                noise_deviation     =   np.subtract( np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
-                tmp_std[it]         =   np.std(noise_deviation)  # / np.sqrt(2)
-                tmp_mean[it]        =   np.mean(noise_deviation)
-
-                hdul.close()
-                it += 1
-
-                if it == num_of_repeats:
-                    it = 0
-
-            readout_noise.append([temperature, np.sqrt(np.mean(np.square(tmp_std)))])
-
-        tmparray = np.sort(np.asarray(readout_noise), axis=0)
-
-        # self.ron_vs_temperature = tmparray
-        redout_noise_versus_temperature_return = tmparray
-        return redout_noise_versus_temperature_return
+        pass
 
     def linearity_estimation(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int):
         """
@@ -440,9 +323,9 @@ class CCD:
         :parameter path_of_data_series:
             - A string representing the path to the directory
               containing the data series used to construct the data points
-        :parameter int num_of_repeats:
+        :param int num_of_repeats:
             - Integer representing the total number of repeats of the data sequence
-        :parameter int num_of_exposures:
+        :param int num_of_exposures:
             - Integer representing the number of different exposure times
               in the data sequence
         :returns np.ndarray linearity_array:
@@ -453,19 +336,23 @@ class CCD:
         tmplist = []
 
         data_series     =   util.list_data(path_of_data_series)
-        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_datapoints=num_of_exposures,
-                                                                num_of_repeats_input=num_of_repeats,
-                                                                where_is_repeat_num_in_string=[10, 13],
-                                                                data_series_list=data_series            )
+        reordered_data  =   np.empty([num_of_exposures, num_of_repeats], dtype=object)
+
+        index = 0
+        for imageid in data_series:
+            repeat_num = int(imageid[10:13])
+            reordered_data[index][repeat_num] = str(imageid)
+            index += 1
+            if index == 10:
+                index = 0
 
         for repeat_sequence in reordered_data:
-            repeat_sequence_meaned      =   self.flat_field_correction(self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series)))  # util.mean_image(repeat_sequence, path_of_data_series)
+            repeat_sequence_meaned  =  util.mean_image(repeat_sequence, path_of_data_series) # self.flat_field_correction(self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series)))
 
             filepath                    =   util.get_path(path_of_data_series + repeat_sequence[0])
             hdul, header, imagedata     =   util.fits_handler(filepath)
             exposure_time               =   float(repeat_sequence[0][-7:-4])  # time in s
             print(int(exposure_time), "%")
-
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
                 tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])
@@ -473,29 +360,13 @@ class CCD:
                 print("linearity_estimation(): Error, exposure times do not match up")
                 print("linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
 
-                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])\
-
         linearity_array     =   np.asarray(tmplist)
-        print(linearity_array)
         self.linearity      =   linearity_array
 
         return linearity_array
 
-    def test_lightsource_stabillity(self, path_of_data_series: str):
-
-        pass
-
-
     def linearity_precision(self):
-        linearity_data = self.linearity[:, 1]
-        query_points = self.linearity[:, 0]
-        reference_point = self.linearity[1, 1]
-        ideal_slope = reference_point / query_points[1]
-        ideal_offset = 0
-        ideal_linearity = np.add(np.multiply(query_points, ideal_slope), ideal_offset)
-        deviations = np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
-        deviations[0] = np.subtract(ideal_linearity[0], linearity_data[0])
-        return ideal_linearity, deviations
+
 
     def charge_transfer_efficiency(self):
         """

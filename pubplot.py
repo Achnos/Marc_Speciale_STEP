@@ -10,11 +10,12 @@
 """
 import matplotlib.pyplot as plt
 import numpy as np
+from cycler import cycler
 
 kwargs = {'fontweight': 'bold'}
 
 
-def plot_image(image: np.ndarray , figure_name: str = None):
+def plot_image(image: np.ndarray , figure_name: str = None, scale: float = None):
     """
     A helper function to pubplot() in case we are plotting 2D images
     in stead of ordinary functions etc.
@@ -22,10 +23,12 @@ def plot_image(image: np.ndarray , figure_name: str = None):
     :parameter np.ndarray image:
         - The image which is to be plotted as a figure.
     :parameter str figure_name:
-        - A figure name
+        - A figure name.
+    :parameter float scale:
+        - A cutoff above which data will not be included in the plot.
     """
-    plt.figure(figure_name)
-    plt.imshow(image, vmin=0, cmap='gray')
+    plt.figure(figure_name, figsize=(10, 10))
+    plt.imshow(image, vmin=0, vmax=scale, cmap='gray')
     plt.colorbar()
 
 
@@ -67,28 +70,23 @@ def pubplot(title           : str           ,
     """
 
     # Adjust a few plot parameters
-    # plt.rc('font', family='sans-serif')
-    plt.rc('font', family='serif')
+    plt.style.use(['science', 'ieee', 'vibrant'])
+    font = {'family': 'serif',
+            'serif': 'helvet',
+            'weight': 'bold',
+            'size': 10}
+    plt.rc('font', **font)
+    plt.rc('text', usetex=True)
 
-    plt.rc('xtick', labelsize='x-small')
-    plt.rc('ytick', labelsize='x-small')
-    # plt.rc('font', serif='Helvetica')
-    plt.rcParams.update({'font.size': 12})
-    # plt.tick_params(axis='x', which='minor', bottom=False)
-
-    # plt.axes().yaxis.set_minor_locator(MultipleLocator(5))
-    # plt.axes().xaxis.set_minor_locator(MultipleLocator(5))
-
-    # kwargs = {'fontweight': 'bold'}  # Bold font on axes
-
-    plt.title(title, **kwargs)
+    plt.title(title, {'fontsize': 12, 'fontweight': 'black'})
     plt.xlabel(xlabel, **kwargs)
     plt.ylabel(ylabel, **kwargs)
+
     if legend:
         plt.legend(loc=legendlocation, fancybox=False, framealpha=1, edgecolor='inherit')
     if grid:
         plt.grid(b=True, which='major', axis='both', alpha=0.3)  # Include a grid!
-    plt.ticklabel_format(axis='both', style='sci', scilimits=(5, 6), useOffset=True)  # set scientific notation.
+    #plt.ticklabel_format(axis='y', style='sci', scilimits=(5, 6), useOffset=True)  # set scientific notation.
     if show:
         plt.show()
     else:
@@ -99,6 +97,6 @@ def pubplot(title           : str           ,
     if ylim is not None:
         plt.ylim(ylim[0], ylim[1])
 
-    plt.savefig(filename)
+    plt.savefig(filename, dpi=200)
     plt.close()
     return

@@ -35,18 +35,24 @@ def get_path(path: str):
     return get_project_root().joinpath(path)
 
 
-def complete_path(dir_path: str):
+def complete_path(dir_path: str, here: bool = True):
     """
     Method to complete a path, given only a string that represents
     the name of a directory in the same folder as this program
 
     :parameter str dir_path:
         - path to the directory, specified as a string datatype
+    :param here:
+        - If not using the current directory, send as False, and
+          give a full path as dir_path
     :returns str completed_path:
         - The completed path as a string
     """
-    path_here       =   str(pathlib.Path().absolute())
-    completed_path  =   path_here + "/" + dir_path + "/"
+    if here:
+        path_here       =   str(pathlib.Path().absolute())
+        completed_path  =   path_here + "/" + dir_path + "/"
+    else:
+        completed_path  =   dir_path + "/"
 
     return completed_path
 
@@ -112,6 +118,23 @@ def list_data(dirpath: PureWindowsPath or PurePosixPath):
     data_list.sort()
 
     return data_list
+
+
+def repeat_sequence_ordered_data(num_of_datapoints: int, num_of_repeats_input: int, where_is_repeat_num_in_string: list,
+                                 data_series_list: list):
+    reordered_data = np.empty([num_of_datapoints, num_of_repeats_input], dtype=object)
+
+    from_id_in_str  =   where_is_repeat_num_in_string[0]
+    to_id_in_str    =   where_is_repeat_num_in_string[1]
+    index = 0
+    for imageid in data_series_list:
+        repeat_num = int(imageid[from_id_in_str : to_id_in_str])
+        reordered_data[index][repeat_num] = str(imageid)
+        index += 1
+        if index == num_of_datapoints:
+            index = 0
+
+    return reordered_data
 
 
 def mean_image(filelist: list, dirpath: str):

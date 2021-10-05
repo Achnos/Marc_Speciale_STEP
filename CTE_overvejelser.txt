@@ -1,0 +1,12 @@
+CHARGE TRANSFER EFFICIENCY ( CTE )
+
+Vi bør være istand til at lave et estimat på charge transfer efficiency,
+ved at studere overscan regionen. I den retning hvor vi har udlæsning af billedet
+vil vi miste noget ladning. Det er fordi, hver gang vi skifter en række/søjle over/ned
+under udlæsningen, risikerer vi at miste nogle af de dannede elektroner.
+
+Jeg forestiller mig at udlæseretningen vil vise en mørk gradient. Den del af billedet der udlæses sidst
+vil være mørkere, fordi vi skal flytte ladningen gennem mere stof. Desuden vil effekten
+sikkert være større for højere temperaturer, da termiske fluktuationer inde i Si blokken
+vil betyde at elektronerne får en større effektiv masse pga. elektron-fonon interaktioner
+over debye temperaturen.
