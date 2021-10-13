@@ -399,7 +399,7 @@ class CCD:
                 filepath = util.get_path(path_of_data_series + imageid)
                 hdul, header, imagedata = util.fits_handler(filepath)
 
-                noise_deviation     =   np.subtract( np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
+                noise_deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
                 tmp_std[it]         =   np.std(noise_deviation)  # / np.sqrt(2)
                 tmp_mean[it]        =   np.mean(noise_deviation)
 
@@ -557,6 +557,33 @@ class CCD:
         deviations[0]       =   np.subtract(ideal_linearity[0], linearity_data[0])
 
         return ideal_linearity, deviations
+
+    def test_zeropoint(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
+
+        """
+        11 - 1 / 21 - 1 = 10-B / 20 - B
+
+        """
+        print("Testing zero point assumption...")
+        data_series = util.list_data(path_of_data_series)
+        reordered_data = util.repeat_sequence_ordered_data(num_of_datapoints_input=num_of_data_points,
+                                                           num_of_repeats_input=num_of_repeats,
+                                                           where_is_repeat_num_in_string=[10, 13],
+                                                           data_series_list=data_series)
+        print(reordered_data)
+        repeat_sequence_meaned  =   []
+        for repeat_sequence in reordered_data:
+            repeat_sequence_meaned.append(util.mean_image(repeat_sequence, path_of_data_series))
+
+        lhs_numerator       =   np.mean(np.subtract(repeat_sequence_meaned[5], repeat_sequence_meaned[2]))
+        lhs_denominator     =   np.mean(np.subtract(repeat_sequence_meaned[7], repeat_sequence_meaned[3]))
+        rhs_numerator       =   np.mean(np.subtract(repeat_sequence_meaned[4], repeat_sequence_meaned[0]))
+        rhs_denominator     =   np.mean(np.subtract(repeat_sequence_meaned[6], repeat_sequence_meaned[1]))
+        lhs_final           =   np.divide(lhs_numerator, lhs_denominator)
+        rhs_final           =   np.divide(rhs_numerator, rhs_denominator)
+        result              =   np.subtract(lhs_final, rhs_final)
+
+        print("The result of the test is that the zeropoint assumption is valid to a precision of", result)
 
     def charge_transfer_efficiency(self):
         """

@@ -1,0 +1,117 @@
+\documentclass[12pt, a4paper, twoside, article]{memoir}
+\usepackage[a4paper, total={6.5in, 8in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[final]{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=black]{hyperref}
+\usepackage{bookmark}
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+\usepackage{color}
+
+\usepackage[sc]{mathpazo}
+\renewcommand{\ttdefault}{txtt}
+\linespread{1.06}
+\renewcommand{\chapnamefont}{\large\em}
+\newcommand{\regi}[1]{ %
+	{%
+		\centering
+		\em #1
+		\par
+	}
+}
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+% Fancy chapters
+\usepackage{tikz}
+\makechapterstyle{box}{
+	\renewcommand*{\printchaptername}{}
+	\renewcommand*{\chapnumfont}{\HUGE\bfseries}
+	\renewcommand*{\printchapternum}{
+		\flushright
+		\begin{tikzpicture}
+			\draw[fill,color=black] (0,0) rectangle (2cm,2cm);
+			\draw[color=white] (1cm,1cm) node { \chapnumfont\thechapter };
+		\end{tikzpicture}
+	}
+	\renewcommand*{\chaptitlefont}{\HUGE\bfseries}
+	\renewcommand*{\printchaptertitle}[1]{\flushright\chaptitlefont##1}
+}
+\chapterstyle{box}
+
+
+
+% Fancy headers
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{}
+\fancyhead[RE,LO]{\textsc{Marc Breiner Sørensen}}
+\fancyfoot[RE,CO]{\thepage}
+\fancyfoot[LE,RO]{ \tiny\leftmark}
+
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+
+
+% Fancy breadtext
+%\usepackage{ebgaramond, fontspec}
+%\setmainfont{EB Garamond}
+%\renewcommand{\familydefault}{\ebgaramond}
+\begin{document}
+	
+	\title{\textsc{\textbf{STEP} \\ \normalsize Subtitle}}
+	\author{\normalsize Student: \textbf{\textsc{Marc Breiner Sørensen \#\small\textsf{201708238}}}\\
+		\normalsize Advisor: \textbf{Hans Kjeldsen}\\
+		\normalsize Institut for Fysik og Astronomi, Aarhus Universitet}
+	\date{\textsc{\textsf{\today}}}
+	\maketitle
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.58\textwidth]{/home/marc/Dropbox/STEP_Speciale_Marc/linearity.png}
+	\end{figure}
+	\thispagestyle{empty}
+	
+	
+	\newpage
+	\tableofcontents
+	
+	\newpage
+	
+	\chapter{Abstract}
+	\newpage
+	
+	\chapter{Introduction}
+	\newpage
+	
+	\chapter{Theory}
+	\newpage
+	
+	\chapter{Methods}
+	\newpage
+	
+	\chapter{Results}
+	\newpage
+	
+	\chapter{Discussion}
+	\newpage
+	
+	\chapter{Conclusion}
+	
+\end{document}
