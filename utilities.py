@@ -137,6 +137,19 @@ def repeat_sequence_ordered_data(num_of_datapoints_input: int, num_of_repeats_in
     return reordered_data
 
 
+def compute_errorbar(filelist: list, dirpath: str):
+    distribution_of_image_means = []
+
+    for imageid in filelist:
+        filepath = get_path(dirpath + imageid)
+        hdul, header, imagedata = fits_handler(filepath)
+        distribution_of_image_means.append(np.mean(imagedata))
+        hdul.close()
+
+    errorbar = np.std(np.asarray(distribution_of_image_means))
+    return errorbar
+
+
 def mean_image(filelist: list, dirpath: str):
     """
     This is a helper function that returns the mean image from
@@ -169,3 +182,7 @@ def mean_image(filelist: list, dirpath: str):
 
     mean_image_array /= number_of_images
     return mean_image_array
+
+
+def gaussian(data, height, mean, width):
+    return height * np.exp(-((data - mean) ** 2) / (2 * (width ** 2)))

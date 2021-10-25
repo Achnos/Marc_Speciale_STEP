@@ -221,10 +221,12 @@ class CCD:
             if repeat_sequence[0][13] == "m":
                 temperature *= -1
 
+            errorbar = util.compute_errorbar(repeat_sequence, path_of_data_series)
+
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
                 dark_per_time_per_pixel = np.mean(np.divide(np.multiply(repeat_sequence_meaned, self.gain_factor), exposure_time))
-                tmplist.append([temperature, dark_per_time_per_pixel])
+                tmplist.append([temperature, dark_per_time_per_pixel, errorbar])
             else:
                 print("dark_current_vs_temperature(): Error, exposure times do not match up")
                 print("dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
@@ -364,8 +366,9 @@ class CCD:
             # Check for consistency
             check_temperature = (temperature*1.1 <= header['CCD-TEMP'] <= temperature*0.9) or (temperature*1.1 >= header['CCD-TEMP'] >= temperature*0.9)
             if check_temperature:
-                noise_deviation     =   np.subtract(self.master_bias, imagedata) * self.gain_factor
-                tmp_std[it]         =   np.std(noise_deviation) / np.sqrt(2)
+                # noise_deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
+                noise_deviation     =   np.subtract(self.master_bias, imagedata) # * self.gain_factor
+                tmp_std[it]         =   np.std(noise_deviation) * self.gain_factor * np.sqrt(8 * np.log(2))
                 tmp_mean[it]        =   np.mean(noise_deviation)
             else:
                 print(header['CCD-TEMP'])
@@ -377,6 +380,7 @@ class CCD:
 
         print(f"The readout noise level is {readout_noise:.3f} RMS electrons per pixel.")
         self.readout_noise_level = readout_noise
+        return np.mean(tmp_std)
 
     def readout_noise_vs_temperature(self, path_of_data_series, num_of_temperatures, num_of_repeats, exposure_time):
         print("Computing readout noise as a function of temperature...")
@@ -409,7 +413,8 @@ class CCD:
                 if it == num_of_repeats:
                     it = 0
 
-            readout_noise.append([temperature, np.sqrt(np.mean(np.square(tmp_std)))])
+            errorbar = util.compute_errorbar(repeat_sequence, path_of_data_series)
+            readout_noise.append([temperature, np.sqrt(np.mean(np.square(tmp_std))), errorbar])
 
         tmparray = np.sort(np.asarray(readout_noise), axis=0)
 
@@ -493,14 +498,17 @@ class CCD:
             # Treat hot pixels
             repeat_sequence_meaned[np.where(self.hot_pixel_mask)] = np.mean(repeat_sequence_meaned[np.where(np.logical_not(self.hot_pixel_mask))])
 
+            # Compute errorbars
+            errorbar = util.compute_errorbar(repeat_sequence, path_of_data_series)
+
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
-                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])
+                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
             else:
                 print("linearity_estimation(): Error, exposure times do not match up")
                 print("linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
 
-                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned)])\
+                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
 
         linearity_array     =   np.asarray(tmplist)
 
@@ -546,6 +554,7 @@ class CCD:
     def linearity_precision(self):
         print("Testing the precision of the linearity measurement...")
         linearity_data      =   self.linearity[:, 1]
+        error_data          =   self.linearity[:, 2]
         query_points        =   self.linearity[:, 0]
         reference_point     =   self.linearity[1, 1]
 
@@ -554,9 +563,11 @@ class CCD:
 
         ideal_linearity     =   np.add(np.multiply(query_points, ideal_slope), ideal_offset)
         deviations          =   np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
+        errors              =   np.multiply(np.divide(error_data, linearity_data), 100)
         deviations[0]       =   np.subtract(ideal_linearity[0], linearity_data[0])
+        errors[0]           =   error_data[0]
 
-        return ideal_linearity, deviations
+        return ideal_linearity, deviations, errors
 
     def test_zeropoint(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
 
@@ -570,7 +581,7 @@ class CCD:
                                                            num_of_repeats_input=num_of_repeats,
                                                            where_is_repeat_num_in_string=[10, 13],
                                                            data_series_list=data_series)
-        print(reordered_data)
+
         repeat_sequence_meaned  =   []
         for repeat_sequence in reordered_data:
             repeat_sequence_meaned.append(util.mean_image(repeat_sequence, path_of_data_series))
