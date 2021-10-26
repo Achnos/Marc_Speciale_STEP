@@ -556,13 +556,13 @@ class CCD:
         linearity_data      =   self.linearity[:, 1]
         error_data          =   self.linearity[:, 2]
         query_points        =   self.linearity[:, 0]
-        reference_point     =   self.linearity[1, 1]
+        reference_point     =   self.linearity[10, 1]
 
-        ideal_slope         =   reference_point / query_points[1]
+        ideal_slope         =   reference_point / query_points[10]
         ideal_offset        =   0
 
         ideal_linearity     =   np.add(np.multiply(query_points, ideal_slope), ideal_offset)
-        deviations          =   np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
+        deviations          =   np.multiply(np.divide(np.abs(np.subtract(ideal_linearity, linearity_data)), linearity_data), 100)
         errors              =   np.multiply(np.divide(error_data, linearity_data), 100)
         deviations[0]       =   np.subtract(ideal_linearity[0], linearity_data[0])
         errors[0]           =   error_data[0]
