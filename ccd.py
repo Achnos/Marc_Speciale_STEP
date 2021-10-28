@@ -14,6 +14,7 @@ import numpy as np
 import utilities as util
 import matplotlib.pyplot as plt
 import pubplot as pp
+import scipy.optimize as sc
 
 
 class CCD:
@@ -475,7 +476,7 @@ class CCD:
                 filepath                        =   util.get_path(path_of_data_series + imageid)
                 hdul, header, imagedata         =   util.fits_handler(filepath)
                 imagedata_meaned                =   self.bias_correction(imagedata)
-                imagedata_meaned_and_corrected  =   np.divide(imagedata_meaned, (stabillity_data[first_it, second_it] / 100 + 1))
+                imagedata_meaned_and_corrected  =   imagedata_meaned # np.divide(imagedata_meaned, (stabillity_data[first_it, second_it] / 100 + 1))
 
                 mean_image_array += imagedata_meaned_and_corrected
 
@@ -556,16 +557,23 @@ class CCD:
         linearity_data      =   self.linearity[:, 1]
         error_data          =   self.linearity[:, 2]
         query_points        =   self.linearity[:, 0]
-        reference_point     =   self.linearity[10, 1]
+        reference_point     =   self.linearity[9, 1]
 
-        ideal_slope         =   reference_point / query_points[10]
+        ideal_slope         =   reference_point / query_points[9]
         ideal_offset        =   0
 
-        ideal_linearity     =   np.add(np.multiply(query_points, ideal_slope), ideal_offset)
-        deviations          =   np.multiply(np.divide(np.abs(np.subtract(ideal_linearity, linearity_data)), linearity_data), 100)
+        linear_model        =   np.polyfit(query_points[:4], linearity_data[:4], deg=1)
+        linear_model_func   =   np.poly1d(linear_model)
+        time_offset         =   np.roots(linear_model)
+        query_points        =   np.add(query_points, time_offset)
+
+        self.linearity[:, 0] = query_points
+
+        print(time_offset, linear_model, ideal_slope)
+
+        ideal_linearity     =   linear_model_func(query_points) # np.add(np.multiply(query_points, ideal_slope), linear_model[1]) #
+        deviations          =   np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
         errors              =   np.multiply(np.divide(error_data, linearity_data), 100)
-        deviations[0]       =   np.subtract(ideal_linearity[0], linearity_data[0])
-        errors[0]           =   error_data[0]
 
         return ideal_linearity, deviations, errors
 

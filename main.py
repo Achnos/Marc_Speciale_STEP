@@ -9,6 +9,7 @@
 #####################################################
 """
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 import pubplot as pp
 import utilities as util
 import numpy as np
@@ -16,8 +17,8 @@ import ccd
 
 
 def produce_plots():
-    data_series = util.list_data(linearity_sequence)
-    filepath = util.get_path(linearity_sequence + data_series[0])
+    data_series = util.list_data(bias_sequence)
+    filepath = util.get_path(bias_sequence + data_series[0])
     hdul, header, imagedata = util.fits_handler(filepath)
     bias_dist = imagedata.flatten()
     gaussdata = np.linspace(240, 375, 1000)
@@ -48,25 +49,41 @@ def produce_plots():
     pp.plot_image(atik_camera.master_flat, "master_flat_fig")
     pp.pubplot("$\mathbf{Master\;\;flat\;\;field\;\;image:}$ " + atik_camera.name, "x", "y", "master_flat.png", legend=False, grid=False)
 
-    plt.errorbar(dark_current_data[:, 0], dark_current_data[:, 1], yerr=dark_current_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label="Dark current", capsize=2)
+    # plt.rcParams["figure.autolayout"] = True
+
+    DC_axis    =   plt.subplot()
+    DC_line    =   DC_axis.plot(dark_current_data[:, 0], dark_current_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Dark current")
+    plt.ylim(-0.5, 14)
+    plt.ylabel("$\mathbf{e}^-$/s", {'fontweight': 'bold'})
+    plt.xlabel("Temperature [$^\circ$C]", {'fontweight': 'bold'})
+
+    RON_axis   =   DC_axis.twinx()
+    RON_line   =   RON_axis.plot(readout_noise_data[:, 0], readout_noise_data[:, 1], ls='--', c='dodgerblue', lw=1, marker='o', markersize=3, label="Readout noise")
+    plt.ylim(-0.5, 14)
+    # plt.plot(dark_current_data[:, 0], dark_current_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Dark current", capsize=2)
     # pp.pubplot("$\mathbf{Dark\;\; current}$", "Temperature [$^\circ$C]", "($\mathbf{e}^-$/sec)/pixel", "dark_current_versus_temperature.png", legendlocation="upper left")
-    plt.errorbar(readout_noise_data[:, 0], readout_noise_data[:, 1], yerr=readout_noise_data[:, 2], ls='--', c='dodgerblue', lw=1, marker='o', markersize=3, label="Readout noise", capsize=2)
-    pp.pubplot("$\mathbf{Noise}$ " + atik_camera.name, "Temperature [$^\circ$C]", "RMS $\mathbf{e}^-$/pixel", "noise_versus_temperature.png", legendlocation="upper left")
+    # plt.plot(readout_noise_data[:, 0], readout_noise_data[:, 1], ls='--', c='dodgerblue', lw=1, marker='o', markersize=3, label="Readout noise", capsize=2)
+    RON_axis.spines['right'].set_color('dodgerblue')
+    RON_axis.tick_params(axis='y', colors='dodgerblue')
+    black_line = mlines.Line2D([], [], color='k', label="Dark current")
+    blue_line = mlines.Line2D([], [], color='dodgerblue', label="Readout noise")
+    plt.legend(handles=[black_line, blue_line])
+    pp.pubplot("$\mathbf{Noise}$ " + atik_camera.name, "Temperature [$^\circ$C]", "RMS $\mathbf{e}^-$/pixel", "noise_versus_temperature.png", legend=False)
 
     plt.plot(linearity_data[:, 0], ideal_linear_relation[:], ls='-', c='dodgerblue', lw=1, label="Ideal relationship")
     plt.errorbar(linearity_data[:, 0], linearity_data[:, 1], yerr=linearity_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)  # + "$-10.0^\circ $ C")
     # plt.plot(linearity_data_20C[:, 0], linearity_data_20C[:, 1], ls='-.', c='mediumspringgreen', lw=1, marker='o', markersize=3, label=atik_camera.name + "$20.0^\circ $ C")
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Exposure time [s]", "Mean ADU/pixel", "linearity.png", legendlocation="lower right")
+    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Exposure time [s]", "Mean ADU/pixel", "linearity.png", legendlocation="lower right") # xlim=[0, 2], ylim=[0,   1])
 
-    plt.errorbar(linearity_data[:, 0], linearity_deviations[:], yerr=linearity_dev_err[:], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    plt.plot(linearity_data[:, 0], np.zeros(len(linearity_data[:])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Exposure time [s]", "Percentage deviation ", "linearity_deviations.png", legendlocation="upper left")
+    plt.errorbar(linearity_data[:, 1], linearity_deviations[:], yerr=linearity_dev_err[:], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    plt.plot(linearity_data[:, 1], np.zeros(len(linearity_data[:])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
+    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", "linearity_deviations.png", legendlocation="upper left")
 
     params = {'legend.fontsize': 7,
               'legend.handlelength': 2}
     plt.rcParams.update(params)
     new = 0
-    for exposure in range(0, 30):
+    for exposure in range(0, 29):
         if exposure <= 10:
             plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls='-', lw=1, label="No. " + str(exposure))
         if 20 > exposure > 10:
@@ -105,11 +122,11 @@ if __name__ == '__main__':
 
     dark_current_data       =   atik_camera.dark_current_vs_temperature(dark_current_sequence  , exposure_time=10   , num_of_repeats=100, num_of_temperatures=16)
     readout_noise_data      =   atik_camera.readout_noise_vs_temperature(readout_noise_sequence, exposure_time=0.001, num_of_repeats=100, num_of_temperatures=16)
-    linearity_data          =   atik_camera.linearity_estimation(linearity_sequence, num_of_exposures=30, num_of_repeats=100)
+    linearity_data          =   atik_camera.linearity_estimation(linearity_sequence, num_of_exposures=29, num_of_repeats=100)
 
     ideal_linear_relation, linearity_deviations, linearity_dev_err = atik_camera.linearity_precision()
 
-    stabillity_data         =   atik_camera.test_lightsource_stabillity(linearity_sequence, num_of_data_points=30, num_of_repeats=100)
+    stabillity_data         =   atik_camera.test_lightsource_stabillity(linearity_sequence, num_of_data_points=29, num_of_repeats=100)
     # linearity_data_20C      =   atik_camera.linearity_estimation(linearity_sequence_20C, num_of_exposures=10, num_of_repeats=100)
 
     produce_plots()
