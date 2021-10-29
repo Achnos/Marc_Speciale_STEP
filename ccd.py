@@ -736,7 +736,7 @@ class CCD:
         # Preliminary estimation of ideal linearity curve
         reference_point         =   self.linearity[9, 1]
         ideal_slope             =   reference_point / query_points[9]
-        # ideal_offset            =   0
+        ideal_offset            =   0
 
         # Linear regression to the first three data points
         # to estimate the zero-point correction to the exposure time (time calibration)
@@ -745,13 +745,13 @@ class CCD:
         time_offset             =   np.roots(linear_model)
 
         # Apply time calibration to the exposure times
-        query_points            =   np.add(query_points, time_offset)
+        query_points            =   np.subtract(query_points, time_offset)
         self.linearity[:, 0]    =   query_points
 
         print(time_offset, linear_model, ideal_slope)
 
         # Construct the ideal linear relation and compute deviations from that
-        ideal_linearity         =   linear_model_func(query_points)  # np.add(np.multiply(query_points, ideal slope), ieal_offset)  #
+        ideal_linearity         =   np.add(np.multiply(query_points, ideal_slope), ideal_offset)  # linear_model_func(query_points)  #
         deviations              =   np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
         errors                  =   np.multiply(np.divide(error_data, linearity_data), 100)
 
