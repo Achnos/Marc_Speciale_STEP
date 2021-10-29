@@ -4,7 +4,7 @@
 # -----       By Marc Breiner Sørensen        ----- #
 # ------------------------------------------------- #
 # ----- Implemented:           August    2021 ----- #
-# ----- Last edit:         23. September 2021 ----- #
+# ----- Last edit:         29. October   2021 ----- #
 # ------------------------------------------------- #
 #####################################################
 """
@@ -111,22 +111,60 @@ if __name__ == '__main__':
     hot_pixel_sequence          =   util.complete_path(file_directory + "hotpix atik414ex 27-9-21"                              , here=False)
     zeropoint_sequence          =   util.complete_path(file_directory + "zeropoint value"                                       , here=False)
 
-    atik_camera.master_bias_image(bias_sequence)
-    atik_camera.master_dark_current_image(bias_sequence, exposure_time=0.001)
-    atik_camera.master_flat_field_image(flat_sequence)
+    bias_dataseq                =    ccd.DataSequence(   path_of_data_series_input   =   bias_sequence           ,
+                                                         exposure_time_input         =   0.001                    )
+    flat_dataseq                =    ccd.DataSequence(   path_of_data_series_input   =   flat_sequence           ,
+                                                         exposure_time_input         =   10                       )
+    readout_noise_dataseq       =    ccd.DataSequence(   path_of_data_series_input   =   readout_noise_sequence  ,
+                                                         num_of_data_points_input    =   16                      ,
+                                                         num_of_repeats_input        =   100                      )
+    dark_current_dataseq        =    ccd.DataSequence(   path_of_data_series_input   =   dark_current_sequence   ,
+                                                         num_of_data_points_input    =   16                      ,
+                                                         num_of_repeats_input        =   100                     ,
+                                                         exposure_time_input         =   10                       )
+    linearity_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   linearity_sequence      ,
+                                                         num_of_data_points_input    =   29                      ,
+                                                         num_of_repeats_input        =   100                      )
+    hot_pixel_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   hot_pixel_sequence      ,
+                                                         num_of_repeats_input        =   2                       ,
+                                                         exposure_time_input         =   [90, 1000]               )
+    zeropoint_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   zeropoint_sequence       ,
+                                                         num_of_data_points_input    =   8                        ,
+                                                         num_of_repeats_input        =   100                       )
 
-    ADU_width = atik_camera.readout_noise_estimation(bias_sequence, temperature=-10)
+    # atik_camera.master_bias_image(bias_sequence)
+    # atik_camera.master_dark_current_image(bias_sequence, exposure_time=0.001)
+    # atik_camera.master_flat_field_image(flat_sequence)
 
-    atik_camera.hot_pixel_estimation(hot_pixel_sequence, num_of_repeats=2, exposure_time=[90, 1000])
-    atik_camera.test_zeropoint(zeropoint_sequence, num_of_data_points=8, num_of_repeats=100)
+    # ADU_width = atik_camera.readout_noise_estimation(bias_sequence, temperature=-10)
 
-    dark_current_data       =   atik_camera.dark_current_vs_temperature(dark_current_sequence  , exposure_time=10   , num_of_repeats=100, num_of_temperatures=16)
-    readout_noise_data      =   atik_camera.readout_noise_vs_temperature(readout_noise_sequence, exposure_time=0.001, num_of_repeats=100, num_of_temperatures=16)
-    linearity_data          =   atik_camera.linearity_estimation(linearity_sequence, num_of_exposures=29, num_of_repeats=100)
+    # atik_camera.hot_pixel_estimation(hot_pixel_sequence, num_of_repeats=2, exposure_time=[90, 1000])
+    # atik_camera.test_zeropoint(zeropoint_sequence, num_of_data_points=8, num_of_repeats=100)
 
-    ideal_linear_relation, linearity_deviations, linearity_dev_err = atik_camera.linearity_precision()
+    # dark_current_data, readout_noise_data = atik_camera.noise_vs_temperature(dark_current_dataseq, readout_noise_dataseq)
+    # dark_current_data       =   atik_camera.dark_current_vs_temperature(dark_current_sequence  , exposure_time=10   , num_of_repeats=100, num_of_temperatures=16)
+    # readout_noise_data      =   atik_camera.readout_noise_vs_temperature(readout_noise_sequence, num_of_repeats=100, num_of_temperatures=16)
+    # linearity_data          =   atik_camera.linearity_estimation(linearity_sequence, num_of_exposures=29, num_of_repeats=100)
 
-    stabillity_data         =   atik_camera.test_lightsource_stabillity(linearity_sequence, num_of_data_points=29, num_of_repeats=100)
+    # ideal_linear_relation, linearity_deviations, linearity_dev_err = atik_camera.linearity_precision()
+
+    # stabillity_data         =   atik_camera.test_lightsource_stabillity(linearity_sequence, num_of_data_points=29, num_of_repeats=100)
     # linearity_data_20C      =   atik_camera.linearity_estimation(linearity_sequence_20C, num_of_exposures=10, num_of_repeats=100)
+
+    characterization = atik_camera.characterize(    bias_data_sequence          =   bias_dataseq            ,
+                                                    flat_data_sequence          =   flat_dataseq            ,
+                                                    dark_current_data_sequence  =   dark_current_dataseq    ,
+                                                    readout_noise_data_sequence =   readout_noise_dataseq   ,
+                                                    linearity_data_sequence     =   linearity_dataseq       ,
+                                                    hot_pixel_data_sequence     =   hot_pixel_dataseq       ,
+                                                    zero_point_data_sequence    =   zeropoint_dataseq        )
+
+    dark_current_data       =   characterization[0]
+    readout_noise_data      =   characterization[1]
+    linearity_data          =   characterization[2]
+    ideal_linear_relation   =   characterization[3]
+    linearity_deviations    =   characterization[4]
+    linearity_dev_err       =   characterization[5]
+    stabillity_data         =   characterization[6]
 
     produce_plots()

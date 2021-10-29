@@ -10,7 +10,6 @@
 """
 import matplotlib.pyplot as plt
 import numpy as np
-from cycler import cycler
 
 kwargs = {'fontweight': 'bold'}
 

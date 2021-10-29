@@ -4,7 +4,7 @@
 # -----       By Marc Breiner Sørensen        ----- #
 # ------------------------------------------------- #
 # ----- Implemented:           August    2021 ----- #
-# ----- Last edit:         23. September 2021 ----- #
+# ----- Last edit:         29. October   2021 ----- #
 # ------------------------------------------------- #
 #####################################################
 """
@@ -57,7 +57,7 @@ def complete_path(dir_path: str, here: bool = True):
     return completed_path
 
 
-def fits_handler(filepath: PureWindowsPath or PurePosixPath, scalelimit: float=None, show: bool=False):
+def fits_handler(filepath: PureWindowsPath or PurePosixPath, scalelimit: float = None, show: bool = False):
     """
     This function handles the loading and plotting of a FITS file
 
@@ -69,7 +69,8 @@ def fits_handler(filepath: PureWindowsPath or PurePosixPath, scalelimit: float=N
         - hdulist, an HDU list, an astropy type
         - header, the header information from the HDU list
         - imagedata, 2D list (matrix) of image data numerical values
-
+    :parameter bool show:
+        - A bool that enables showing of the images if set to true
     """
     hdulist     =   astropy.io.fits.open(filepath)
     header      =   hdulist[0].header
@@ -120,8 +121,28 @@ def list_data(dirpath: PureWindowsPath or PurePosixPath):
     return data_list
 
 
-def repeat_sequence_ordered_data(num_of_datapoints_input: int, num_of_repeats_input: int,
-                                 where_is_repeat_num_in_string: list, data_series_list: list):
+def repeat_sequence_ordered_data(num_of_datapoints_input:       int     ,
+                                 num_of_repeats_input:          int     ,
+                                 where_is_repeat_num_in_string: list    ,
+                                 data_series_list:              list        ):
+    """
+        A method that will reorder the data_sequence. When loaded, data from a folder
+        is sorted according to names. It is instead necessary to reorder the data
+        in a structured format, where repeats of a data point (the repeat sequence) is
+        grouped together.
+
+        :parameter int num_of_datapoints_input:
+            - The number of repeat sequences
+        :parameter int num_of_repeats_input:
+            - The number of repeats in a repeat sequence (the length of the sequence)
+        :parameter list where_is_repeat_num_in_string:
+            - An index telling the method where to find the repeat num in the filename string
+        :parameter list data_series_list:
+            - A list of the data series, constructed from the list_data() method above
+        :returns:
+            - Restructured data set of repeat sequences, where repeats of a datapoint
+              are grouped together in ascending order.
+    """
     reordered_data = np.empty([num_of_datapoints_input, num_of_repeats_input], dtype=object)
 
     from_id_in_str  =   where_is_repeat_num_in_string[0]
@@ -138,6 +159,24 @@ def repeat_sequence_ordered_data(num_of_datapoints_input: int, num_of_repeats_in
 
 
 def compute_errorbar(filelist: list, dirpath: str):
+    """
+        Method that will construct errorbars for a data sequence.
+        If a series of data consists of N datapoints, each constructed
+        from a repeat sequence of M images, this method will compute
+        the M individual image means, associate these with a gaussian
+        distribution, of which the width will represent the error in
+        the n'th data points of the N lenght data series.
+
+        :parameter list filelist:
+            - A list of images in the repeat sequence, constructed by
+              the list_data() method above
+        :parameter str dirpath:
+            - The path of the directory containing the (series of)
+              data that we wish to list the filenames of
+        :returns float errorbar:
+            - Computed errorbar for the datapoint that is to be constructed
+              from the M images in the repeat sequence
+    """
     distribution_of_image_means = []
 
     for imageid in filelist:
@@ -184,5 +223,24 @@ def mean_image(filelist: list, dirpath: str):
     return mean_image_array
 
 
-def gaussian(data, height, mean, width):
-    return height * np.exp(-((data - mean) ** 2) / (2 * (width ** 2)))
+def gaussian(data: np.ndarray or list, height: float, mean: float, width: float):
+    """
+        A method that represents a gaussian/normal distribution. For a list
+        of data the gaussian function value is computed at each bin value.
+        The distribution is defined according to the wikipedia article on
+        normal distributions.
+
+        :parameter np.ndarray or list data:
+            - Data set from which to construct distribution
+        :parameter float height:
+            - The normalization/heigh of the distribution at the mean
+        :parameter float mean:
+            - The mean, around which the distribution is centered
+        :parameter float width:
+            - The width of the distribution, around the mean, defined
+              from the standard deviation of the distribution
+        :returns:
+    """
+    gaussian_distribution   =   height * np.exp(-((data - mean) ** 2) / (2 * (width ** 2)))
+
+    return gaussian_distribution
