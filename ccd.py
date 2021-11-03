@@ -110,7 +110,10 @@ class CCD:
 
     readout_noise_level: float = []
 
-    def __init__(self, name: str, gain_factor: float):
+    analysis_data_storage_directory_path:  str = []
+    master_frames_storage_directory_path:  str = []
+
+    def __init__(self, name: str, gain_factor: float, analysis_frame_path: str, master_frame_path: str):
         """
         Constructor member function
         :parameter str name:
@@ -125,8 +128,11 @@ class CCD:
         self.name           =   name
         self.gain_factor    =   gain_factor
 
-        print("")
+        self.analysis_data_storage_directory_path = analysis_frame_path
+        self.master_frames_storage_directory_path = master_frame_path
 
+        print("")
+        
     def characterize(self,
                      bias_data_sequence:            DataSequence,
                      flat_data_sequence:            DataSequence,
@@ -135,6 +141,35 @@ class CCD:
                      linearity_data_sequence:       DataSequence,
                      hot_pixel_data_sequence:       DataSequence,
                      zero_point_data_sequence:      DataSequence    ):
+        """
+            The main interface for the characterization procedure. Calling this
+            method will fully characterize the ccd in question. The method will
+            call all of the members below, to first construct master frames of
+            the bias, flat field and dark current. A preliminary estimation of
+            the readout noise levels is computed by readout_noise_estimation().
+            A hot pixel mask is then constructed by hot_pixel_estimation().
+            The noise of the CCD is then characterized by noise_versus_temperature()
+            and the linearity data analyzed and characterized by the methods
+            linearity_estimation() and linearity_precision(). Finally the light
+            source stability and the CCD preliminary zero point estimation are
+            both treated by, respectively, the lightsource_stability() and
+            zeropoint_estimation() methods.
+
+            :param DataSequence bias_data_sequence:
+                - A datasequence instance representing the bias data series
+            :param DataSequence flat_data_sequence:
+                - A datasequence instance representing the flat field data series
+            :param DataSequence dark_current_data_sequence:
+                - A datasequence instance representing the dark current data series
+            :param DataSequence readout_noise_data_sequence:
+                - A datasequence instance representing the readout noise data series
+            :param DataSequence linearity_data_sequence:
+                - A datasequence instance representing the linearity data series
+            :param DataSequence hot_pixel_data_sequence:
+                - A datasequence instance representing the hot pixel data series
+            :param DataSequence zero_point_data_sequence:
+                - A datasequence instance representing the zero point estimation data series
+        """
 
         print("Initializing characterization of CCD...")
 
@@ -151,7 +186,7 @@ class CCD:
                              num_of_data_points  =   zero_point_data_sequence.num_of_data_points,
                              num_of_repeats      =   zero_point_data_sequence.num_of_repeats)
 
-        dark_current_data, readout_noise_data = self.noise_vs_temperature(dark_current_data_sequence, readout_noise_data_sequence)
+        dark_current_data, readout_noise_data, ron_dists_vs_temp = self.noise_vs_temperature(dark_current_data_sequence, readout_noise_data_sequence)
 
         linearity_data = self.linearity_estimation( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
                                                     num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
@@ -162,11 +197,21 @@ class CCD:
         stabillity_data = self.test_lightsource_stability(path_of_data_series  =   linearity_data_sequence.path_of_data_series,
                                                           num_of_data_points   =   linearity_data_sequence.num_of_data_points,
                                                           num_of_repeats       =   linearity_data_sequence.num_of_repeats)
-
-        return [dark_current_data, readout_noise_data, linearity_data, ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data]
+        
+        return [dark_current_data, readout_noise_data, linearity_data, ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data, ron_dists_vs_temp]
 
     def noise_vs_temperature(self, dark_current_vars: DataSequence, readout_noise_vars: DataSequence ):
-        print("Characterizing the noise levels of the CCD...")
+        """
+            Fully characterizes the noise of the CCD, both thermal (dark current) and
+            readout noise (RON) as a function of temperature
+
+            :param DataSequence dark_current_vars:
+                - A datasequence instance representing the dark current data series
+            :param DataSequence readout_noise_vars:
+                - A datasequence instance representing the readout noise data series
+        """
+
+        print(" Characterizing the noise levels of the CCD...")
 
         path_of_data_series_dark_current    =   dark_current_vars.path_of_data_series
         exposure_time_dark_current          =   dark_current_vars.exposure_time
@@ -182,10 +227,10 @@ class CCD:
         num_of_repeats_readout_noise        =   readout_noise_vars.num_of_repeats
         num_of_temperatures_readout_noise   =   readout_noise_vars.num_of_data_points
 
-        readout_noise_data = self.readout_noise_vs_temperature( path_of_data_series  =   path_of_data_series_readout_noise,
-                                                                num_of_repeats       =   num_of_repeats_readout_noise     ,
-                                                                num_of_temperatures  =   num_of_temperatures_readout_noise  )
-        return dark_current_data, readout_noise_data
+        readout_noise_data, ron_dists_vs_temp = self.readout_noise_vs_temperature(  path_of_data_series  =   path_of_data_series_readout_noise,
+                                                                                    num_of_repeats       =   num_of_repeats_readout_noise     ,
+                                                                                    num_of_temperatures  =   num_of_temperatures_readout_noise  )
+        return dark_current_data, readout_noise_data, ron_dists_vs_temp
 
     def master_bias_image(self, path_of_data_series: str):
         """
@@ -196,11 +241,13 @@ class CCD:
               containing the data series used to construct the
               master bias image
         """
-        print("Constructing the master bias correction image...")
+        print(" Constructing the master bias correction image...")
 
         data_series         =   util.list_data(path_of_data_series)
         mean_image_return   =   util.mean_image(data_series, path_of_data_series)
+        
 
+        util.print_txt_file("master_bias.txt", mean_image_return, which_directory=self.master_frames_storage_directory_path)
         self.master_bias = mean_image_return
 
     def bias_correction(self, image_to_be_corrected: np.ndarray):
@@ -225,7 +272,7 @@ class CCD:
         :parameter exposure_time:
             - The exposure time in seconds of the data_series
         """
-        print("Constructing the master dark current correction image...")
+        print(" Constructing the master dark current correction image...")
 
         data_series         =   util.list_data(path_of_data_series)
         dim_path            =   util.get_path(path_of_data_series + data_series[0])
@@ -242,13 +289,15 @@ class CCD:
             if header['EXPTIME'] == exposure_time:
                 imagedata   =   np.divide(imagedata, exposure_time)
             else:
-                print("master_dark_current_image(): Error, exposure time does not match up")
-                print("master_dark_current_image(): Exposure time was: ", header['EXPTIME'])
+                print("  master_dark_current_image(): Error, exposure time does not match up")
+                print("  master_dark_current_image(): Exposure time was: ", header['EXPTIME'])
 
             mean_image_array += imagedata
             hdul.close()
 
         mean_image_array   /=   number_of_images
+
+        util.print_txt_file("master_dark.txt", mean_image_array, which_directory=self.master_frames_storage_directory_path)
 
         self.master_dark    =   mean_image_array
 
@@ -295,7 +344,7 @@ class CCD:
         :returns np.ndarray dark_current_versus_temperature_return:
             - A numpy array of data points of the form (temperature, value)
         """
-        print("Computing dark current as a function of temperature...")
+        print("  Computing dark current as a function of temperature...")
 
         tmplist         =   []
         data_series     =   util.list_data(path_of_data_series)
@@ -322,8 +371,8 @@ class CCD:
                 dark_per_time_per_pixel = np.mean(np.divide(np.multiply(repeat_sequence_meaned, self.gain_factor), exposure_time))
                 tmplist.append([temperature, dark_per_time_per_pixel, errorbar])
             else:
-                print("dark_current_vs_temperature(): Error, exposure times do not match up")
-                print("dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
+                print("   dark_current_vs_temperature(): Error, exposure times do not match up")
+                print("   dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
 
             hdul.close()
 
@@ -331,6 +380,8 @@ class CCD:
 
         self.dark_current_versus_temperature    = tmparray
         dark_current_versus_temperature_return  = tmparray
+        
+        util.print_txt_file("dark_current_versus_temperature.txt", dark_current_versus_temperature_return, which_directory=self.analysis_data_storage_directory_path)
 
         return dark_current_versus_temperature_return
 
@@ -343,7 +394,7 @@ class CCD:
               containing the data series used to construct the
               master flat field image
         """
-        print("Constructing the master flat field correction image...")
+        print(" Constructing the master flat field correction image...")
 
         data_series         =   util.list_data(path_of_data_series)
         dim_path            =   util.get_path(path_of_data_series + data_series[0])
@@ -363,6 +414,8 @@ class CCD:
 
         meaned_flat /= number_of_images
         meaned_flat /= np.max(meaned_flat)  # Normalize
+        
+        util.print_txt_file("master_flat.txt", meaned_flat, which_directory=self.master_frames_storage_directory_path)
 
         self.master_flat = meaned_flat
 
@@ -390,7 +443,7 @@ class CCD:
         :parameter list exposure_time:
             - list of shape [exposure time of short exposure image, exposure time of long exposure image]
         """
-        print("Looking for hot pixels...")
+        print(" Looking for hot pixels...")
 
         data_series                         =   util.list_data(path_of_data_series)
         reordered_data                      =   util.repeat_sequence_ordered_data(  num_of_datapoints_input=2,
@@ -419,7 +472,7 @@ class CCD:
         pp.pubplot("Hot pixels", "dark current ($e^-$/sec), 90 sec exposure time", "dark current ($e^-$/sec), 1000 sec exposure time", "hot_pixels_test.png", xlim=[0.5, 100.0], ylim=[0.5, 20], legendlocation="lower right")
 
         hot_pixels = (short_exposure_image > 7.5)
-        print("No. of hot pixels:", hot_pixels.sum())
+        print("  No. of hot pixels:", hot_pixels.sum())
 
         self.hot_pixel_mask = hot_pixels
 
@@ -446,7 +499,7 @@ class CCD:
             - Integer representing the temperature at which the data series
               was acquired
         """
-        print("Computing readout noise level...")
+        print(" Computing readout noise level...")
 
         data_series         =   util.list_data(path_of_data_series)
         number_of_images    =   len(data_series)
@@ -474,8 +527,8 @@ class CCD:
         readout_noise   =  np.sqrt(np.mean(np.square(tmp_std)))
         ron_mean        =  np.mean(tmp_mean)
 
-        print(f"The readout noise level is {readout_noise:.3f} RMS electrons per pixel")
-        print(f"The mean of the distribution is {ron_mean:.3f}, and should be equal to 0")
+        print(f"  The readout noise level is {readout_noise:.3f} RMS electrons per pixel")
+        print(f"  The mean of the distribution is {ron_mean:.3f}, and should be equal to 0")
 
         self.readout_noise_level = readout_noise
         return np.mean(tmp_std)
@@ -511,7 +564,7 @@ class CCD:
                     - A numpy array of data points of the form (temperature, value)
         """
 
-        print("Computing readout noise as a function of temperature...")
+        print("  Computing readout noise as a function of temperature...")
         data_series         =   util.list_data(path_of_data_series)
         tmp_std             =   np.zeros(num_of_repeats)
         tmp_mean            =   np.zeros(num_of_repeats)
@@ -520,11 +573,15 @@ class CCD:
                                                                     data_series_list=data_series            )
 
         readout_noise = []
+        ron_dists_vs_temp = []
         for repeat_sequence in reordered_data:
             # Get temperatures from the filename
             temperature = float(repeat_sequence[0][16:18] + '.' + repeat_sequence[0][19])  # time in s
             if repeat_sequence[0][14] == "m":
                 temperature *= -1
+
+            dist_at_this_temperature = util.mean_image(repeat_sequence, path_of_data_series)
+            ron_dists_vs_temp.append(dist_at_this_temperature.flatten())
 
             it = 0
             for imageid in repeat_sequence:
@@ -556,9 +613,12 @@ class CCD:
         tmparray = np.sort(np.asarray(readout_noise), axis=0)
 
         self.readout_noise_versus_temperature = tmparray
-        redout_noise_versus_temperature_return = tmparray
+        readout_noise_versus_temperature_return = tmparray
+        
+        util.print_txt_file("readout_noise_versus_temperature.txt", readout_noise_versus_temperature_return,
+                            which_directory=self.analysis_data_storage_directory_path)
 
-        return redout_noise_versus_temperature_return
+        return readout_noise_versus_temperature_return, ron_dists_vs_temp
 
     def linearity_estimation(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int):
         """
@@ -588,7 +648,7 @@ class CCD:
         :returns np.ndarray linearity_array:
             - A numpy array of data points of the form (exposure time, mean ADU)
         """
-        print("Testing linearity...")
+        print(" Testing linearity...")
 
         tmplist = []
 
@@ -644,17 +704,20 @@ class CCD:
             if header['EXPTIME'] == exposure_time:
                 tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
             else:
-                print("linearity_estimation(): Error, exposure times do not match up")
-                print("linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
+                print("  linearity_estimation(): Error, exposure times do not match up")
+                print("  linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
 
                 tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
 
         linearity_array     =   np.asarray(tmplist)
 
-        print("Done! Data constructed from linearity measurements:")
-        print(linearity_array)
+        # print("  Done! Data constructed from linearity measurements:")
+        # print(linearity_array)
 
         self.linearity      =   linearity_array
+
+        util.print_txt_file("linearity.txt", linearity_array,
+                            which_directory=self.analysis_data_storage_directory_path)
 
         return linearity_array
 
@@ -682,7 +745,7 @@ class CCD:
             :returns np.ndarray stability_array:
                 - A numpy array of data points of size (num_of_data_points, num_of_repeats)
         """
-        print("Testing light source stabillity...")
+        print(" Testing light source stabillity...")
         data_series         =   util.list_data(path_of_data_series)
         reordered_data      =   util.repeat_sequence_ordered_data(  num_of_datapoints_input=num_of_data_points,
                                                                     num_of_repeats_input=num_of_repeats,
@@ -714,6 +777,9 @@ class CCD:
         sequence_mean       =   np.mean(stability_array, axis=1, keepdims=True)
         stability_array     =   np.multiply(np.divide(np.subtract(stability_array, sequence_mean), sequence_mean), 100)
 
+        util.print_txt_file("lightsource_stability.txt", stability_array,
+                            which_directory=self.analysis_data_storage_directory_path)
+
         return stability_array
 
     def linearity_precision(self):
@@ -728,14 +794,13 @@ class CCD:
             has been completed successfully.
         """
 
-        print("Testing the precision of the linearity measurement...")
+        print(" Testing the precision of the linearity measurement...")
         linearity_data          =   self.linearity[:, 1]
         error_data              =   self.linearity[:, 2]
         query_points            =   self.linearity[:, 0]
 
         # Preliminary estimation of ideal linearity curve
-        reference_point         =   self.linearity[9, 1]
-        ideal_slope             =   reference_point / query_points[9]
+        ideal_slope             =   (self.linearity[11, 1] - self.linearity[10, 1]) / (query_points[11] - query_points[10])
         ideal_offset            =   0
 
         # Linear regression to the first three data points
@@ -748,12 +813,17 @@ class CCD:
         query_points            =   np.subtract(query_points, time_offset)
         self.linearity[:, 0]    =   query_points
 
-        print(time_offset, linear_model, ideal_slope)
-
         # Construct the ideal linear relation and compute deviations from that
         ideal_linearity         =   np.add(np.multiply(query_points, ideal_slope), ideal_offset)  # linear_model_func(query_points)  #
         deviations              =   np.multiply(np.divide(np.subtract(ideal_linearity, linearity_data), linearity_data), 100)
         errors                  =   np.multiply(np.divide(error_data, linearity_data), 100)
+
+        util.print_txt_file("ideal_linearity.txt", ideal_linearity,
+                            which_directory=self.analysis_data_storage_directory_path)
+        util.print_txt_file("linearity_deviations.txt", deviations,
+                            which_directory=self.analysis_data_storage_directory_path)
+        util.print_txt_file("linearity_deviation_errors.txt", errors,
+                            which_directory=self.analysis_data_storage_directory_path)
 
         return ideal_linearity, deviations, errors
 
@@ -785,7 +855,7 @@ class CCD:
 
             Returns nothing, but prints the result of the test below.
         """
-        print("Testing zero point assumption...")
+        print(" Testing zero point assumption...")
         data_series = util.list_data(path_of_data_series)
         reordered_data = util.repeat_sequence_ordered_data(num_of_datapoints_input=num_of_data_points,
                                                            num_of_repeats_input=num_of_repeats,
@@ -810,7 +880,7 @@ class CCD:
         # Subtract both sides from each other, to check if result is zero
         result              =   np.subtract(lhs_final, rhs_final)
 
-        print("The result of the test is that the zeropoint assumption is valid to a precision of", result)
+        print("  The result of the test is that the zeropoint assumption is valid to a precision of", result)
 
     @staticmethod
     def charge_transfer_efficiency():
@@ -819,12 +889,12 @@ class CCD:
         rows (if readout is down/up-wards). Say it is linear, we
         can fit to this, and get the linear rate of loss per row
         """
-        print("Characterizing charge transfer efficiency...")
+        print(" Characterizing charge transfer efficiency...")
 
     @staticmethod
     def charge_diffusion():
-        print("Characterizing charge diffusion rates")
+        print(" Characterizing charge diffusion rates")
 
     @staticmethod
     def quantum_efficiency():
-        print("Testing quantum efficiency")
+        print(" Testing quantum efficiency")

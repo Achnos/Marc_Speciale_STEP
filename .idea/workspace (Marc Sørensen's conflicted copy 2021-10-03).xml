@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="STEP_Speciale_Marc" targetName="STEP_Speciale_Marc" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="58421c65-7227-47bf-98b1-054bf7064be5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_001bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_002bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_003bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_004bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_005bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_006bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_007bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_008bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_009bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(10).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(2).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(3).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(4).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(5).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(6).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(7).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(8).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias(9).fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bias_sequence/Capture_010bias.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ccd.py" beforeDir="false" afterPath="$PROJECT_DIR$/ccd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_003.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_005.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_006.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_007.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/flats/flat_050_009.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity.png" beforeDir="false" afterPath="$PROJECT_DIR$/linearity.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_001_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_002_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_003_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_004_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_005_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_006_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_007_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_008_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_009_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_002.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_004.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_008.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_016.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_032.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_064.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_128.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_256.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linearity/linearity_010_512.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_m_04_9_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_m_09_9_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_m_12_3_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_p_00_3_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_p_04_5_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_p_10_0_001.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_p_14_7_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_p_19_7_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temperature_sequence/thermal_noise_celcius_p_22_2_000.fit" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1xlCD5XI8Q8qnD2wLj6qFN2XCWd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/utilities.py" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="STEP_Speciale_Marc" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="STEP_Speciale_Marc" TARGET_NAME="STEP_Speciale_Marc" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="STEP_Speciale_Marc" RUN_TARGET_NAME="STEP_Speciale_Marc">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Build" type="PythonConfigurationType" factoryName="Python">
+      <module name="STEP_Speciale_Marc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tasks.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="STEP_Speciale_Marc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="STEP_Speciale_Marc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.Build" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="58421c65-7227-47bf-98b1-054bf7064be5" name="Changes" comment="" />
+      <created>1630920164465</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1630920164465</updated>
+      <workItem from="1630920168647" duration="7234000" />
+      <workItem from="1631019443858" duration="914000" />
+      <workItem from="1631263017527" duration="678000" />
+      <workItem from="1631522267648" duration="19501000" />
+      <workItem from="1631609501807" duration="688000" />
+      <workItem from="1631610706792" duration="4638000" />
+      <workItem from="1631691915176" duration="109000" />
+      <workItem from="1631692051632" duration="177000" />
+      <workItem from="1631692259812" duration="15975000" />
+      <workItem from="1631785468597" duration="6751000" />
+      <workItem from="1631879607427" duration="2612000" />
+      <workItem from="1631887248119" duration="2132000" />
+      <workItem from="1631969472148" duration="1851000" />
+      <workItem from="1632129850617" duration="4591000" />
+      <workItem from="1632210846508" duration="13150000" />
+      <workItem from="1632387979357" duration="10420000" />
+      <workItem from="1632476239268" duration="7992000" />
+      <workItem from="1632814808886" duration="3220000" />
+      <workItem from="1632819520743" duration="126000" />
+      <workItem from="1633283095846" duration="136000" />
+    </task>
+    <task id="LOCAL-00001" summary="Got started with c-bindings in python">
+      <created>1631692778447</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1631692778449</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Tested c-bindings with image data from a FITS file, and looks like it works">
+      <created>1631710208627</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1631710208627</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Rewrote the methods in python with numpy. So far probably done with bias, dark, flat, linearity, and started on ron">
+      <created>1632305080687</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1632305080687</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added documentation to my code project">
+      <created>1632407339278</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1632407339278</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Got started with c-bindings in python" />
+    <MESSAGE value="Tested c-bindings with image data from a FITS file, and looks like it works" />
+    <MESSAGE value="Rewrote the methods in python with numpy. So far probably done with bias, dark, flat, linearity, and started on ron" />
+    <MESSAGE value="Added documentation to my code project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added documentation to my code project" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/STEP_Speciale_Marc$main.coverage" NAME="main Coverage Results" MODIFIED="1632817694760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

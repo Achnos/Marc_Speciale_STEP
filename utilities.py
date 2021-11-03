@@ -17,6 +17,29 @@ import matplotlib.pyplot as plt
 from pathlib import Path, PureWindowsPath, PurePosixPath
 
 
+def print_txt_file(filename: str, data_to_print: np.ndarray, which_directory: str = None):
+    """
+        Simple method to open a file, print the data from an
+        np.ndarray to it, and close the file again
+
+        :param str filename:
+            - String representing the filename
+        :param np.ndarray data_to_print:
+            - np.ndarray holding the data to print
+        :param str which_directory:
+            - String that represents the path of a directory other than the current one
+              where the default is none, meaning current directory
+    """
+
+    if which_directory is not None:
+        file = open(which_directory + filename, "a")
+        np.savetxt(file, data_to_print, newline='\n')
+        file.close()
+    else:
+        file = open(filename, "a")
+        np.savetxt(file, data_to_print, newline='\n')
+        file.close()
+
 def get_path(path: str):
     """
     This function returns the absolute path of a file
