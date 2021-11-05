@@ -131,10 +131,11 @@ def linearity_plot():
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
     # Plot the relative linearity deviations and the ideal relation
-    plt.errorbar(linearity_data[:, 1], linearity_deviations[:], yerr=linearity_dev_err[:], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    # plt.errorbar(linearity_data[:, 1], linearity_deviations[:], yerr=linearity_dev_err[:], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    plt.plot(linearity_data[:, 1], linearity_deviations[:], ls='--', c='k', lw=1,
+                 marker='o', markersize=3, label=atik_camera.name)
     plt.plot(linearity_data[:, 1], np.zeros(len(linearity_data[:])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
-
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "linearity_deviations.png", legendlocation="upper left")
+    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "linearity_deviations.png", legendlocation="upper left", show=True)
 
 
 def lightsource_stability_plot():
@@ -186,7 +187,7 @@ def produce_plots():
     noise_plot()
     linearity_plot()
 
-    lightsource_stability_plot()
+    # lightsource_stability_plot()
     ron_dist_plot()
 
 
@@ -211,7 +212,8 @@ if __name__ == '__main__':
     flat_sequence               =    util.complete_path(file_directory + "FLATS atik414ex 29-9-21 m10deg"                        , here=False)
     dark_current_sequence       =    util.complete_path(file_directory + "temp seq noise atik414ex 27-9-21"                      , here=False)
     readout_noise_sequence      =    util.complete_path(file_directory + "ron seq atik414ex 27-9-21"                             , here=False)
-    linearity_sequence          =    util.complete_path(file_directory + "total linearity  atik414ex"                            , here=False)
+    # linearity_sequence          =    util.complete_path(file_directory + "total linearity  atik414ex"                            , here=False)
+    linearity_sequence          =    util.complete_path(file_directory + "linearity with reference"                              , here=False)
     linearity_sequence_20C      =    util.complete_path(file_directory + "Linearity at 20 degrees celcius atik414ex 29-9-21"     , here=False)
     hot_pixel_sequence          =    util.complete_path(file_directory + "hotpix atik414ex 27-9-21"                              , here=False)
     zeropoint_sequence          =    util.complete_path(file_directory + "zeropoint value"                                       , here=False)
