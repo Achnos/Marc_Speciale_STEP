@@ -250,7 +250,7 @@ class CCD:
             dark_current_data = self.dark_current_versus_temperature
             readout_noise_data = self.readout_noise_versus_temperature
 
-        # ron_dists_vs_temp = []
+        ron_dists_vs_temp = []
 
         time_calibration = self.time_calibration( path_of_data_series =   time_calibration_data_sequence.path_of_data_series ,
                                                   num_of_exposures    =   time_calibration_data_sequence.num_of_data_points  ,
@@ -871,7 +871,7 @@ class CCD:
 
         #test = []
         for repeat_sequence_id in range(0, num_of_exposures):
-            mean_image_array    =   np.zeros(image_shape)
+            mean_image_array    =  0 # np.zeros(image_shape)
             # mean_image_array    =   mean_image_array[:, :100]
 
             distribution_of_image_means = []
@@ -899,19 +899,26 @@ class CCD:
                 #imagedata_first = np.subtract(imagedata_first_ref[:, :100], self.master_bias[:, :100])
                 #imagedata_next = np.subtract(imagedata_next_ref[:, :100], self.master_bias[:, :100])
 
-                imagedata_actual                 =   self.bias_correction(imagedata_actual_image)
-                imagedata_first                  =   self.bias_correction(imagedata_first_ref)
-                imagedata_next                   =   self.bias_correction(imagedata_next_ref)
+                imagedata_actual                 =   np.mean(self.bias_correction(imagedata_actual_image))
+                imagedata_first                  =   np.mean(self.bias_correction(imagedata_first_ref))
+                imagedata_next                   =   np.mean(self.bias_correction(imagedata_next_ref))
 
-                scaling                          =   (np.mean(imagedata_next) / np.mean(imagedata_first))
+                denom = (1/2) * (imagedata_first + imagedata_next)
+                if repeat_sequence_id < 9:
+                    scale = (1  + self.time_calibration_factor) / (exposures[repeat_sequence_id] + self.time_calibration_factor)
+                else:
+                    scale = (10 + self.time_calibration_factor) / (exposures[repeat_sequence_id] + self.time_calibration_factor)
+                scaling = np.multiply(denom, 1/scale)
+                # scaling                          =   np.mean(imagedata_next) / np.mean(imagedata_first))
 
-                imagedata_meaned_and_corrected   =   np.multiply(imagedata_actual, scaling)
-
+                imagedata_meaned_and_corrected   =   np.divide(imagedata_actual, scaling)
+                # print(np.median(imagedata_meaned_and_corrected))
+                # pp.plot_image(imagedata_meaned_and_corrected, "", "", "", "","test.png", show=True)
                 #test2.append(np.mean(imagedata_meaned_and_corrected, axis=1))
 
-                mean_image_array += imagedata_meaned_and_corrected
+                mean_image_array += np.subtract(imagedata_meaned_and_corrected, 1)
 
-                distribution_of_image_means.append(np.mean(imagedata_meaned_and_corrected))
+                distribution_of_image_means.append(np.mean(imagedata_meaned_and_corrected) / float(np.sqrt(num_of_repeats)))
 
             mean_image_array /= num_of_repeats
 
@@ -938,13 +945,13 @@ class CCD:
 
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
-                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
+                tmplist.append([exposure_time, repeat_sequence_meaned, errorbar])
             else:
                 print("  linearity_estimation(): Error, exposure times do not match up")
                 print("  linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
 
-                tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
-
+                tmplist.append([exposure_time, repeat_sequence_meaned, errorbar])
+        print(tmplist)
         linearity_array     =   np.asarray(tmplist)
 
         # print("  Done! Data constructed from linearity measurements:")
