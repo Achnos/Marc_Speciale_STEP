@@ -255,12 +255,11 @@ class CCD:
         time_calibration = self.time_calibration( path_of_data_series =   time_calibration_data_sequence.path_of_data_series ,
                                                   num_of_exposures    =   time_calibration_data_sequence.num_of_data_points  ,
                                                   num_of_repeats      =   time_calibration_data_sequence.num_of_repeats       )
-        """linearity_data = self.linearity_estimation( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
-                                                    num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
-                                                    num_of_repeats      =   linearity_data_sequence.num_of_repeats       )"""
+
         linearity_data = self.linearity_estimation_with_reference( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
                                                                    num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
-                                                                   num_of_repeats      =   linearity_data_sequence.num_of_repeats       )
+                                                                   num_of_repeats      =   linearity_data_sequence.num_of_repeats      ,
+                                                                   reference_exposure  =   linearity_data_sequence.exposure_time        )
 
         ideal_linear_relation, linearity_deviations, linearity_dev_err = self.linearity_precision()
 
@@ -793,7 +792,7 @@ class CCD:
 
         return linearity_array
 
-    def linearity_estimation_with_reference(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int):
+    def linearity_estimation_with_reference(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int, reference_exposure: float):
         """
         Method which will test the linearity, by plotting mean ADU in an image
         as a function of exposure time, which it returns as a list,
@@ -818,6 +817,8 @@ class CCD:
         :parameter int num_of_exposures:
             - Integer representing the number of different exposure times
               in the data sequence
+        :parameter float reference_exposure:
+            - The reference measurement exposure time
         :returns np.ndarray linearity_array:
             - A numpy array of data points of the form (exposure time, mean ADU)
         """
@@ -826,11 +827,6 @@ class CCD:
         tmplist = []
 
         data_series         =   util.list_data(path_of_data_series)
-
-
-        num_of_datapoints_input = num_of_exposures
-        num_of_repeats_input = num_of_repeats
-        data_series_list = data_series
         where_is_repeat_num_in_string = [10, 13]
 
         reordered_data      =   np.empty((num_of_exposures, num_of_repeats, 3), dtype=object)
@@ -840,126 +836,64 @@ class CCD:
         exposures = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])
 
         index = 0
-        for imageid in data_series_list:
+        for imageid in data_series:
             if imageid[-7:-4] == "(2)":
-                exposure_time = 10.0
+                this_actual_exposure_time = 10.0
             else:
-                exposure_time = float(imageid[-9:-6])  # -7:-4
-            exposure_index      =   (np.where(exposures == exposure_time))[0][0]
+                this_actual_exposure_time = float(imageid[-9:-6])  # -7:-4
+            exposure_index      =   (np.where(exposures == this_actual_exposure_time))[0][0]
             repeat_num          =   int(imageid[from_id_in_str:to_id_in_str])
             reference_index     =   int(imageid[-5])
 
-            """   
-            reference_string = imageid[13:16]
-            is_reference = (reference_string == "010")
-            if is_reference:
-                if imageid[-7:-4] == "(2)":
-                     reordered_data[exposure_index][repeat_num][0] = str(imageid)
-                else :
-                     reordered_data[exposure_index][repeat_num][1] = str(imageid)
-            else:
-                reordered_data[exposure_index][repeat_num][0] = str(imageid)
-            """
             reordered_data[exposure_index][repeat_num][reference_index] = str(imageid)
 
             index += 1
-            if index == num_of_datapoints_input:
+            if index == num_of_exposures:
                 index = 0
 
-        dim_path            =   util.get_path(path_of_data_series + reordered_data[0][0][0])
-        image_shape         =   util.get_dims(dim_path)
-
-        #test = []
         for repeat_sequence_id in range(0, num_of_exposures):
-            mean_image_array    =  0 # np.zeros(image_shape)
-            # mean_image_array    =   mean_image_array[:, :100]
-
+            this_actual_exposure_time   =   exposures[repeat_sequence_id]
+            tmp_mean    =  0
             distribution_of_image_means = []
-            #test2 = []
-
             for repeat_id in range(0, num_of_repeats):
-                # if repeat_sequence_id == num_of_exposures - 1:
-                filepath_first_ref      =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
-                filepath_actual_image   =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
-                filepath_next_ref       =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][2])
-                """
-                else:
-                    filepath_actual_image   =   util.get_path( path_of_data_series + reordered_data[repeat_sequence_id    ][repeat_id][0])
-                    filepath_first_ref      =   util.get_path( path_of_data_series + reordered_data[repeat_sequence_id    ][repeat_id][1])
-                    filepath_next_ref       =   util.get_path( path_of_data_series + reordered_data[repeat_sequence_id + 1][repeat_id][1])
-                """
-                hdul, header, imagedata_actual_image    =   util.fits_handler(filepath_actual_image)
-                hdul, header, imagedata_first_ref       =   util.fits_handler(filepath_first_ref)
-                hdul, header, imagedata_next_ref        =   util.fits_handler(filepath_next_ref)
+                filepath_first_ref                           =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
+                filepath_actual_image                        =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+                filepath_next_ref                            =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][2])
 
-                # pp.plot_image(imagedata_actual_image, str(repeat_sequence_id) + " " + str(repeat_id) + " actual", "x", "y", "Camera: " + "test", "test", "test", show=True)
-                # pp.plot_image(imagedata_first_ref, str(repeat_sequence_id) + " " + str(repeat_id) + " ref", "x", "y", "Camera: " + "test", "test", "test", show=True)
+                hdul, header_actual, imagedata_actual_image  =   util.fits_handler(filepath_actual_image)
+                hdul, header_first, imagedata_first_ref      =   util.fits_handler(filepath_first_ref)
+                hdul, header_next, imagedata_next_ref        =   util.fits_handler(filepath_next_ref)
 
-                #imagedata_actual = np.subtract(imagedata_actual_image[:,:100], self.master_bias[:, :100])
-                #imagedata_first = np.subtract(imagedata_first_ref[:, :100], self.master_bias[:, :100])
-                #imagedata_next = np.subtract(imagedata_next_ref[:, :100], self.master_bias[:, :100])
+                imagedata_actual_bias_corrected_and_meaned   =   np.mean(self.bias_correction(imagedata_actual_image))
+                imagedata_first_bias_corrected_and_meaned    =   np.mean(self.bias_correction(imagedata_first_ref))
+                imagedata_next_bias_corrected_and_meaned     =   np.mean(self.bias_correction(imagedata_next_ref))
 
-                imagedata_actual                 =   np.mean(self.bias_correction(imagedata_actual_image))
-                imagedata_first                  =   np.mean(self.bias_correction(imagedata_first_ref))
-                imagedata_next                   =   np.mean(self.bias_correction(imagedata_next_ref))
+                mean_lightsource_change                      =   (1/2) * (imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned)
+                time_calibration                             =   (reference_exposure + self.time_calibration_factor) / (this_actual_exposure_time + self.time_calibration_factor)
 
-                denom = (1/2) * (imagedata_first + imagedata_next)
-                if repeat_sequence_id < 9:
-                    scale = (1  + self.time_calibration_factor) / (exposures[repeat_sequence_id] + self.time_calibration_factor)
-                else:
-                    scale = (10 + self.time_calibration_factor) / (exposures[repeat_sequence_id] + self.time_calibration_factor)
-                scaling = np.multiply(denom, 1/scale)
-                # scaling                          =   np.mean(imagedata_next) / np.mean(imagedata_first))
+                imagedata_meaned_normed_and_corrected        =   np.divide(np.multiply(imagedata_actual_bias_corrected_and_meaned, time_calibration), mean_lightsource_change)
+                imagedata_converted_to_deviation             =   np.subtract(imagedata_meaned_normed_and_corrected, 1)
 
-                imagedata_meaned_and_corrected   =   np.divide(imagedata_actual, scaling)
-                # print(np.median(imagedata_meaned_and_corrected))
-                # pp.plot_image(imagedata_meaned_and_corrected, "", "", "", "","test.png", show=True)
-                #test2.append(np.mean(imagedata_meaned_and_corrected, axis=1))
+                tmp_mean += imagedata_converted_to_deviation
 
-                mean_image_array += np.subtract(imagedata_meaned_and_corrected, 1)
+                distribution_of_image_means.append(np.mean(imagedata_meaned_normed_and_corrected) / float(np.sqrt(num_of_repeats)))
 
-                distribution_of_image_means.append(np.mean(imagedata_meaned_and_corrected) / float(np.sqrt(num_of_repeats)))
-
-            mean_image_array /= num_of_repeats
-
-            #test.append(np.mean(np.asarray(test2), axis=0))
-
-            #plt.plot(np.linspace(1, len(np.asarray(np.mean(np.asarray(test2), axis=0))), 1039), np.asarray(np.mean(np.asarray(test2), axis=0)))
-            # repeat_sequence_meaned      =   self.bias_correction(repeat_sequence_meaned)  # self.flat_field_correction(  ,   util.mean_image(repeat_sequence, path_of_data_series)
-
-            # Get exposure time from filename within a given repeat sequence
-            repeat_sequence_meaned      =   mean_image_array
-            filepath                    =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][0][1])
-            hdul, header, imagedata     =   util.fits_handler(filepath)
-            if reordered_data[repeat_sequence_id][0][0][-7:-4] == "(2)":
-                exposure_time   =     10.0
-            else:
-                exposure_time   =     float(reordered_data[repeat_sequence_id][0][1][-9:-6])  # time in s
-
-            # Treat hot pixels
-            #repeat_sequence_meaned[np.where(self.hot_pixel_mask)] = np.mean(repeat_sequence_meaned[np.where(np.logical_not(self.hot_pixel_mask))])
+            tmp_mean /= num_of_repeats
 
             # Compute errorbars
-            # errorbar = util.compute_errorbar(reordered_data[repeat_sequence_id][:][:, 0], path_of_data_series)
             errorbar = np.std(np.asarray(distribution_of_image_means))
 
             # Check for consistency
-            if header['EXPTIME'] == exposure_time:
-                tmplist.append([exposure_time, repeat_sequence_meaned, errorbar])
+            if header_actual['EXPTIME'] == this_actual_exposure_time:
+                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar])
             else:
                 print("  linearity_estimation(): Error, exposure times do not match up")
-                print("  linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ", exposure_time)
+                print("  linearity_estimation(): Exposure time was: ", header_actual['EXPTIME'], "should have been: ", this_actual_exposure_time)
 
-                tmplist.append([exposure_time, repeat_sequence_meaned, errorbar])
-        print(tmplist)
+                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar])
+
         linearity_array     =   np.asarray(tmplist)
-
-        # print("  Done! Data constructed from linearity measurements:")
-        # print(linearity_array)
-
         self.linearity      =   linearity_array
-
-        #plt.show()
 
         util.print_txt_file("linearity.txt", linearity_array,
                             which_directory=self.analysis_data_storage_directory_path)

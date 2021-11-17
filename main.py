@@ -289,7 +289,8 @@ if __name__ == '__main__':
                                                          exposure_time_input         =   10                        )
     linearity_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   linearity_sequence        ,
                                                          num_of_data_points_input    =   30                        ,
-                                                         num_of_repeats_input        =   10                        )
+                                                         num_of_repeats_input        =   10                        ,
+                                                         exposure_time_input         =   10                        )
     time_calibration_dataseq    =    ccd.DataSequence(   path_of_data_series_input   =   time_calibration_sequence ,
                                                          num_of_data_points_input    =   20                        ,
                                                          num_of_repeats_input        =   10                        )
