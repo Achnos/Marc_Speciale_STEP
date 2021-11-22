@@ -1,8 +1,18 @@
 \begin{thebibliography}{1}
 
+\bibitem{atik414specs}
+Atik cameras spec sheets.
+\newblock \url{https://www.atik-cameras.com/specification-tables/}.
+\newblock Accessed: 8th October 2021.
+
 \bibitem{solidstatephysicsbook}
 Philip Hoffmann.
 \newblock {\em Solid State Physics. An Introduction 2nd ed.}
 \newblock Wiley-VCH Berlin, 2015.
+
+\bibitem{handbookofccdastronomy}
+S.~Howell.
+\newblock {\em Handbook of CCD Astronomy}.
+\newblock Cambridge: Cambridge University Press, 2nd edition, 2006.
 
 \end{thebibliography}

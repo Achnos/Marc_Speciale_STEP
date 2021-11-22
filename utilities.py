@@ -32,11 +32,11 @@ def print_txt_file(filename: str, data_to_print: np.ndarray or list, which_direc
     """
 
     if which_directory is not None:
-        file = open(which_directory + filename, "a")
+        file = open(which_directory + filename, "w")
         np.savetxt(file, np.asarray(data_to_print), newline='\n')
         file.close()
     else:
-        file = open(filename, "a")
+        file = open(filename, "w")
         np.savetxt(file, np.asarray(data_to_print), newline='\n')
         file.close()
 

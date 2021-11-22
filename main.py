@@ -124,19 +124,15 @@ def linearity_plot():
     """
 
     # Plot the linearity data as a function of exposure times, and plot the ideal linear relation
-    #plt.plot(linearity_data[:, 0], ideal_linear_relation[:], ls='-', c='dodgerblue', lw=1, label="Ideal relationship")
-    plt.errorbar(linearity_data[:, 0], linearity_data[:, 1], yerr=linearity_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)  # + "$-10.0^\circ $ C")
-
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Exposure time [s]", "Mean ADU/pixel", "linearity.png", legendlocation="lower right", show=True)  # xlim=[0, 2], ylim=[0,   1])
+    plt.errorbar(linearity_data[:, 3], linearity_data[:, 1], yerr=linearity_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    plt.plot(linearity_data[:, 3], np.zeros(len(linearity_data[:, 3])), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
+    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%", figure_directory + "linearity.png", legendlocation="lower right")
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
-    # Plot the relative linearity deviations and the ideal relation
-    plt.errorbar(linearity_data[:, 1], linearity_deviations[:], yerr=linearity_dev_err[:], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    #plt.plot(linearity_data[:, 1], linearity_deviations[:], ls='--', c='k', lw=1,
-     #            marker='o', markersize=3, label=atik_camera.name)
-    plt.plot(linearity_data[:, 1], np.zeros(len(linearity_data[:])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "linearity_deviations.png", legendlocation="upper left", show=True)
-
+    plt.errorbar(linearity_data[:, 3], linearity_data[:, 1], yerr=linearity_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    plt.plot(linearity_data[:, 3], np.zeros(len(linearity_data[:, 3])), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
+    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%", figure_directory + "linearity_zoom.png", legendlocation="lower right", xlim=[0, 60e3], ylim=[-7.5, 3])
+    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
 def lightsource_stability_plot():
     """
@@ -185,7 +181,7 @@ def time_calibration_plot():
     plt.plot(time_cal_corrected_data, time_cal_linearity_array[:, 1], ls='--', c='r', lw=1, marker='o', markersize=3, label="Corrected data")
     plt.plot(time_cal_corrected_data, time_cal_new_linear_model, ls='-', c='red', lw=1, label="New ideal relationship")
 
-    pp.pubplot("$\mathbf{Time calibration}$ ", "Exposure time [s]", "Mean ADU/pixel", "time_calibration.png", legendlocation="lower right", show=True)  # xlim=[0, 2], ylim=[0,   1])
+    pp.pubplot("$\mathbf{Time calibration}$ ", "Exposure time [s]", "Mean ADU/pixel", "time_calibration.png", legendlocation="lower right")  # xlim=[0, 2], ylim=[0,   1])
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
     # Plot the relative linearity deviations and the ideal relation
@@ -193,7 +189,7 @@ def time_calibration_plot():
     plt.plot(time_cal_linearity_array[:, 1], np.zeros(len(time_cal_linearity_array[:, 1])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
     plt.plot(time_cal_linearity_array[:, 1], time_cal_new_deviations,  ls='--', c='r', lw=1, marker='o', markersize=3, label=atik_camera.name)
 
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "time_calibration_deviations.png", legendlocation="upper left", show=True)
+    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "time_calibration_deviations.png", legendlocation="upper left")
 
 
 def produce_plots():
@@ -202,7 +198,7 @@ def produce_plots():
         from the characterization procedure.
     """
 
-    gauss_dist_plot()
+    # gauss_dist_plot()
 
     master_frame_plot(atik_camera.master_bias, "master_bias_fig", "$\mathbf{Master\;\;bias\;\;frame}$ "            , atik_camera.name, figure_directory + "master_bias.png"                    )
     master_frame_plot(atik_camera.master_dark, "master_dark_fig", "$\mathbf{Master\;\;dark\;\;current\;\;frame}$ " , atik_camera.name, figure_directory + "master_dark.png",    raisetitle=True)
@@ -221,12 +217,12 @@ if __name__ == '__main__':
     # For example  if "construct_master_bias" is set to "True", then the characterization
     # method will construct a new master bias frame from the data fed to the procedure.
     # If these are set to "False" data from previous runs are used instead.
-    construct_master_bias       =   True
-    construct_master_dark       =   True
-    construct_master_flat       =   True
+    construct_master_bias       =   False
+    construct_master_dark       =   False
+    construct_master_flat       =   False
     do_noise_estimation         =   False
     do_time_calibration         =   True
-    do_linearity_estimation     =   True
+    do_linearity_estimation     =   False
 
     # These are the paths at which to save the constructed master frames and data sets
     # from the analysis procedures. If these methods are not used in characterization,
@@ -314,14 +310,15 @@ if __name__ == '__main__':
 
     dark_current_data       =   characterization[0]
     readout_noise_data      =   characterization[1]
-    linearity_data          =   characterization[2]
+    time_calibration        =   characterization[2]
+    linearity_data          =   characterization[3]
+    """
     ideal_linear_relation   =   characterization[3]
     linearity_deviations    =   characterization[4]
     linearity_dev_err       =   characterization[5]
     stabillity_data         =   characterization[6]
     ron_dists_vs_temp       =   characterization[7]
-    time_calibration        =   characterization[8]
-
+    """
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
     produce_plots()

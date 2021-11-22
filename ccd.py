@@ -250,24 +250,26 @@ class CCD:
             dark_current_data = self.dark_current_versus_temperature
             readout_noise_data = self.readout_noise_versus_temperature
 
-        ron_dists_vs_temp = []
+        # ron_dists_vs_temp = []
 
         time_calibration = self.time_calibration( path_of_data_series =   time_calibration_data_sequence.path_of_data_series ,
                                                   num_of_exposures    =   time_calibration_data_sequence.num_of_data_points  ,
                                                   num_of_repeats      =   time_calibration_data_sequence.num_of_repeats       )
+        if self.do_linearity_estimation:
+            linearity_data = self.linearity_estimation_with_reference( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
+                                                                       num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
+                                                                       num_of_repeats      =   linearity_data_sequence.num_of_repeats      ,
+                                                                       reference_exposure  =   linearity_data_sequence.exposure_time        )
+        else:
+            linearity_data  = self.linearity
 
-        linearity_data = self.linearity_estimation_with_reference( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
-                                                                   num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
-                                                                   num_of_repeats      =   linearity_data_sequence.num_of_repeats      ,
-                                                                   reference_exposure  =   linearity_data_sequence.exposure_time        )
-
-        ideal_linear_relation, linearity_deviations, linearity_dev_err = self.linearity_precision()
+        # ideal_linear_relation, linearity_deviations, linearity_dev_err = self.linearity_precision()
 
         # stabillity_data = self.test_lightsource_stability(path_of_data_series  =   linearity_data_sequence.path_of_data_series,
         #                                                   num_of_data_points   =   linearity_data_sequence.num_of_data_points,
         #                                                   num_of_repeats       =   linearity_data_sequence.num_of_repeats)
-        stabillity_data = []
-        return [dark_current_data, readout_noise_data, linearity_data, ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data, ron_dists_vs_temp, time_calibration]
+        # stabillity_data = []
+        return [dark_current_data, readout_noise_data, time_calibration, linearity_data] #, ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data, ron_dists_vs_temp]
 
     def noise_vs_temperature(self, dark_current_vars: DataSequence, readout_noise_vars: DataSequence ):
         """
@@ -854,6 +856,7 @@ class CCD:
         for repeat_sequence_id in range(0, num_of_exposures):
             this_actual_exposure_time   =   exposures[repeat_sequence_id]
             tmp_mean    =  0
+            mean_ADU    =  0
             distribution_of_image_means = []
             for repeat_id in range(0, num_of_repeats):
                 filepath_first_ref                           =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
@@ -864,33 +867,35 @@ class CCD:
                 hdul, header_first, imagedata_first_ref      =   util.fits_handler(filepath_first_ref)
                 hdul, header_next, imagedata_next_ref        =   util.fits_handler(filepath_next_ref)
 
-                imagedata_actual_bias_corrected_and_meaned   =   np.mean(self.bias_correction(imagedata_actual_image))
-                imagedata_first_bias_corrected_and_meaned    =   np.mean(self.bias_correction(imagedata_first_ref))
-                imagedata_next_bias_corrected_and_meaned     =   np.mean(self.bias_correction(imagedata_next_ref))
+                imagedata_actual_bias_corrected_and_meaned   =   np.mean((self.bias_correction(imagedata_actual_image))[350:400, 350:400])
+                imagedata_first_bias_corrected_and_meaned    =   np.mean((self.bias_correction(imagedata_first_ref))[350:400, 350:400])
+                imagedata_next_bias_corrected_and_meaned     =   np.mean((self.bias_correction(imagedata_next_ref))[350:400, 350:400])
 
                 mean_lightsource_change                      =   (1/2) * (imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned)
                 time_calibration                             =   (reference_exposure + self.time_calibration_factor) / (this_actual_exposure_time + self.time_calibration_factor)
 
                 imagedata_meaned_normed_and_corrected        =   np.divide(np.multiply(imagedata_actual_bias_corrected_and_meaned, time_calibration), mean_lightsource_change)
-                imagedata_converted_to_deviation             =   np.subtract(imagedata_meaned_normed_and_corrected, 1)
+                imagedata_converted_to_deviation             =   np.subtract(imagedata_meaned_normed_and_corrected, 1) * 100
 
                 tmp_mean += imagedata_converted_to_deviation
+                mean_ADU += imagedata_actual_bias_corrected_and_meaned
 
                 distribution_of_image_means.append(np.mean(imagedata_meaned_normed_and_corrected) / float(np.sqrt(num_of_repeats)))
 
             tmp_mean /= num_of_repeats
+            mean_ADU /= num_of_repeats
 
             # Compute errorbars
             errorbar = np.std(np.asarray(distribution_of_image_means))
 
             # Check for consistency
             if header_actual['EXPTIME'] == this_actual_exposure_time:
-                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar])
+                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
             else:
                 print("  linearity_estimation(): Error, exposure times do not match up")
                 print("  linearity_estimation(): Exposure time was: ", header_actual['EXPTIME'], "should have been: ", this_actual_exposure_time)
 
-                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar])
+                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
 
         linearity_array     =   np.asarray(tmplist)
         self.linearity      =   linearity_array
@@ -1038,7 +1043,7 @@ class CCD:
         deviations              =   np.multiply(np.divide(np.subtract(linearity_data, linear_model_data), linear_model_data), 100)
         errors                  =   np.multiply(np.divide(error_data, linearity_data), 100)
         new_deviations          =   np.multiply(np.divide(np.subtract(linearity_data, new_linear_data), new_linear_data), 100)
-        print(new_deviations, deviations)
+
         return [linearity_array, linear_model_data, corrected_data, new_linear_data, deviations, errors, new_deviations]
 
     def test_lightsource_stability(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):

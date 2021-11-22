@@ -52,34 +52,93 @@
 	\section{Characterization of CCDs}
 	
 	\subsection{Gain}
-	test1
-	
-	\subsection{Bias}
-	test2
-	
-	\subsection{Readout noise}
-	test3
-	
-	\subsection{Photonic noise}
-	test4
-	
-	\subsection{Thermal noise and Dark current}
-	test5
+	The relationship between the number of electrons generated at the chip, and the actual pixel value in the image, is called \textbf{gain}\cite{handbookofccdastronomy}. This value is dependent on the software used to read out as well as the chip itself. As electrons are transferred out from the chip, they pass through an amplification stage, where a capacitor is charged. The voltage from this capacitor is passed through an \textbf{Analogue-to-digital converter (ADC)} which transforms the voltage signal into one that can be interpreted as a string of binary digits. This conversion is done by the software, and the resultant units are \textbf{Analogue-to-digital units (ADUs)}, which is ultimately the pixel value. At the ADC and software conversion levels we can scale the signal by an arbitrary factor, preservin gthe relative pixel values. This arbitrary scaling factor is exactly the gain. It can be expressed as
+	\begin{equation}
+		\text{gain} = \frac{\text{Number of electrons per pixel}}{\text{Number of counts per pixel}}
+	\end{equation} 
+	In each pixel bin on the chip, there is a maximum number of electrons that can be store. This number is known as the \textbf{ful well capacity} of the chip. In addition, there is a maximum number that can be represented in the digitized signal, that depends on the number of available bits in the ADC. For a $16$bit ADC, this number is $\text{ADU}_{\text{max, 16 bit}} = 2^{16} = 65563$. It is hence natural to choose the gain factor such that the full well capacity corresponds to the maximum digital value that we can store.
 	
 	\subsection{Dark frames}
-	test6
+	A dark frame is an image acquired while the chip is not exposed to incoming photons. Such a frame may be used to study dark current and readout noise effects in a CCD detector, and is also used to construct the master bias frame discussed below.
 	
-	\subsection{Flat fielding}
-	test7
+	\subsection{Bias}
+	In order to avoid negative counts in an image that consists entirely of noise, an offset voltage is applied to the CCD. This is because read out noise in the chip folows a gaussian distribution (see section \ref{ron}) centered on zero, and hence includes negative values in some of the pixels. This voltage offset level is called \textbf{bias}. 
+	
+	In general bias is roughly constant across a chip, but it is common for the bias frame to show some level of structure in the chip. These structures can either be form the mechanical construction of the chip surface, from bad columns that may hve a significantly higher offset than the rest of the chip, or resultant from the chip being made up of different sections that were constructed independently, and then later joined together. 
+	
+	Bad columns and sectors in the bias image is generally stable over a long time, and bias does not vary with time, and hence is independent of exposure time. 
+	
+	In order to study the bias level in the CCD, one may acquire an image with effectively zero exposure time\footnote{By 'effectively zero' we mean, as short an exposure time, as is permitted by the camera at hand. Typically this value is in the range of about $0.001$s.}. In addition this exposure should be a so-called \textbf{dark frame}. Such a frame is acquired in a dark setting such that no light reaches the chip during exposure or readout. Since the chip is initially discharged right before exposure, and then read out seqentially after the exposure has been completed, it is important to ensure that as few photons as possible reaches the chip.
+	
+	A master bias frame may be constructed by averaging many repeats of a dark frame taken at (effectively) zero exposure ($0.001s$ for the test procedure camera). Such a frame may be seen in 
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width	=0.95\textwidth]{master_bias.png}
+		\caption{A master bias frame constructed by averaging many repeats of a dark frame taken at (effectively) zero exposure ($0.001s$ for the test procedure camera). The scale denotes the number of ADUs in a given pixel.}
+		\label{fig:masterbias}
+	\end{figure}
+	
+	
+	\subsection{Noise}
+	For a CCD there are three main types of important noise. These are \textbf{Readout noise (RON)}, \textbf{Photonic noise} and thermal noise also called \textbf{dark current}. These three kinds of noise will be discussed in turn below. 
+	
+	\subsubsection{Readout noise}\label{ron}
+	Readout noise is as stochastic process associated with the amplkification of the signal at the amplifier during readout of the charge from the chip. It is usually quoted in terms of the number of a RMS number of electrons introduced per pixel upon readout \cite{handbookofccdastronomy}. Read noise cannot be eliminated completely, but it can be minimized. 
+	
+	There are two components to the phenomena. The first one is an introduction of uncertainty at the ADC level. The process of converting the analogue signal to a digital one is not perfectly repeatable, but is a distribution of possible answers centered on a mena value.
+	The second component is extra electrons introduced by the electronics at work during readout. The width of the resultant additive distribution is interpreted as the readout noise, as a number of introduced electrons per pixel.
+	The size and temperature of the amplifier contribute to this noise. Especially the temperature introduces as significant contribution due to thermal fluctuations. 
+	
+	Read out noise follows a gaussian distribution, and the width, that is the standard deviation of the distribution, is the read noise (in electrons) divided by the gain (in electrons per count). This can be seen by producing a histogram of the values in the master bias frame. It is seen that this distribution is gaussian with a mean value of the mean bias level offset, and a width corresponding to the readout noise. See figure \ref{fig:rongauss}. 
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width	=0.95\textwidth]{gauss_bias.png}
+		\caption{}
+		\label{fig:rongauss}
+	\end{figure}
+	
+	Generally a slower read out speed, will reduce the read out noise \cite{handbookofccdastronomy}. This however poses another complication, as a slower readout speed will 
+	
+	\subsubsection{Photonic noise}
+	Photon noise is the natural variation, or in other words statistical fluctuation, of the photonic flux detected by the CCD. Photons detected follow a poisson distribution, since each photon is a discrete quanta, and the probability of the detection of the photon is independent of the other photons detected. A poisson distribution tends to that of normal distribution for large numbers, and hence the photon noise depends on the number of photons detected. We may hence reduce this photonic noise by observing bright objects that emit many photons, or by using longer exposure times.
+	
+	\subsubsection{Thermal noise and Dark current}
+	Thermal noise, also called \textbf{dark current} is the resulting current within the chip, due to thermic motion of the electrons in the solid state material. This effect can be studied using so-called \textbf{dark-frames} described above, in which the chip is not exposed to incoming photons, and hence no photo-electrons should be produced (in the ideal case of a perfectly dark room). Dark current depends on time, and is usually given as electrons per second. We thus obtain the following relation for the dark current in the chip
+	
+	\begin{equation}\label{darkcurrenteq}
+		\text{dark current} = \frac{\text{ADU} * \text{gain}}{\text{exposure time}}
+	\end{equation}
+
+	where the ADU value refers to the mean ADU / pixel in a dark frame. Gain is the detector gain described above. Since dark current results from thermic motion of electrons in the chip, it is strongly temperature dependent, and can be practically eliminated by cooling the chip. A well designed testing procedure should characterize the dark current levels as a function of temperature of the chip. Readout noise levels are usually significantly greater than dark current levels, so dark frames must be taken at exposure times that are long, in order to yield an appreciably large dark current effect that can be practically isolated from that of the readout noise. This can also be achieved by averaging over a large number of dark frames. It should also be noted that a master bias frame should be subtracted from the dark fame in order to isolate dark currents. 
+	
+	A master dark current frame can be constructed by averaging over many dark frames at a given exposure, subtracting the master bias frame, and then computing the dark current in each pixel according to equation \ref{darkcurrenteq}. Such a frame can be seen in \ref{fig:masterdarkcurrent}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width	=0.95\textwidth]{master_dark.png}
+		\caption{A master dark current frame constructed by averaging over many dark frames at a given exposure, subtracting the master bias frame, and then computing the dark current in each pixel according to equation \ref{darkcurrenteq}.}
+		\label{fig:masterdarkcurrent}
+	\end{figure}
+	
+	\subsection{Flat fielding}\label{sec:flat}
+	A CCD may not have a perfectly flat response to incoming light. By an ideal flat CCD detector we mean a detector that uniformly detects photons with the same efficiency, sensitivity, gain etc, across the entire light-sensitive area of the chip. This ideal situation is seldom realized in practice due to faults in the chip or various manufacturing processes. Some CCDs may be constructed by joining several photo sensitive pieces of silicon, or may be constructed by grinding off layers of a block of silicon to get achieve a thin detector. This grinding process may leave circular or straight lines through the chip that can be either more or less sensitive to light. There may also be specks of dust or fingerprints on the camera window causing blocking of light and diffraction patterns in the image.
+	
+	In order to overcome this difficulty and to reconstruct the desired image from detector data in a non-flat CCD (which is usually the case at hand), we can utilize flat field frames. Such frames are acquired by imging a flat field, such as a white flat screen. Any non-uniformities in the resulting image, should, in the ideal experimental design, be due to non-flatness of the chip, or obstructing objects on the camera window. This flat field frame then represents the relative light sensitivity between pixels in the chip. Construction of a master flat field frame, by averaging over many such flat exposures, can then be used as a correction frame after the frame has been normalized to unity. This is done by finding the greatest pixel ADU-value, and dividing the rest of the pixels in the frame by this value. This should be done after a hot pixel correction. Now the master flat contains values in the interval (0, 1], the left end of the interval representing pixels that receive the most light. This frame can now be used for flat field corrections. This is done by dividing an image in question with the master flat on a pixel-by-pixel basis \footnote{Division by zero will not be a problem in practice, since generally there will always be a non-zero value in each pixel, for an arbitrary exposure time greater than bias, even after bias correction.}. An example of such a master flat frame can be seen in figure \ref{fig:masterflat}
+	
+		\begin{figure}[h!]
+		\centering
+		\includegraphics[width	=0.95\textwidth]{master_flat.png}
+		\caption{A master flat frame constructed by averaging over a given number of light exposures of a flat field, with $10s$ exposure times, subtrcting the bias and dark current master frames, and then normalizing to unity as described in section \ref{sec:flat}. }
+		\label{fig:masterflat}
+	\end{figure}
+	
 	
 	\subsection{Hot pixels}
-	test8
+	A hot pixel is a pixel which after an arbitrary exposure time, has an ADU value that is significantly greater than the mean value in the image. Such an effect can occur either because that pixel has a higher sensitivity to incoming photons, due to the detector being struck by cosmic rays, or because the dark current in that pixel is higher and/or not proportional to time in a linear way. For cameras in space, cosmic rays are of great importance, since the rate of incidence is much higher than at the surface of earth.   
 	
 	\subsection{Linearity}
-	test9
-	
-	\subsection{Quantum efficiency}
-	test10
+	Linearity is the measure of response between measured ADUs and exposure time. In other words, if one doubles the exposure time, we expect to also double the number of measured ADUs. We may study this effect by acquiring frames at different exposure times, and comparing the mean ADU/pixel across exposure times. A detector is seldom perfectly linear, and thus we wish to determine the unlinearity, so we can correct for it. The measure of the unlinearity of the detector can be defined as the deviation of a given measurement from the perfect linear case. 
 	
 	\subsection{Charge diffusion and charge transfer efficiency}
 	test11
