@@ -8,10 +8,11 @@ I was expecting a `,' or a `}'---line 43 of file refs.bib
  :  note = {Cambridge Observing Handbooks for Research Astronomers}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "bibid"
 Warning--to sort, need author or key in atik414specs
 You've used 3 entries,
             2118 wiz_defined-function locations,
-            512 strings with 4304 characters,
+            513 strings with 4309 characters,
 and the built_in function-call counts, 626 in all, are:
 = -- 57
 > -- 15

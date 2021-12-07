@@ -124,13 +124,13 @@ def linearity_plot():
     """
 
     # Plot the linearity data as a function of exposure times, and plot the ideal linear relation
-    plt.errorbar(linearity_data[:, 3], linearity_data[:, 1], yerr=linearity_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    plt.plot(linearity_data[:, 3], np.zeros(len(linearity_data[:, 3])), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
+    plt.errorbar(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.concatenate((linearity_data[0:3, 1], linearity_data[6:, 1])), yerr=np.concatenate((linearity_data[0:3, 2], linearity_data[6:, 2])), ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    plt.plot(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.zeros(len(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])))), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
     pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%", figure_directory + "linearity.png", legendlocation="lower right")
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
-    plt.errorbar(linearity_data[:, 3], linearity_data[:, 1], yerr=linearity_data[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    plt.plot(linearity_data[:, 3], np.zeros(len(linearity_data[:, 3])), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
+    plt.errorbar(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.concatenate((linearity_data[0:3, 1], linearity_data[6:, 1])), yerr=np.concatenate((linearity_data[0:3, 2], linearity_data[6:, 2])), ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
+    plt.plot(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.zeros(len(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])))), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
     pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%", figure_directory + "linearity_zoom.png", legendlocation="lower right", xlim=[0, 60e3], ylim=[-7.5, 3])
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
@@ -205,7 +205,7 @@ def produce_plots():
     master_frame_plot(atik_camera.master_flat, "master_flat_fig", "$\mathbf{Master\;\;flat\;\;field\;\;frame}$ "   , atik_camera.name, figure_directory + "master_flat.png"                    )
 
     # noise_plot()
-    time_calibration_plot()
+    # time_calibration_plot()
     linearity_plot()
 
     # lightsource_stability_plot()
@@ -222,7 +222,7 @@ if __name__ == '__main__':
     construct_master_flat       =   False
     do_noise_estimation         =   False
     do_time_calibration         =   True
-    do_linearity_estimation     =   False
+    do_linearity_estimation     =   True
 
     # These are the paths at which to save the constructed master frames and data sets
     # from the analysis procedures. If these methods are not used in characterization,
@@ -263,9 +263,11 @@ if __name__ == '__main__':
     flat_sequence               =    util.complete_path(file_directory + "FLATS atik414ex 29-9-21 m10deg"                        , here=False)
     dark_current_sequence       =    util.complete_path(file_directory + "temp seq noise atik414ex 27-9-21"                      , here=False)
     readout_noise_sequence      =    util.complete_path(file_directory + "ron seq atik414ex 27-9-21"                             , here=False)
-    linearity_sequence          =    util.complete_path(file_directory + "total linearity with reference"                        , here=False)
+    # linearity_sequence          =    util.complete_path(file_directory + "total linearity with reference"                        , here=False)
     linearity_sequence_20C      =    util.complete_path(file_directory + "Linearity at 20 degrees celcius atik414ex 29-9-21"     , here=False)
+    linearity_sequence          =    util.complete_path(file_directory + "linearity dimmed"     , here=False)
     time_calibration_sequence   =    util.complete_path(file_directory + "time calibration 15-11-21"                             , here=False)
+    new_timecal_sequence        =    util.complete_path(file_directory + "new time calibration"                                  , here=False)
     hot_pixel_sequence          =    util.complete_path(file_directory + "hotpix atik414ex 27-9-21"                              , here=False)
     zeropoint_sequence          =    util.complete_path(file_directory + "zeropoint value"                                       , here=False)
 
@@ -284,11 +286,13 @@ if __name__ == '__main__':
                                                          num_of_repeats_input        =   100                       ,
                                                          exposure_time_input         =   10                        )
     linearity_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   linearity_sequence        ,
-                                                         num_of_data_points_input    =   30                        ,
+                                                         num_of_data_points_input    =   24                        ,
                                                          num_of_repeats_input        =   10                        ,
                                                          exposure_time_input         =   10                        )
     time_calibration_dataseq    =    ccd.DataSequence(   path_of_data_series_input   =   time_calibration_sequence ,
                                                          num_of_data_points_input    =   20                        ,
+                                                         num_of_repeats_input        =   10                        )
+    new_timecal_dataseq         =    ccd.DataSequence(   path_of_data_series_input   =   new_timecal_sequence      ,
                                                          num_of_repeats_input        =   10                        )
     hot_pixel_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   hot_pixel_sequence        ,
                                                          num_of_repeats_input        =   2                         ,
@@ -306,7 +310,8 @@ if __name__ == '__main__':
                                                     linearity_data_sequence          =   linearity_dataseq        ,
                                                     hot_pixel_data_sequence          =   hot_pixel_dataseq        ,
                                                     zero_point_data_sequence         =   zeropoint_dataseq        ,
-                                                    time_calibration_data_sequence   =   time_calibration_dataseq  )
+                                                    # time_calibration_data_sequence   =   time_calibration_dataseq
+                                                    time_calibration_data_sequence   =   new_timecal_dataseq      )
 
     dark_current_data       =   characterization[0]
     readout_noise_data      =   characterization[1]

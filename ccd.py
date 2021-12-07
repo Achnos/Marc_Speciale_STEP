@@ -251,10 +251,13 @@ class CCD:
             readout_noise_data = self.readout_noise_versus_temperature
 
         # ron_dists_vs_temp = []
-
+        """
         time_calibration = self.time_calibration( path_of_data_series =   time_calibration_data_sequence.path_of_data_series ,
                                                   num_of_exposures    =   time_calibration_data_sequence.num_of_data_points  ,
                                                   num_of_repeats      =   time_calibration_data_sequence.num_of_repeats       )
+                                                  """
+        time_calibration = self.new_time_calibration( path_of_data_series = time_calibration_data_sequence.path_of_data_series   ,
+                                                      num_of_repeats      = time_calibration_data_sequence.num_of_repeats         )
         if self.do_linearity_estimation:
             linearity_data = self.linearity_estimation_with_reference( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
                                                                        num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
@@ -835,7 +838,8 @@ class CCD:
         from_id_in_str      =   where_is_repeat_num_in_string[0]
         to_id_in_str        =   where_is_repeat_num_in_string[1]
 
-        exposures = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])
+        # exposures = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])
+        exposures = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240])
 
         index = 0
         for imageid in data_series:
@@ -852,6 +856,7 @@ class CCD:
             index += 1
             if index == num_of_exposures:
                 index = 0
+        print(reordered_data)
 
         for repeat_sequence_id in range(0, num_of_exposures):
             this_actual_exposure_time   =   exposures[repeat_sequence_id]
@@ -899,6 +904,15 @@ class CCD:
 
         linearity_array     =   np.asarray(tmplist)
         self.linearity      =   linearity_array
+
+        query_points = self.linearity[:, 3]
+        linearity_data = self.linearity[:, 1]
+        fitted_linear_model = np.polyfit(query_points[6:19], linearity_data[6:19], deg=1)
+        fitted_slope = fitted_linear_model[0]
+        fitted_offset = fitted_linear_model[1]
+        fitted_linearity = np.add(np.multiply(query_points, fitted_slope), fitted_offset)
+        util.print_txt_file("fitted_linearity.txt", fitted_linearity,
+                            which_directory=self.analysis_data_storage_directory_path)
 
         util.print_txt_file("linearity.txt", linearity_array,
                             which_directory=self.analysis_data_storage_directory_path)
@@ -1046,6 +1060,56 @@ class CCD:
 
         return [linearity_array, linear_model_data, corrected_data, new_linear_data, deviations, errors, new_deviations]
 
+    def new_time_calibration(self, path_of_data_series: str, num_of_repeats: int):
+
+        data_series = util.list_data(path_of_data_series)
+        where_is_repeat_num_in_string = [8, 11]
+
+        reordered_data = np.empty((3, num_of_repeats, 3), dtype=object)
+        from_id_in_str = where_is_repeat_num_in_string[0]
+        to_id_in_str = where_is_repeat_num_in_string[1]
+
+        exposures = np.array([1, 2])
+
+        for imageid in data_series:
+            repeat_num = int(imageid[from_id_in_str:to_id_in_str])
+            reference_index = int(imageid[-7])
+            intensity_index = int(imageid[-5])
+
+            reordered_data[intensity_index][repeat_num][reference_index] = str(imageid)
+
+
+        offsets = []
+        one_second_correction = 1  #  (1 - 2.826937348128014116e-01)  # 3.269314122356812846e-01)  # 2.335026485015368747e-01)  # 4.061413920020190416e-01)
+        two_second_correction = 1  #  (1 - 2.470296021393934560e-01)  # 2.862068501265830345e-01)  # 2.034781685231622506e-01)  # 3.563827129498361446e-01)
+        for repeat_sequence_id in range(0, 3):
+            time_offset = 0
+            for repeat_id in range(0, num_of_repeats):
+                filepath_first_ref                           =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
+                filepath_actual_image                        =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+                filepath_next_ref                            =   util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][2])
+
+                hdul, header_actual, imagedata_actual_image  =   util.fits_handler(filepath_actual_image)
+                hdul, header_first, imagedata_first_ref      =   util.fits_handler(filepath_first_ref)
+                hdul, header_next, imagedata_next_ref        =   util.fits_handler(filepath_next_ref)
+
+                imagedata_actual_bias_corrected_and_meaned   =   one_second_correction * np.mean((self.bias_correction(imagedata_actual_image)))
+                imagedata_first_bias_corrected_and_meaned    =   two_second_correction * np.mean((self.bias_correction(imagedata_first_ref)))
+                imagedata_next_bias_corrected_and_meaned     =   one_second_correction * np.mean((self.bias_correction(imagedata_next_ref)))
+
+                numerator = 1 - ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned)
+                denominator = ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (2 * imagedata_actual_bias_corrected_and_meaned)) - 1
+                time_offset += numerator / denominator
+
+            time_offset /= num_of_repeats
+            offsets.append(time_offset)
+
+
+        final_offset = np.float(np.mean(np.asarray(offsets)))
+        self.time_calibration_factor = final_offset
+        print(self.time_calibration_factor)
+
+
     def test_lightsource_stability(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
         """
             Method to analyze the stabillity of the lightsource used to acquire the
@@ -1134,7 +1198,7 @@ class CCD:
 
         # ideal_linear_model            =   np.polyfit(query_points[:14], linearity_data[:14], deg=1)
 
-        ideal_linear_model            =   np.polyfit(np.concatenate([query_points[0:14]]), np.concatenate([linearity_data[0:14]]), deg=1)
+        ideal_linear_model        =   np.polyfit(np.concatenate([query_points[0:14]]), np.concatenate([linearity_data[0:14]]), deg=1)
         # linear_model_func       =   np.poly1d(ideal_linear_model)
         # time_offset             =   np.roots(ideal_linear_model)
         # query_points            =   np.subtract(query_points, time_offset)

@@ -1,4 +1,4 @@
-This is LuaTeX, Version 1.10.0 (TeX Live 2019/Debian)  (format=lualatex 2021.11.22)  22 NOV 2021 16:34
+This is LuaTeX, Version 1.10.0 (TeX Live 2019/Debian)  (format=lualatex 2021.11.22)  6 DEC 2021 13:51
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -1440,118 +1440,161 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.29405pt on input line 2.
  [2]) [3] (./sections/abstract.tex) [4] [5] (./sections/theory.tex
-[6] [7]
-<sections/../images/MOS_Capacitor.png, id=140, 1445.4pt x 646.66594pt>
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 12.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 12.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 12.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 12.
+
+[6]
+Underfull \vbox (badness 2707) has occurred while \output is active []
+
+ [7]
+<sections/../images/MOS_Capacitor.png, id=147, 1445.4pt x 646.66594pt>
 File: sections/../images/MOS_Capacitor.png Graphic file (type png)
 <use sections/../images/MOS_Capacitor.png>
 Package luatex.def Info: sections/../images/MOS_Capacitor.png  used on input lin
-e 30.
+e 36.
 (luatex.def)             Requested size: 234.87749pt x 105.07703pt.
- [8
+
+[8] [9
 Missing character: There is no — (U+2014) in font pplr9e!
-<./sections/../images/MOS_Capacitor.png>]
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 43.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 43.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 43.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 43.
- [9] [10]
-<sections/../images/master_bias.png, id=170, 389.5353pt x 175.6161pt>
-File: sections/../images/master_bias.png Graphic file (type png)
-<use sections/../images/master_bias.png>
-Package luatex.def Info: sections/../images/master_bias.png  used on input line 
-77.
-(luatex.def)             Requested size: 446.2658pt x 201.19324pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[11]
-<sections/../images/gauss_bias.png, id=180, 411.939pt x 185.7339pt>
+<./sections/../images/MOS_Capacitor.png>] [10] [11] [12]
+<sections/../images/gauss_bias.png, id=193, 411.939pt x 185.7339pt>
 File: sections/../images/gauss_bias.png Graphic file (type png)
 <use sections/../images/gauss_bias.png>
 Package luatex.def Info: sections/../images/gauss_bias.png  used on input line 9
 7.
 (luatex.def)             Requested size: 446.2658pt x 201.21028pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12<./sections/../images/master_bias.png>] [13<./sections/../images/gauss_bias.
-png>]
-<sections/../images/master_dark.png, id=198, 389.5353pt x 183.20445pt>
+ [13<./sections/../images/gauss_bias.png>]
+<sections/../images/master_dark.png, id=204, 389.5353pt x 183.20445pt>
 File: sections/../images/master_dark.png Graphic file (type png)
 <use sections/../images/master_dark.png>
 Package luatex.def Info: sections/../images/master_dark.png  used on input line 
 119.
 (luatex.def)             Requested size: 446.2658pt x 209.88676pt.
 
-[14<./sections/../images/master_dark.png>]
-<sections/../images/master_flat.png, id=210, 389.5353pt x 175.6161pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[14] [15<./sections/../images/master_dark.png>]
+<sections/../images/master_flat.png, id=222, 389.5353pt x 175.6161pt>
 File: sections/../images/master_flat.png Graphic file (type png)
 <use sections/../images/master_flat.png>
 Package luatex.def Info: sections/../images/master_flat.png  used on input line 
 131.
 (luatex.def)             Requested size: 446.2658pt x 201.19324pt.
+ [16<./sections/../images/master_flat.png>]) [17] (./sections/methods.tex
+<sections/../images/setup.jpg, id=239, 963.6pt x 722.7pt>
+File: sections/../images/setup.jpg Graphic file (type jpg)
+<use sections/../images/setup.jpg>
+Package luatex.def Info: sections/../images/setup.jpg  used on input line 14.
+(luatex.def)             Requested size: 281.85585pt x 211.38614pt.
+ [18]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 23.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[15]) [16<./sections/../images/master_flat.png>] (./sections/methods.tex
-[17]
-<sections/../images/dark_current_versus_temperature.pdf, id=231, 462.528pt x 346
+ [19<./sections/../images/setup.jpg>]
+<sections/../images/dark_current_versus_temperature.pdf, id=257, 462.528pt x 346
 .896pt>
 File: sections/../images/dark_current_versus_temperature.pdf Graphic file (type 
 pdf)
 <use sections/../images/dark_current_versus_temperature.pdf>
 Package luatex.def Info: sections/../images/dark_current_versus_temperature.pdf 
- used on input line 17.
+ used on input line 53.
 (luatex.def)             Requested size: 281.85585pt x 211.39981pt.
- [18<./sections/../images/dark_current_versus_temperature.pdf>]
-<sections/../images/setup.jpg, id=298, 963.6pt x 722.7pt>
-File: sections/../images/setup.jpg Graphic file (type jpg)
-<use sections/../images/setup.jpg>
-Package luatex.def Info: sections/../images/setup.jpg  used on input line 31.
-(luatex.def)             Requested size: 281.85585pt x 211.38614pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19<./sections/../images/setup.jpg>] [20]
-LaTeX Font Info:    Trying to load font information for TS1+pplx on input line 5
-2.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pplx.fd
-File: ts1pplx.fd 2004/09/06 font definitions for TS1/pplx.
-)
-<sections/../images/lightsource.png, id=310, 274.26465pt x 320.8788pt>
-File: sections/../images/lightsource.png Graphic file (type png)
-<use sections/../images/lightsource.png>
-Package luatex.def Info: sections/../images/lightsource.png  used on input line 
-61.
-(luatex.def)             Requested size: 375.80542pt x 439.69922pt.
- [21] [22<./sections/../images/lightsource.png>] [23]
-<sections/../images/linearity.png, id=338, 226.2051pt x 186.81795pt>
+ [20] [21<./sections/../images/dark_current_versus_temperature.pdf>]
+<sections/../images/linearity.png, id=329, 226.2051pt x 186.81795pt>
 File: sections/../images/linearity.png Graphic file (type png)
 <use sections/../images/linearity.png>
-Package luatex.def Info: sections/../images/linearity.png  used on input line 10
-0.
+Package luatex.def Info: sections/../images/linearity.png  used on input line 67
+.
 (luatex.def)             Requested size: 305.33788pt x 252.19048pt.
- [24]
-<sections/../images/noise_versus_temperature.png, id=351, 263.42415pt x 186.8179
+<sections/../images/noise_versus_temperature.png, id=332, 263.42415pt x 186.8179
 5pt>
 File: sections/../images/noise_versus_temperature.png Graphic file (type png)
 <use sections/../images/noise_versus_temperature.png>
 Package luatex.def Info: sections/../images/noise_versus_temperature.png  used o
-n input line 113.
+n input line 76.
 (luatex.def)             Requested size: 305.33788pt x 216.55501pt.
-) [25<./sections/../images/linearity.png>] [26<./sections/../images/noise_versus
-_temperature.png>] [27] [28] (./main.bbl
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [22]
+
+LaTeX Warning: Citation `bibid' on page 23 undefined on input line 84.
+
+
+Underfull \vbox (badness 1024) has occurred while \output is active []
+
+ [23<./sections/../images/linearity.png>]
+LaTeX Font Info:    Trying to load font information for TS1+pplx on input line 9
+1.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pplx.fd
+File: ts1pplx.fd 2004/09/06 font definitions for TS1/pplx.
+) [24<./sections/../images/noise_versus_temperature.png>]
+<sections/../images/lightsource.png, id=358, 274.26465pt x 320.8788pt>
+File: sections/../images/lightsource.png Graphic file (type png)
+<use sections/../images/lightsource.png>
+Package luatex.def Info: sections/../images/lightsource.png  used on input line 
+100.
+(luatex.def)             Requested size: 375.80542pt x 439.69922pt.
+ [25] [26<./sections/../images/lightsource.png>]
+<sections/../images/time_calibration.png, id=373, 234.51614pt x 186.81795pt>
+File: sections/../images/time_calibration.png Graphic file (type png)
+<use sections/../images/time_calibration.png>
+Package luatex.def Info: sections/../images/time_calibration.png  used on input 
+line 125.
+(luatex.def)             Requested size: 305.33788pt x 243.25096pt.
+ [27]
+<sections/../images/time_calibration_deviations.png, id=385, 225.4824pt x 186.81
+795pt>
+File: sections/../images/time_calibration_deviations.png Graphic file (type png)
+
+<use sections/../images/time_calibration_deviations.png>
+Package luatex.def Info: sections/../images/time_calibration_deviations.png  use
+d on input line 132.
+(luatex.def)             Requested size: 305.33788pt x 252.99434pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [28<./sections/../images/time_calibration.png>] [29<./sections/../images/time_c
+alibration_deviations.png>]
+<sections/../images/linearity_zoom.png, id=410, 233.4321pt x 186.81795pt>
+File: sections/../images/linearity_zoom.png Graphic file (type png)
+<use sections/../images/linearity_zoom.png>
+Package luatex.def Info: sections/../images/linearity_zoom.png  used on input li
+ne 156.
+(luatex.def)             Requested size: 305.33788pt x 244.3912pt.
+<sections/../images/linearity_dimmed.png, id=415, 226.2051pt x 186.81795pt>
+File: sections/../images/linearity_dimmed.png Graphic file (type png)
+<use sections/../images/linearity_dimmed.png>
+Package luatex.def Info: sections/../images/linearity_dimmed.png  used on input 
+line 163.
+(luatex.def)             Requested size: 305.33788pt x 252.19048pt.
+<sections/../images/linearity_zoom_dimmed.png, id=418, 233.4321pt x 186.81795pt>
+
+File: sections/../images/linearity_zoom_dimmed.png Graphic file (type png)
+<use sections/../images/linearity_zoom_dimmed.png>
+Package luatex.def Info: sections/../images/linearity_zoom_dimmed.png  used on i
+nput line 168.
+(luatex.def)             Requested size: 305.33788pt x 244.3912pt.
+
+Underfull \vbox (badness 4132) has occurred while \output is active []
+
+ [30<./sections/../images/linearity_zoom.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [31<./sections/../images/linearity_dimmed.png>] [32<./sections/../images/linear
+ity_zoom_dimmed.png>] [33]) [34] [35] [36] [37] (./main.bbl
 bibitemlist
 LaTeX Font Info:    Trying to load font information for T1+txtt on input line 5.
 
@@ -1568,7 +1611,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--7
 atik-[]cameras.com/
  []
 
-) [29]
+) [38]
 \tf@toc=\write5
 
 \openout5 = main.toc
@@ -1581,19 +1624,22 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 129.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 129.
 )
 
 Here is how much of LuaTeX's memory you used:
- 30397 strings out of 481365
+ 30485 strings out of 481365
  100000,953878 words of node,token memory allocated
- 4335 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 7 glue, 399 kern, 1 glyph, 385 attribute, 191 glue_
-spec, 194 attribute_list, 3 write, 1 pdf_action nodes
-   avail lists: 2:692,3:151,4:66,5:196,6:57,7:4285,8:124,9:237,10:28,11:312
- 45941 multiletter control sequences out of 65536+600000
+ 5329 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 8 glue, 531 kern, 1 glyph, 491 attribute, 191 glue_
+spec, 247 attribute_list, 3 write, 1 pdf_action nodes
+   avail lists: 2:609,3:147,4:65,5:202,6:57,7:4516,8:125,9:236,10:19,11:342
+ 45971 multiletter control sequences out of 65536+600000
  249 fonts using 17807627 bytes
- 60i,12n,60p,1498b,707s stack positions out of 5000i,500n,10000p,200000b,100000s
+ 60i,12n,60p,2022b,707s stack positions out of 5000i,500n,10000p,200000b,100000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fon
 ts/enc/dvips/lm/lm-ec.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
@@ -1607,10 +1653,10 @@ texlive/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pal
 atino/uplri8a.pfb>
-Output written on main.pdf (29 pages, 1075725 bytes).
+Output written on main.pdf (38 pages, 1104599 bytes).
 
-PDF statistics: 566 PDF objects out of 1000 (max. 8388607)
- 447 compressed objects within 5 object streams
- 96 named destinations out of 1000 (max. 131072)
- 360 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 671 PDF objects out of 1000 (max. 8388607)
+ 530 compressed objects within 6 object streams
+ 122 named destinations out of 1000 (max. 131072)
+ 376 words of extra memory for PDF output out of 10000 (max. 100000000)
 
