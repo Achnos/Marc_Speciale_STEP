@@ -1,4 +1,4 @@
-This is LuaTeX, Version 1.10.0 (TeX Live 2019/Debian)  (format=lualatex 2021.11.22)  6 DEC 2021 13:51
+This is LuaTeX, Version 1.10.0 (TeX Live 2019/Debian)  (format=lualatex 2021.11.22)  14 DEC 2021 15:28
  restricted system commands enabled.
 **main.tex
 (./main.tex
@@ -1187,6 +1187,36 @@ Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footers
 \f@nch@O@olf=\skip270
 \f@nch@O@orf=\skip271
 )
+(/usr/share/texlive/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2019/11/15 version 4.22 text color boxes
+
+(/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(/usr/share/texlive/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count355
+)
+\tcb@titlebox=\box65
+\tcb@upperbox=\box66
+\tcb@lowerbox=\box67
+\tcb@phantombox=\box68
+\c@tcbbreakpart=\count356
+\c@tcblayer=\count357
+\tcolorbox@number=\count358
+\tcb@temp=\box69
+\tcb@temp=\box70
+\tcb@temp=\box71
+\tcb@temp=\box72
+\tcb@out=\write5
+\tcb@record@out=\write6
+)
+(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
+)
 (/usr/share/texlive/texmf-dist/tex/latex/subfiles/subfiles.sty
 Package: subfiles 2020/02/14 v1.6 Multi-file projects (package)
 
@@ -1195,38 +1225,38 @@ Package: import 2009/03/23  v 5.1
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count355
-\l__pdf_internal_box=\box65
+\l__kernel_color_stack_int=\count359
+\l__pdf_internal_box=\box73
 )
 (./main.aux)
 \openout1 = main.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 87.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 87
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 92.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 92
 .
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Trying to load font information for T1+pplx on input line 87
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Trying to load font information for T1+pplx on input line 92
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pplx.fd
@@ -1266,34 +1296,34 @@ File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 87.
+LaTeX Info: Redefining \microtypecontext on input line 92.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `basictext'.
-LaTeX Info: Redefining \showhyphens on input line 87.
+LaTeX Info: Redefining \showhyphens on input line 92.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of spacing.
 Package microtype Info: No adjustment of kerning.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
-\c@lstlisting=\count356
+\c@lstlisting=\count360
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count357
+\scratchcounter=\count361
 \scratchdimen=\dimen327
-\scratchbox=\box66
-\nofMPsegments=\count358
-\nofMParguments=\count359
+\scratchbox=\box74
+\nofMPsegments=\count362
+\nofMParguments=\count363
 \everyMPshowfont=\toks52
-\MPscratchCnt=\count360
+\MPscratchCnt=\count364
 \MPscratchDim=\dimen328
-\MPnumerator=\count361
-\makeMPintoPDFobject=\count362
+\MPnumerator=\count365
+\makeMPintoPDFobject=\count366
 \everyMPtoPDFconversion=\toks53
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1304,8 +1334,8 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 
 ))
-\AtBeginShipoutBox=\box67
-Package hyperref Info: Link coloring ON on input line 87.
+\AtBeginShipoutBox=\box75
+Package hyperref Info: Link coloring ON on input line 92.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -1316,14 +1346,14 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count363
+\c@section@level=\count367
 )
 Redoing nameref's sectioning
 Redoing nameref's label
-LaTeX Info: Redefining \nameref on input line 87.
-LaTeX Info: Redefining \ref on input line 87.
-LaTeX Info: Redefining \pageref on input line 87.
-LaTeX Info: Redefining \nameref on input line 87.
+LaTeX Info: Redefining \nameref on input line 92.
+LaTeX Info: Redefining \ref on input line 92.
+LaTeX Info: Redefining \pageref on input line 92.
+LaTeX Info: Redefining \nameref on input line 92.
 ABD: EveryShipout initializing macros
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/20.74'.
@@ -1331,61 +1361,61 @@ Package microtype Info: Character `029' is missing
 
 
 LaTeX Font Warning: Font shape `T1/pplx/b/sc' undefined
-(Font)              using `T1/pplx/b/n' instead on input line 90.
+(Font)              using `T1/pplx/b/n' instead on input line 96.
 
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Trying to load font information for OT1+pplx on input line 9
-0.
+6.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 9
-0.
+6.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 9
-0.
+6.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 9
-0.
+6.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 15.0049pt on input line 90.
+(Font)              scaled to size 15.0049pt on input line 96.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 90.
+(Font)              scaled to size 10.42007pt on input line 96.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 90.
+(Font)              scaled to size 8.33606pt on input line 96.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 15.0049pt on input line 90.
+(Font)              scaled to size 15.0049pt on input line 96.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 90.
+(Font)              scaled to size 10.42007pt on input line 96.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 90.
+(Font)              scaled to size 8.33606pt on input line 96.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (
 RS)
 )
 LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 9
-0.
+6.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
@@ -1394,7 +1424,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zplm' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 90
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 96
 .
 
 (/usr/share/texmf/tex/latex/lm/t1lmss.fd
@@ -1402,7 +1432,7 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
 LaTeX Font Warning: Font shape `T1/lmss/bx/sc' undefined
-(Font)              using `T1/lmss/bx/n' instead on input line 90.
+(Font)              using `T1/lmss/bx/n' instead on input line 96.
 
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmss' (encoding: T1).
@@ -1413,20 +1443,19 @@ Package microtype Info: Character `029' is missing
 (microtype)             Ignoring protrusion settings for this character.
 
 LaTeX Font Warning: Font shape `T1/lmss/m/sc' in size <14.4> not available
-(Font)              Font shape `T1/lmr/m/sc' tried instead on input line 90.
+(Font)              Font shape `T1/lmr/m/sc' tried instead on input line 96.
 
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/14.4'.
 (microtype)             Ignoring protrusion settings for this character.
-<images/linearity.png, id=7, 226.2051pt x 186.81795pt>
-File: images/linearity.png Graphic file (type png)
-<use images/linearity.png>
-Package luatex.def Info: images/linearity.png  used on input line 93.
-(luatex.def)             Requested size: 272.45874pt x 225.03273pt.
+<images/ccd_sensor_bg.jpg, id=7, 397.2441pt x 560.5743pt>
+File: images/ccd_sensor_bg.jpg Graphic file (type jpg)
+<use images/ccd_sensor_bg.jpg>
+Package luatex.def Info: images/ccd_sensor_bg.jpg  used on input line 106.
+(luatex.def)             Requested size: 597.58612pt x 845.05922pt.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}<./images/linearity.png>]
-(./main.toc
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}<./images/ccd_sensor_bg.jpg>] (./main.toc
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 12.50409pt on input line 2.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
@@ -1439,164 +1468,16 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 9.37807pt on input line 2.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.29405pt on input line 2.
- [2]) [3] (./sections/abstract.tex) [4] [5] (./sections/theory.tex
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 12.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 12.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 12.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 12.
-
-[6]
-Underfull \vbox (badness 2707) has occurred while \output is active []
-
- [7]
-<sections/../images/MOS_Capacitor.png, id=147, 1445.4pt x 646.66594pt>
-File: sections/../images/MOS_Capacitor.png Graphic file (type png)
-<use sections/../images/MOS_Capacitor.png>
-Package luatex.def Info: sections/../images/MOS_Capacitor.png  used on input lin
-e 36.
-(luatex.def)             Requested size: 234.87749pt x 105.07703pt.
-
-[8] [9
-Missing character: There is no — (U+2014) in font pplr9e!
-<./sections/../images/MOS_Capacitor.png>] [10] [11] [12]
-<sections/../images/gauss_bias.png, id=193, 411.939pt x 185.7339pt>
-File: sections/../images/gauss_bias.png Graphic file (type png)
-<use sections/../images/gauss_bias.png>
-Package luatex.def Info: sections/../images/gauss_bias.png  used on input line 9
-7.
-(luatex.def)             Requested size: 446.2658pt x 201.21028pt.
- [13<./sections/../images/gauss_bias.png>]
-<sections/../images/master_dark.png, id=204, 389.5353pt x 183.20445pt>
-File: sections/../images/master_dark.png Graphic file (type png)
-<use sections/../images/master_dark.png>
-Package luatex.def Info: sections/../images/master_dark.png  used on input line 
-119.
-(luatex.def)             Requested size: 446.2658pt x 209.88676pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[14] [15<./sections/../images/master_dark.png>]
-<sections/../images/master_flat.png, id=222, 389.5353pt x 175.6161pt>
-File: sections/../images/master_flat.png Graphic file (type png)
-<use sections/../images/master_flat.png>
-Package luatex.def Info: sections/../images/master_flat.png  used on input line 
-131.
-(luatex.def)             Requested size: 446.2658pt x 201.19324pt.
- [16<./sections/../images/master_flat.png>]) [17] (./sections/methods.tex
-<sections/../images/setup.jpg, id=239, 963.6pt x 722.7pt>
-File: sections/../images/setup.jpg Graphic file (type jpg)
-<use sections/../images/setup.jpg>
-Package luatex.def Info: sections/../images/setup.jpg  used on input line 14.
-(luatex.def)             Requested size: 281.85585pt x 211.38614pt.
- [18]
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 23.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19<./sections/../images/setup.jpg>]
-<sections/../images/dark_current_versus_temperature.pdf, id=257, 462.528pt x 346
-.896pt>
-File: sections/../images/dark_current_versus_temperature.pdf Graphic file (type 
-pdf)
-<use sections/../images/dark_current_versus_temperature.pdf>
-Package luatex.def Info: sections/../images/dark_current_versus_temperature.pdf 
- used on input line 53.
-(luatex.def)             Requested size: 281.85585pt x 211.39981pt.
- [20] [21<./sections/../images/dark_current_versus_temperature.pdf>]
-<sections/../images/linearity.png, id=329, 226.2051pt x 186.81795pt>
-File: sections/../images/linearity.png Graphic file (type png)
-<use sections/../images/linearity.png>
-Package luatex.def Info: sections/../images/linearity.png  used on input line 67
-.
-(luatex.def)             Requested size: 305.33788pt x 252.19048pt.
-<sections/../images/noise_versus_temperature.png, id=332, 263.42415pt x 186.8179
-5pt>
-File: sections/../images/noise_versus_temperature.png Graphic file (type png)
-<use sections/../images/noise_versus_temperature.png>
-Package luatex.def Info: sections/../images/noise_versus_temperature.png  used o
-n input line 76.
-(luatex.def)             Requested size: 305.33788pt x 216.55501pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [22]
-
-LaTeX Warning: Citation `bibid' on page 23 undefined on input line 84.
-
-
-Underfull \vbox (badness 1024) has occurred while \output is active []
-
- [23<./sections/../images/linearity.png>]
-LaTeX Font Info:    Trying to load font information for TS1+pplx on input line 9
+ [2]) [3] (./sections/abstract.tex) [4] [5]
+(./sections/theory.tex
+<sections/../images/ccd_sensor.jpg, id=137, 843.15pt x 560.8152pt>
+File: sections/../images/ccd_sensor.jpg Graphic file (type jpg)
+<use sections/../images/ccd_sensor.jpg>
+Package luatex.def Info: sections/../images/ccd_sensor.jpg  used on input line 1
 1.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pplx.fd
-File: ts1pplx.fd 2004/09/06 font definitions for TS1/pplx.
-) [24<./sections/../images/noise_versus_temperature.png>]
-<sections/../images/lightsource.png, id=358, 274.26465pt x 320.8788pt>
-File: sections/../images/lightsource.png Graphic file (type png)
-<use sections/../images/lightsource.png>
-Package luatex.def Info: sections/../images/lightsource.png  used on input line 
-100.
-(luatex.def)             Requested size: 375.80542pt x 439.69922pt.
- [25] [26<./sections/../images/lightsource.png>]
-<sections/../images/time_calibration.png, id=373, 234.51614pt x 186.81795pt>
-File: sections/../images/time_calibration.png Graphic file (type png)
-<use sections/../images/time_calibration.png>
-Package luatex.def Info: sections/../images/time_calibration.png  used on input 
-line 125.
-(luatex.def)             Requested size: 305.33788pt x 243.25096pt.
- [27]
-<sections/../images/time_calibration_deviations.png, id=385, 225.4824pt x 186.81
-795pt>
-File: sections/../images/time_calibration_deviations.png Graphic file (type png)
-
-<use sections/../images/time_calibration_deviations.png>
-Package luatex.def Info: sections/../images/time_calibration_deviations.png  use
-d on input line 132.
-(luatex.def)             Requested size: 305.33788pt x 252.99434pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [28<./sections/../images/time_calibration.png>] [29<./sections/../images/time_c
-alibration_deviations.png>]
-<sections/../images/linearity_zoom.png, id=410, 233.4321pt x 186.81795pt>
-File: sections/../images/linearity_zoom.png Graphic file (type png)
-<use sections/../images/linearity_zoom.png>
-Package luatex.def Info: sections/../images/linearity_zoom.png  used on input li
-ne 156.
-(luatex.def)             Requested size: 305.33788pt x 244.3912pt.
-<sections/../images/linearity_dimmed.png, id=415, 226.2051pt x 186.81795pt>
-File: sections/../images/linearity_dimmed.png Graphic file (type png)
-<use sections/../images/linearity_dimmed.png>
-Package luatex.def Info: sections/../images/linearity_dimmed.png  used on input 
-line 163.
-(luatex.def)             Requested size: 305.33788pt x 252.19048pt.
-<sections/../images/linearity_zoom_dimmed.png, id=418, 233.4321pt x 186.81795pt>
-
-File: sections/../images/linearity_zoom_dimmed.png Graphic file (type png)
-<use sections/../images/linearity_zoom_dimmed.png>
-Package luatex.def Info: sections/../images/linearity_zoom_dimmed.png  used on i
-nput line 168.
-(luatex.def)             Requested size: 305.33788pt x 244.3912pt.
-
-Underfull \vbox (badness 4132) has occurred while \output is active []
-
- [30<./sections/../images/linearity_zoom.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [31<./sections/../images/linearity_dimmed.png>] [32<./sections/../images/linear
-ity_zoom_dimmed.png>] [33]) [34] [35] [36] [37] (./main.bbl
-bibitemlist
-LaTeX Font Info:    Trying to load font information for T1+txtt on input line 5.
+(luatex.def)             Requested size: 375.80542pt x 249.96844pt.
+LaTeX Font Info:    Trying to load font information for T1+txtt on input line 12
+.
 
 (/usr/share/texlive/texmf-dist/tex/latex/txfonts/t1txtt.fd
 File: t1txtt.fd 2000/12/15 v3.1
@@ -1606,40 +1487,305 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 19.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 19.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 19.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 19.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+[7<./sections/../images/ccd_sensor.jpg>]
+<sections/../images/Band_filling_diagram.png, id=168, 1927.2pt x 938.50626pt>
+File: sections/../images/Band_filling_diagram.png Graphic file (type png)
+<use sections/../images/Band_filling_diagram.png>
+Package luatex.def Info: sections/../images/Band_filling_diagram.png  used on in
+put line 25.
+(luatex.def)             Requested size: 328.82706pt x 160.13109pt.
+ [8
+Missing character: There is no – (U+2013) in font pplr9e!
+<./sections/../images/Band_filling_diagram.png>]
+<sections/../images/pnfigur.png, id=184, 2701.09125pt x 1790.69pt>
+File: sections/../images/pnfigur.png Graphic file (type png)
+<use sections/../images/pnfigur.png>
+Package luatex.def Info: sections/../images/pnfigur.png  used on input line 40.
+(luatex.def)             Requested size: 469.75499pt x 311.40814pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[9]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10<./sections/../images/pnfigur.png>]
+<sections/../images/MOS_Capacitor.png, id=212, 1445.4pt x 646.66594pt>
+File: sections/../images/MOS_Capacitor.png Graphic file (type png)
+<use sections/../images/MOS_Capacitor.png>
+Package luatex.def Info: sections/../images/MOS_Capacitor.png  used on input lin
+e 59.
+(luatex.def)             Requested size: 234.87749pt x 105.07703pt.
+ [11
+Missing character: There is no — (U+2014) in font pplr9e!
+<./sections/../images/MOS_Capacitor.png>]
+<sections/../images/pixel.png, id=225, 991.705pt x 784.9325pt>
+File: sections/../images/pixel.png Graphic file (type png)
+<use sections/../images/pixel.png>
+Package luatex.def Info: sections/../images/pixel.png  used on input line 73.
+(luatex.def)             Requested size: 446.2658pt x 353.21635pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12]
+<sections/../images/ccdsect.png, id=247, 863.225pt x 797.98125pt>
+File: sections/../images/ccdsect.png Graphic file (type png)
+<use sections/../images/ccdsect.png>
+Package luatex.def Info: sections/../images/ccdsect.png  used on input line 90.
+(luatex.def)             Requested size: 446.2658pt x 412.52957pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[13<./sections/../images/pixel.png>]
+
+LaTeX Warning: Text page 14 contains only floats.
+
+[14<./sections/../images/ccdsect.png>]
+<sections/../images/readoutprinciple.png, id=266, 593.21625pt x 830.10126pt>
+File: sections/../images/readoutprinciple.png Graphic file (type png)
+<use sections/../images/readoutprinciple.png>
+Package luatex.def Info: sections/../images/readoutprinciple.png  used on input 
+line 100.
+(luatex.def)             Requested size: 234.87749pt x 328.66539pt.
+<sections/../images/readoutregister.png, id=269, 1290.8225pt x 870.25125pt>
+File: sections/../images/readoutregister.png Graphic file (type png)
+<use sections/../images/readoutregister.png>
+Package luatex.def Info: sections/../images/readoutregister.png  used on input l
+ine 110.
+(luatex.def)             Requested size: 446.2658pt x 300.86111pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15<./sections/../images/readoutprinciple.png>] [16<./sections/../images/readou
+tregister.png>] [17]
+<sections/../images/master_bias.png, id=307, 246.9225pt x 174.4116pt>
+File: sections/../images/master_bias.png Graphic file (type png)
+<use sections/../images/master_bias.png>
+Package luatex.def Info: sections/../images/master_bias.png  used on input line 
+143.
+(luatex.def)             Requested size: 446.2658pt x 315.23404pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \vbox (badness 3849) has occurred while \output is active []
+
+ [18]
+[19<./sections/../images/master_bias.png>]
+<sections/../images/gauss_bias.png, id=333, 411.939pt x 185.7339pt>
+File: sections/../images/gauss_bias.png Graphic file (type png)
+<use sections/../images/gauss_bias.png>
+Package luatex.def Info: sections/../images/gauss_bias.png  used on input line 1
+67.
+(luatex.def)             Requested size: 446.2658pt x 201.21028pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[20] [21<./sections/../images/gauss_bias.png>]
+<sections/../images/master_dark.png, id=363, 232.4685pt x 174.8934pt>
+File: sections/../images/master_dark.png Graphic file (type png)
+<use sections/../images/master_dark.png>
+Package luatex.def Info: sections/../images/master_dark.png  used on input line 
+189.
+(luatex.def)             Requested size: 446.2658pt x 335.78351pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[22]
+<sections/../images/master_flat.png, id=373, 232.7094pt x 165.7392pt>
+File: sections/../images/master_flat.png Graphic file (type png)
+<use sections/../images/master_flat.png>
+Package luatex.def Info: sections/../images/master_flat.png  used on input line 
+201.
+(luatex.def)             Requested size: 446.2658pt x 317.86407pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[23<./sections/../images/master_dark.png>] [24<./sections/../images/master_flat.
+png>]) [25] (./sections/methods.tex
+<sections/../images/setup.jpg, id=395, 963.6pt x 722.7pt>
+File: sections/../images/setup.jpg Graphic file (type jpg)
+<use sections/../images/setup.jpg>
+Package luatex.def Info: sections/../images/setup.jpg  used on input line 14.
+(luatex.def)             Requested size: 281.85585pt x 211.38614pt.
+ [26]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 23.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27<./sections/../images/setup.jpg>]
+<sections/../images/darkcurrent_versus_temperature_preliminary.png, id=413, 215.
+00325pt x 186.81795pt>
+File: sections/../images/darkcurrent_versus_temperature_preliminary.png Graphic 
+file (type png)
+<use sections/../images/darkcurrent_versus_temperature_preliminary.png>
+Package luatex.def Info: sections/../images/darkcurrent_versus_temperature_preli
+minary.png  used on input line 53.
+(luatex.def)             Requested size: 328.82706pt x 285.72218pt.
+ [28] [29<./sections/../images/darkcurrent_versus_temperature_preliminary.png>]
+<sections/../images/linearity.png, id=427, 226.2051pt x 186.81795pt>
+File: sections/../images/linearity.png Graphic file (type png)
+<use sections/../images/linearity.png>
+Package luatex.def Info: sections/../images/linearity.png  used on input line 67
+.
+(luatex.def)             Requested size: 305.33788pt x 252.19048pt.
+ [30]
+<sections/../images/darkcurrent_versus_temperature.png, id=436, 215.00325pt x 18
+6.81795pt>
+File: sections/../images/darkcurrent_versus_temperature.png Graphic file (type p
+ng)
+<use sections/../images/darkcurrent_versus_temperature.png>
+Package luatex.def Info: sections/../images/darkcurrent_versus_temperature.png  
+used on input line 76.
+(luatex.def)             Requested size: 328.82706pt x 285.72218pt.
+<sections/../images/readoutnoise_versus_temperature.png, id=439, 227.6505pt x 18
+6.81795pt>
+File: sections/../images/readoutnoise_versus_temperature.png Graphic file (type 
+png)
+<use sections/../images/readoutnoise_versus_temperature.png>
+Package luatex.def Info: sections/../images/readoutnoise_versus_temperature.png 
+ used on input line 81.
+(luatex.def)             Requested size: 328.82706pt x 269.87564pt.
+<sections/../images/hot_pixels_test.png, id=442, 222.5916pt x 183.92715pt>
+File: sections/../images/hot_pixels_test.png Graphic file (type png)
+<use sections/../images/hot_pixels_test.png>
+Package luatex.def Info: sections/../images/hot_pixels_test.png  used on input l
+ine 90.
+(luatex.def)             Requested size: 328.82706pt x 271.742pt.
+ [31<./sections/../images/linearity.png>]
+<sections/../images/hot_pixel_mask.png, id=458, 232.7094pt x 165.7392pt>
+File: sections/../images/hot_pixel_mask.png Graphic file (type png)
+<use sections/../images/hot_pixel_mask.png>
+Package luatex.def Info: sections/../images/hot_pixel_mask.png  used on input li
+ne 99.
+(luatex.def)             Requested size: 446.2658pt x 317.86407pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [32<./sections/../images/darkcurrent_versus_temperature.png>]
+LaTeX Font Info:    Trying to load font information for TS1+pplx on input line 1
+09.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pplx.fd
+File: ts1pplx.fd 2004/09/06 font definitions for TS1/pplx.
+) [33<./sections/../images/readoutnoise_versus_temperature.png>] [34<./sections/
+../images/hot_pixels_test.png>] [35<./sections/../images/hot_pixel_mask.png>]
+<sections/../images/lightsource.png, id=487, 274.26465pt x 320.8788pt>
+File: sections/../images/lightsource.png Graphic file (type png)
+<use sections/../images/lightsource.png>
+Package luatex.def Info: sections/../images/lightsource.png  used on input line 
+118.
+(luatex.def)             Requested size: 375.80542pt x 439.69922pt.
+ [36] [37<./sections/../images/lightsource.png>]
+<sections/../images/time_calibration.png, id=504, 234.51614pt x 186.81795pt>
+File: sections/../images/time_calibration.png Graphic file (type png)
+<use sections/../images/time_calibration.png>
+Package luatex.def Info: sections/../images/time_calibration.png  used on input 
+line 143.
+(luatex.def)             Requested size: 305.33788pt x 243.25096pt.
+<sections/../images/time_calibration_deviations.png, id=506, 225.4824pt x 186.81
+795pt>
+File: sections/../images/time_calibration_deviations.png Graphic file (type png)
+
+<use sections/../images/time_calibration_deviations.png>
+Package luatex.def Info: sections/../images/time_calibration_deviations.png  use
+d on input line 150.
+(luatex.def)             Requested size: 305.33788pt x 252.99434pt.
+ [38] [39<./sections/../images/time_calibration.png><./sections/../images/time_c
+alibration_deviations.png>]
+<sections/../images/linearity_zoom.png, id=531, 233.4321pt x 186.81795pt>
+File: sections/../images/linearity_zoom.png Graphic file (type png)
+<use sections/../images/linearity_zoom.png>
+Package luatex.def Info: sections/../images/linearity_zoom.png  used on input li
+ne 174.
+(luatex.def)             Requested size: 305.33788pt x 244.3912pt.
+<sections/../images/linearity_dimmed.png, id=536, 226.2051pt x 186.81795pt>
+File: sections/../images/linearity_dimmed.png Graphic file (type png)
+<use sections/../images/linearity_dimmed.png>
+Package luatex.def Info: sections/../images/linearity_dimmed.png  used on input 
+line 181.
+(luatex.def)             Requested size: 305.33788pt x 252.19048pt.
+<sections/../images/linearity_zoom_dimmed.png, id=539, 233.4321pt x 186.81795pt>
+
+File: sections/../images/linearity_zoom_dimmed.png Graphic file (type png)
+<use sections/../images/linearity_zoom_dimmed.png>
+Package luatex.def Info: sections/../images/linearity_zoom_dimmed.png  used on i
+nput line 186.
+(luatex.def)             Requested size: 305.33788pt x 244.3912pt.
+ [40] [41<./sections/../images/linearity_zoom.png>] [42<./sections/../images/lin
+earity_dimmed.png>]
+<sections/../images/linearity_onepixel.png, id=570, 226.2051pt x 186.81795pt>
+File: sections/../images/linearity_onepixel.png Graphic file (type png)
+<use sections/../images/linearity_onepixel.png>
+Package luatex.def Info: sections/../images/linearity_onepixel.png  used on inpu
+t line 199.
+(luatex.def)             Requested size: 305.33788pt x 252.19048pt.
+
+[43<./sections/../images/linearity_zoom_dimmed.png>]
+Underfull \vbox (badness 1803) has occurred while \output is active []
+
+ [44<./sections/../images/linearity_onepixel.png>] [45]) [46] (./sections/missi
+onreq.tex)
+[47] [48] [49] [50] (./main.bbl
+bibitemlist
+
 Underfull \hbox (badness 10000) in paragraph at lines 4--7
 []\T1/pplx/m/n/12 Atik cam-eras spec sheets.  [][]$\T1/txtt/m/n/12 https://www.
 atik-[]cameras.com/
  []
 
-) [38]
-\tf@toc=\write5
+) [51
+Missing character: There is no – (U+2013) in font pplr9e!
+] [52]
+\tf@toc=\write7
 
-\openout5 = main.toc
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 129.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 129.
+\openout7 = main.toc
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 140.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 140.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 129.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 129.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 140.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 140.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 129.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 140.
 )
 
 Here is how much of LuaTeX's memory you used:
- 30485 strings out of 481365
- 100000,953878 words of node,token memory allocated
- 5329 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 8 glue, 531 kern, 1 glyph, 491 attribute, 191 glue_
-spec, 247 attribute_list, 3 write, 1 pdf_action nodes
-   avail lists: 2:609,3:147,4:65,5:202,6:57,7:4516,8:125,9:236,10:19,11:342
- 45971 multiletter control sequences out of 65536+600000
+ 32804 strings out of 481365
+ 100000,1144653 words of node,token memory allocated
+ 6371 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 13 glue, 628 kern, 1 glyph, 659 attribute, 191 glue
+_spec, 331 attribute_list, 3 write, 4 pdf_action nodes
+   avail lists: 1:1,2:643,3:146,4:75,5:239,6:57,7:4404,8:123,9:313,10:22,11:332
+ 48102 multiletter control sequences out of 65536+600000
  249 fonts using 17807627 bytes
- 60i,12n,60p,2022b,707s stack positions out of 5000i,500n,10000p,200000b,100000s
+ 60i,12n,75p,2022b,709s stack positions out of 5000i,500n,10000p,200000b,100000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fon
 ts/enc/dvips/lm/lm-ec.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
@@ -1653,10 +1799,10 @@ texlive/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pal
 atino/uplri8a.pfb>
-Output written on main.pdf (38 pages, 1104599 bytes).
+Output written on main.pdf (52 pages, 6167101 bytes).
 
-PDF statistics: 671 PDF objects out of 1000 (max. 8388607)
- 530 compressed objects within 6 object streams
- 122 named destinations out of 1000 (max. 131072)
- 376 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 840 PDF objects out of 1000 (max. 8388607)
+ 693 compressed objects within 7 object streams
+ 163 named destinations out of 1000 (max. 131072)
+ 408 words of extra memory for PDF output out of 10000 (max. 100000000)
 

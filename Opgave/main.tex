@@ -74,24 +74,32 @@
 %\usepackage{ebgaramond, fontspec}
 %\setmainfont{EB Garamond}
 %\renewcommand{\familydefault}{\ebgaramond}
-\title{\textsc{\textbf{STEP} \\ \normalsize Subtitle}}	
-\author{\normalsize Student: \textbf{\textsc{Marc Breiner Sørensen
-			\#\small\textsf{201708238}}}\\
-	\normalsize Supervisor: \textbf{Hans Kjeldsen}\\
-	\normalsize Institut for Fysik og Astronomi, Aarhus Universitet}
-\date{\textsc{\textsf{\today}}}
+\usepackage {xcolor}
 
+\title{\color{white}\textsc{\textbf{STEP} \\ \normalsize Subtitle}}	
+\author{\color{white}\normalsize Student: \textbf{\textsc{Marc Breiner Sørensen
+			\#\small\textsf{201708238}}}\\
+	\color{white}\normalsize Supervisors: \textbf{Hans Kjeldsen} \& \textbf{Mads Fredslund Andersen}\\
+	\color{white}\normalsize Institut for Fysik og Astronomi, Aarhus Universitet}
+\date{\color{white}\textsc{\textsf{\today}}}
+
+\usepackage{tcolorbox}
+
+\usepackage{eso-pic,graphicx}
 % Multi-file preamble stuff
 \graphicspath{{images/}}
 \usepackage{subfiles} % Best loaded last in the preamble
 \begin{document}
-
+	\AddToShipoutPictureBG*{\centering\includegraphics[width=\paperwidth,height=\paperheight]{ccd_sensor_bg.jpg}};
+	\begin{tcolorbox}[colback = black, colframe = black, sharpish corners]
 	\maketitle
-	\begin{figure}[h!]
-		\centering
+\end{tcolorbox}
+
+	%\begin{figure}[h!]
+	%	\centering
 		%\includegraphics[width=0.58\textwidth]{/home/marc/Dropbox/STEP_Speciale_Marc/linearity.png}
-		\includegraphics[width=0.58\textwidth]{linearity.png}
-	\end{figure}
+%		\includegraphics[width=0.8\textwidth]{ccd_sensor.jpg}
+%	\end{figure}
 	\thispagestyle{empty}
 	
 	
@@ -111,6 +119,9 @@
 	\newpage
 	
 	\subfile{sections/methods}
+	\newpage
+	
+	\subfile{sections/missionreq}
 	\newpage
 	
 	\chapter{Results}

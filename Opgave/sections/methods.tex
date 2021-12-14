@@ -17,7 +17,7 @@
 		\end{figure}
 		
 		The setup consists of the camera resting on a stand, pointed into a white lacquered wooden screen. The camera is connected via USB2 to the lab computer and a power supply. Since the setup for dark frames requires a sufficiently dark room, an in-house darkroom is used.
-		For all light exposures, the ambient room lighting was used, with the camera pointed into the screen. The ambient light is a double fluorescent bulb, and the light can be dimmed to roughly half of the flux by turning off half the bulbs. This is useful in order to control the length of exposure times during the acquisition of linearity data. To focus the light, and avoid rapid over-saturation, a pinhole was constructed from heavy black cardboard and mounted with tape.
+		For all light exposures, the ambient room lighting was used, with the camera pointed into the screen. The ambient light is a double fluorescent bulb, and the light can be dimmed to roughly half of the flux by turning off half the bulbs. This is useful in order to control the length of exposure times during the acquisition of linearity data. Since the test procedure detector does not have a shutter, rapid saturation was seen for very small exposure times, in a lit room environment. To circumvent this issue, a pinhole was constructed from heavy black cardboard and mounted with tape. The cardboard was poked with a small needle to create a small hole. This pinhole also serves to focus the light.
 		For all dark frames, the same configuration was used, but with no ambient light, and computer screens turned off. 
 		
 		\begin{table}[]
@@ -29,7 +29,7 @@
 				\textbf{Readout noise (typical)}& 5$e^-$\\
 				\textbf{Gain factor}& 0.28$e^-$/ADU\\
 				\textbf{Cooling $\Delta T$}& $-30^\circ$\\
-				\textbf{Dark current}& $\sim 0.001 e^-\;$ at $\;-10^\circ$ \\
+				\textbf{Dark current}& $\sim 0.001 e^- / s\;$ at $\;-10^\circ$ \\
 				\textbf{ADC}& 16 bit\\
 				\textbf{Pixel size}& $6.45 \mu m \times 6.45 \mu m$\\ 
 				\textbf{Shutter}&No\\
@@ -44,19 +44,19 @@
 		\subsubsection{Acquiring data and reducing noise}
 		Characterization of a CCD chip involves acquiring images in a variety of ways to study several effects. Here, practical noise reduction steps that should be applied, will be described. 
 		
-		We acquire frames while varying a parameter like temperature (for thermal noise) or exposure time (for linearity). For each value of this varied parameter, say temperature for thermal noise (dark current), we wish to associate a functional value. In the case at hand, it is electrons per second. This is done by considering the frame taken at that value of the variable (temperature), and computing the mean value of the experimental metric (dark current, electrons per second) across all pixels in the image. For any measurement, we should take steps to reduce the noise in the image. Dark current can be reduced by cooling the chip before acquiring data frames. Readout noise is \textbf{gaussian} and the noise in the distribution is reduced by a factor of $1/\sqrt{N}$ for $N$ measurements. Hence, for each datapoint, before computing the desired variable, like dark current for a specific temperature, we should, at that temperature, acquire $N$ frames, and construct a mean image from these $N$ frames. Typically $N$ is chosen to be as large as is practically feasible. The value of the experimental metric is then computed from that average frame. Initially, $N = 100$ was chosen, but since, at ambient lighting levels used for the linearity measurements, longer exposure times make this impractical, $N=10$ was chosen instead. The difference in the functional behavior of the curve, as a result of choosing a smaller value of N, was found to be of little importance. The temperature was chosen to be $T = -10^\circ$ C, due to reasons outlined in the next section.
+		We acquire frames while varying a parameter like temperature (for thermal noise) or exposure time (for linearity). For each value of this varied parameter, say temperature for thermal noise (dark current), we wish to associate a functional value. In the case at hand, it is electrons per second. This is done by considering the frame taken at that value of the variable (temperature), and computing the mean value of the experimental metric (dark current, electrons per second) across all pixels in the image. For any measurement, we should take steps to reduce the noise in the image. Dark current can be reduced by cooling the chip before acquiring data frames. Readout noise is \textbf{gaussian} and the noise in the distribution is reduced by a factor of $1/\sqrt{N}$ for $N$ measurements. Hence, for each datapoint, before computing the desired variable, like dark current for a specific temperature, we should, at that temperature, acquire $N$ frames, and construct a mean image from these $N$ frames. Typically $N$ is chosen to be as large as is practically feasible. The value of the experimental metric is then computed from that average frame. Initially, $N = 100$ was chosen to achieve a high degree of noise reduction. However, since at ambient lighting levels used for the linearity measurements, longer exposure times make this impractical, $N=10$ was tested, as this would pose more practical. It was seen that, due to general low noise levels in the detector in the cooled setting (see next section), this value of $N$ was sufficient. The difference in the functional behavior of the curve, as a result of choosing a smaller value of N, was found to be of little importance. The temperature was chosen to be $T = -10^\circ$ C, due to reasons outlined in the next section.
 	
 		\subsubsection{Background noise and dark current}
 		A good starting point for the development of the testing procedure originates from a preliminary investigation of the noise levels of the chip. This test was carried out at a desktop in an office, using a very primitive experimental setup. This preliminary test confirms that dark current is strongly dependent on temperature. See figure \ref{fig:dcprelim}. Since the camera cooler can cool to a temperature gradient of $\Delta T = 30 ^\circ $C, the temperature $T = -10 ^\circ$ C was chosen. Since the cooling system works as a temperature gradient, it is not feasible to go much lower. These steps ensure that we can minimize dark current and read-out noise.
 		\begin{figure}
 			\centering
-			\includegraphics[width=0.6\textwidth]{dark_current_versus_temperature.pdf}
+			\includegraphics[width=0.7\textwidth]{darkcurrent_versus_temperature_preliminary.png}
 			\caption{Preliminary dark current measurement, performed at the office in sub-optimal settings, to get a first glimpse of the behavior of this variable.}
 			\label{fig:dcprelim}
 		\end{figure}
 		
 		\subsubsection{Master bias and flat field frames}
-		Bias images are frames with the smallest possible exposure time. This exposure time is $0.001s$ for the test procedure camera. Thus, for the construction of the master bias frame, we may choose $N$ as large as$N = 300$.  The bias frames are acquired in a dark setting with no light. This frame should be subtracted from all other data points. The same repeat number is chosen for the master flat-field frame, where the exposure time was chosen to be $10s$.  The flat-field frames are acquired in a lit room setting. 
+		Bias images are frames with the smallest possible exposure time. This exposure time is $0.001s$ for the test procedure detector. Thus, for the construction of the master bias frame, we may choose $N$ as large as$N = 300$.  The bias frames are acquired in a dark setting with no light. This frame should be subtracted from all other data points. The same repeat number is chosen for the master flat-field frame, where the exposure time was chosen to be $10s$.  The flat-field frames are acquired in a lit room setting. 
 		
 		For both the bias frames and the flat-field frames, we choose the $T= -10^\circ$ temperature setpoint chosen above, to reduce dark current.
 		
@@ -73,15 +73,33 @@
 		Readout noise and dark current are expected to be temperature-dependent, and hence, in the entire cooling range of the camera,  images of dark frames were acquired in order to study the behavior of these physical effects. Exposure times are chosen such that the minimal exposure time is chosen for the readout noise images since no photon should have been detected, and since the dark current is time-dependent, and hence should be negligible in this regime. For dark current frames, it is crucial to pick an exposure time such that the dark current contribution is greater (by a considerable amount, higher orders of magnitude) than the readout noise contribution. Dark current follows a \textbf{poissonian} distribution, and to recover this underlying distribution we should pick long exposure times. Since this requires \textbf{very} long times of exposure, it is more practical to pick an exposure time of $10s$, and then mean over $N = 100$ acquired images at this temperature, to reduce the noise contribution, since readout noise should be Gaussian with a zero-centered mean value. 
 		
 		\begin{figure}
-			\centering			\includegraphics[width=0.65\textwidth]{noise_versus_temperature.png}
-			\caption{Dark current and readout noise as a function of temperature. The datapoints have been constructed by acquiring 100 dark frames at exposure times $0.001$ s for readout noise, and $10$s for dark current, at each temperature. Readout noise is computed according to section \ref{sec:rondc}, and dark current according to equation \ref{darkcurrenteq}. }
-			\label{fig:noise}
+			\centering			\includegraphics[width=0.7\textwidth]{darkcurrent_versus_temperature.png}
+			\caption{Dark current as a function of temperature. The datapoints have been constructed by acquiring 100 dark frames at an exposure time of $10$s, at each temperature. Dark current is computed according to equation \ref{darkcurrenteq}. }
+			\label{fig:darkcurrent}
 		\end{figure}
+	\begin{figure}
+		\centering			\includegraphics[width=0.7\textwidth]{readoutnoise_versus_temperature.png}
+		\caption{Readout noise as a function of temperature. The datapoints have been constructed by acquiring 100 dark frames at an exposure time of $0.001$ s, at each temperature. Readout noise is computed according to section \ref{sec:rondc}. }
+		\label{fig:readoutnoise}
+	\end{figure}
 		
-		\subsubsection{Hot pixel treatment}
+		\subsubsection{Hot pixel treatment}\label{sect:hotpix}
 		It is crucial to treat hot pixels. One way to do this is to realize that hot pixels are those pixels in which dark current does not show a linear temporal behavior. Acquiring a \textit{very} long exposure, here chosen as a $1000s$ exposure, and a medium-long (considerably shorter than the former) exposure, here chosen to be a $90s$ exposure, we can study the dark current in each pixel, and determine if there is a linear relationship between the two frames. 
 		
-		Small values of the dark current are most accurately measured in the long exposure image, while the short exposure image will allow for the large dark current values to be accurately measured. We can not that for the test procedure camera, readout noise at $T = -10^\circ$C, is around 3-4 electrons per image. Dividing that by the exposure time in the short exposure image, $90s$, corresponds to a dark current of about $0.33-0.44 e^-/\text{sec}$. It was noted that the dark current contribution should be significantly greater, for us to be able to see the Poissonian distribution of the thermal noise. Thus we may conclude that the smallest measurable dark current in that image will be around twice that \cite{bibid}. We use this value as a filter, below which we do not include the pixel in the following treatment. 
+		\begin{figure}
+			\centering			\includegraphics[width=0.7\textwidth]{hot_pixels_test.png}
+			\caption{Two exposures at $90s$ (first axis) and $1000s$ (second axis). The flattened arrays of data (pixel values of dark current) are sorted, and values of dark current above the threshold described in section \ref{sect:hotpix} are plotted. Outside the range of a linear relation between the two exposures, pixels are considered hot. This is usually above some value of the dark current, here qualitatively judged to be at $7.5 e^-/s$, which was chosen as the cutoff. Any pixel that displays a dark current above this value is defined as a hot pixel, and its index is used to define a mask. This mask can be seen in figure \ref{fig:hotpixmask}.
+			}
+			\label{fig:hotpix}
+		\end{figure}
+		
+		Small values of the dark current are most accurately measured in the long exposure image, while the short exposure image will allow for the large dark current values to be accurately measured. We can not that for the test procedure camera, readout noise at $T = -10^\circ$C, is around 3-4 electrons per image. Dividing that by the exposure time in the short exposure image, $90s$, corresponds to a dark current of about $0.33-0.44 e^-/\text{sec}$. It was noted that the dark current contribution should be significantly greater, for us to be able to see the Poissonian distribution of the thermal noise. Thus we may conclude that the smallest measurable dark current in that image will be around twice that \cite{CCDdatareductionguide}. This treatment can be seen in figure \ref{fig:hotpix}. For this analysis applied to the test procedure detector, a value of $7.5 e^-/s$ was chosen as the cutoff for the definition of a hot pixel. We use this value as a filter, below which we do not include the pixel in the following treatment. Such a mask can be seen in figure \ref{fig:hotpixmask}. $94$ hot pixels were identified applying this analysis on the test procedure detector.
+		
+		\begin{figure}
+			\centering			\includegraphics[width=0.95\textwidth]{hot_pixel_mask.png}
+			\caption{The mask constructed from the hot pixel treatment. For the test procedure detector a cutoff at a value of $7.5 e^-/s$ was chosen. White spots mark the pixels that should be omitted in the other analyses. Here the white spots have been enlarged to display the concept. $94$ hot pixels were identified applying this analysis on the test procedure detector.}
+			\label{fig:hotpixmask}
+		\end{figure}
 		
 		By scatter plotting the pixels in the short exposure against the same pixels in the long exposure, and finding (qualitatively) the range within which the data points seem to follow a nice linear relationship. The remainder, that is those above a certain threshold beyond which they no longer appear to be linear, are considered hot in this sense, and from this information, a mask can be constructed. For the test procedure camera, this value is around a dark current of $7.5 e^-/$sec. These pixels are then marked, and an image mask is formed. This mask marks which pixels to omit in the other analysis.
 		
@@ -106,9 +124,9 @@
 		
 		The flux of the light source at the time of our desired frame then lies somewhere in between, assuming no wild fluctuations or drifts, and a linear change in the time in between acquisition of the two reference frames. These assumptions of local monotonicity of the light source flux are justified by considering figure \ref{fig:lightsourcestability}. In this way we are also able to correct for the potential long temporal drift of the intensity. Let $\bm F(x[s]) = \text{mean}\left(\text{Image}([s])\right)$ be interpreted as the mean flux in an image of exposure time $s$ in seconds, that is, the mean ADU value of an arbitrary image of exposure time $s$. Hence we may correct for the instability, using a 10 second reference exposure, for a given frame via the computation
 		\begin{equation}\label{eq:fluxcorrect_notimecal}
-			\bm F(x [s])_\text{corrected} = \frac{\bm F(x [s])}{\frac12\left[\bm F(10s)_\text{before}+\bm F(10s)_\text{after}\right]} * 10,
+			\bm F(x [s])_\text{corrected} = \frac{\bm F(x [s])}{\frac12\left[\bm F(10s)_\text{before}+\bm F(10s)_\text{after}\right]} * \frac{10s}{x[s]},
 		\end{equation}
-		where the last factor of 10 is to account for the relation between the 10 seconds and 1 second exposure times, in the ideal case where there is no time offset.
+		where the last factor of 10s, divided by the exposure time, is to account for the relation between the 10 seconds and actual exposure times, in the ideal case where there is no time offset.
 		
 		\subsection{Time calibration}
 	Another assumption to be tested pertains to the camera itself: the time calibration of the measurements. A series of measurements were constructed to study if the zero-point was actually at $0s$ and to what precision. A preliminary estimate is gained by acquiring eight frames, noting that, under the assumption that our detector is linear, it should be true that for a given frame $\text{Image}(\text{Exposure time})$, we must expect for a perfect time calibration that 
@@ -171,6 +189,17 @@
 	\end{figure}
 		
 		\subsection{Shutter test}
+		
+		\subsection{Digital saturation}\label{sect:digsat}
+		Saturation of the detector pixels is one of two scenarios: Either we have reached full well of a pixel, or the charge stored in that pixel, when read out and digitized is greater than what can be represented with the number of available bits in the ADC. For the case of the test procedure detector, the ADC has a 16 bit architecture. The maximum value we may represent with 16 bits is an ADU value of $65536$. Consider figure \ref{fig:linearitydim}. There is a significant drop-off around $60000$, and the curve looks asymptotic around a value just above $65000$. Ideal detector design will have full well corresponding to an ADU value below digital saturation. 
+		
+		When a pixel reaches full well, charge will start to 'spill' into neighbouring pixels via. diffusion processes. We call this effect bleeding. We should expect, for true analog saturation, that any pixel will be saturated, since every pixel has been filled, due to natural full well, or because other pixels bled over into the pixel, causing full well. The curve in figure \ref{fig:linearitydim} is the mean behaviour of the pixels. This effect is gradual with increasing exposure times, so for true saturation a single pixel should exhibit a gradual fall off asymptotically toward some ADU value corresponding to full well. If we study the linearity curve of a single pixel, and notice a sudden discontinuous dropoff, we must identify the effect with digital saturation. The linearity curve of a single pixel has been plotted in figure \ref{fig:linearitydimonepix}. We notice a sudden drop-off of the curve, corresponding to the maximum representable value of $16$ bit. This means our detector has issues with digital saturation, and we should ensure that we do not take exposures close to this ADU value.
+		
+		\begin{figure}
+			\centering			\includegraphics[width=0.65\textwidth]{linearity_onepixel.png}
+			\caption{The linearity curve of a single pixel, exhibiting digital saturation, as described in section \ref{sect:digsat}. }
+			\label{fig:linearitydimonepix}
+		\end{figure}
 		
 		\section{Measurement plan}
 		This chapter will outline the test procedure measurement plan that results from the conclusions drawn in the preceding chapter. It will be presented as a step by step guide to obtaining the data. 
@@ -236,6 +265,6 @@
 					\item Compute mean ADU/pixel
 				\end{itemize}
 			\end{itemize}
-		The result of these two analysis may be seen plotted in figure \ref{fig:noise}	
+		The result of these two analysis may be seen plotted in figure \ref{fig:readoutnoise}	and \ref{fig:darkcurrent}.
 		
 \end{document}

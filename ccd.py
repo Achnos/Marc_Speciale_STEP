@@ -103,6 +103,7 @@ class CCD:
     master_flat: np.ndarray = []
 
     hot_pixel_mask: np.ndarray = []
+    hot_pixel_data: np.ndarray = []
 
     linearity: np.ndarray = []
 
@@ -487,7 +488,7 @@ class CCD:
             hdul.close()
 
         meaned_flat /= number_of_images
-        meaned_flat /= np.max(meaned_flat)  # Normalize
+        meaned_flat /= np.mean(meaned_flat)  # Normalize
         
         util.print_txt_file("master_flat.txt", meaned_flat, which_directory=self.master_frames_storage_directory_path)
 
@@ -541,9 +542,7 @@ class CCD:
         potential_hot_pixels                =   long_exposure_image > smallest_measurable_dark_current
 
         # Plot to qualitatively decide upon cutoff
-        plt.plot(short_exposure_image[potential_hot_pixels].flatten(), long_exposure_image[potential_hot_pixels].flatten(), '.', c="k", label='Data')
-        plt.plot([0, 1e3], [0, 1e3], c="dodgerblue", label='Ideal relationship')
-        pp.pubplot("Hot pixels", "dark current ($e^-$/sec), 90 sec exposure time", "dark current ($e^-$/sec), 1000 sec exposure time", "hot_pixels_test.png", xlim=[0.5, 100.0], ylim=[0.5, 20], legendlocation="lower right")
+        self.hot_pixel_data = [short_exposure_image[potential_hot_pixels].flatten(), long_exposure_image[potential_hot_pixels].flatten()]
 
         hot_pixels = (short_exposure_image > 7.5)
         print("  No. of hot pixels:", hot_pixels.sum())
@@ -856,7 +855,6 @@ class CCD:
             index += 1
             if index == num_of_exposures:
                 index = 0
-        print(reordered_data)
 
         for repeat_sequence_id in range(0, num_of_exposures):
             this_actual_exposure_time   =   exposures[repeat_sequence_id]

@@ -55,14 +55,16 @@ def plot_image( image           : np.ndarray    ,
 
     plt.figure(figure_name)
     ax = plt.gca()
-    im = ax.imshow(image, cmap='gray')
+    if scale:
+        im = ax.imshow(image, cmap='jet', vmax = scale)
+    else:
+        im = ax.imshow(image, cmap='gray')
 
     # create an axes on the right side of ax. The width of cax will be 5%
     # of ax and the padding between cax and ax will be fixed at 0.05 inch.
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="5%", pad=0.05)
 
-    plt.rcParams['image.cmap'] = "winter"
     plt.colorbar(im, cax=cax)
 
     plt.style.use(['science', 'ieee', 'vibrant'])
@@ -81,13 +83,13 @@ def plot_image( image           : np.ndarray    ,
     ax.set_xlabel(xlabel, **kwargs)
     ax.set_ylabel(ylabel, **kwargs)
 
-    white_line = mlines.Line2D([], [], color='white', label=input_label)
-    plt.legend(handles=[white_line], bbox_to_anchor=(1, 1), loc="upper left", fancybox=False, framealpha=1, edgecolor='inherit')
+    # white_line = mlines.Line2D([], [], color='white', label=input_label)
+    # plt.legend(handles=[white_line], bbox_to_anchor=(1, 1), loc="upper left", fancybox=False, framealpha=1, edgecolor='inherit')
 
     if show:
         plt.show()
 
-    plt.savefig(filename, dpi=200)
+    plt.savefig(filename, dpi=300)
     plt.close()
 
 
@@ -138,8 +140,10 @@ def pubplot(title           : str           ,
     plt.rc('text', usetex=True)
 
     plt.title(title, {'fontsize': 12, 'fontweight': 'black'})
-    plt.xlabel(xlabel, **kwargs)
-    plt.ylabel(ylabel, **kwargs)
+    plt.xlabel(xlabel, {'fontsize': 10, 'fontweight': 'black'})
+    plt.ylabel(ylabel, {'fontsize': 10, 'fontweight': 'black'})
+    plt.xticks(fontsize=10)
+    plt.yticks(fontsize=10)
 
     if legend:
         plt.legend(loc=legendlocation, fancybox=False, framealpha=1, edgecolor='inherit')

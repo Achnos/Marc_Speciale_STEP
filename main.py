@@ -88,33 +88,15 @@ def noise_plot():
         from the ccd.dark_current_versus_temperature() and ccd.readout_noise_versus_temperature() methods
     """
 
-    # Plot the dark current data, and adjust that axis' parameters
-    dc_axis     =   plt.subplot()
-    dc_line     =   dc_axis.plot(dark_current_data[:, 0], dark_current_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Dark current")
+    plt.plot(dark_current_data[:, 0], dark_current_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Dark current")
+    plt.ylim(-0.1, 3)
+    pp.pubplot("$\mathbf{Dark\;current\;}$ " + atik_camera.name, "Temperature [$^\circ$C]", "$\mathbf{e}^-$/s/pixel", figure_directory + "darkcurrent_versus_temperature.png", legend=True)
 
-    plt.ylim(-0.5, 14)
-    plt.ylabel("Dark current [$\mathbf{e}^-$/sec]", {'fontweight': 'bold'})
-    plt.xlabel("Temperature [$^\circ$C]", {'fontweight': 'bold'})
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
-    # Now plot the readout noise data and adjust the parameters of that axis
-    ron_axis    =   dc_axis.twinx()
-    ron_line    =   ron_axis.plot(readout_noise_data[:, 0], readout_noise_data[:, 1], ls='--', c='dodgerblue', lw=1, marker='o', markersize=3, label="Readout noise")
-
-    plt.ylim(-0.5, 14)
-    ron_axis.spines['right'].set_color('dodgerblue')
-    ron_axis.tick_params(axis='y', colors='dodgerblue')
-    ron_axis.yaxis.label.set_color('dodgerblue')
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    # Create two lines, that we may use to create a legend
-    black_line  =   mlines.Line2D([], [], color='k', label="Dark current")
-    blue_line   =   mlines.Line2D([], [], color='dodgerblue', label="Readout noise")
-
-    plt.legend(handles=[black_line, blue_line])
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    pp.pubplot("$\mathbf{Noise}$ " + atik_camera.name, "Temperature [$^\circ$C]", "Readout Noise [RMS $\mathbf{e}^-$/pixel]", figure_directory + "noise_versus_temperature.png", legend=False)
+    plt.plot(readout_noise_data[:, 0], readout_noise_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Readout noise")
+    plt.ylim(3, 14)
+    pp.pubplot("$\mathbf{Readout\;noise\;}$" + atik_camera.name, "Temperature [$^\circ$C]", "Readout Noise [RMS $\mathbf{e}^-$/pixel]", figure_directory + "readoutnoise_versus_temperature.png", legend=True)
 
 
 def linearity_plot():
@@ -192,6 +174,30 @@ def time_calibration_plot():
     pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "time_calibration_deviations.png", legendlocation="upper left")
 
 
+def shutter_test_plot():
+    filepath = util.get_path(shutter_test[:-1])
+    hdul, header, imagedata = util.fits_handler(filepath)
+    pp.plot_image(imagedata, "Shuttertest", "x", "y", "Camera: " + atik_camera.name, "shutter_test.png", "shutter_test", scale=650)
+
+
+def hot_pixels_plot():
+    hot_pixel_data = atik_camera.hot_pixel_data
+    plt.plot(hot_pixel_data[0], hot_pixel_data[1], '.', c="k", markersize = 2.5, label='Data')
+    plt.plot([0, 1e3], [0, 1e3], c="dodgerblue", label='Ideal relationship')
+    pp.pubplot("Hot pixels", "$e^-$/sec [90s]", "$e^-$/sec [1000s]", "hot_pixels_test.png", xlim=[0.5, 100.0], ylim=[0.5, 20], legendlocation="lower right")
+
+    mask = atik_camera.hot_pixel_mask
+    padding = 10
+    for i in range(padding, len(mask[:,0])):
+        for j in range(padding, len(mask[0,:])):
+            if mask[i, j] == 1:
+                for k in range(i - padding, i):
+                    for l in range(j - padding, j):
+                        mask[k, l] = 1
+
+    pp.plot_image(mask, "Hot pixel mask", "x", "y", "Camera: " + atik_camera.name, "hot_pixel_mask.png", "hot_pixel_mask")
+
+
 def produce_plots():
     """
         A method that will produce all the relevant plots, from the data constructed
@@ -199,12 +205,14 @@ def produce_plots():
     """
 
     # gauss_dist_plot()
+    shutter_test_plot()
+    hot_pixels_plot()
 
     master_frame_plot(atik_camera.master_bias, "master_bias_fig", "$\mathbf{Master\;\;bias\;\;frame}$ "            , atik_camera.name, figure_directory + "master_bias.png"                    )
     master_frame_plot(atik_camera.master_dark, "master_dark_fig", "$\mathbf{Master\;\;dark\;\;current\;\;frame}$ " , atik_camera.name, figure_directory + "master_dark.png",    raisetitle=True)
     master_frame_plot(atik_camera.master_flat, "master_flat_fig", "$\mathbf{Master\;\;flat\;\;field\;\;frame}$ "   , atik_camera.name, figure_directory + "master_flat.png"                    )
 
-    # noise_plot()
+    noise_plot()
     # time_calibration_plot()
     linearity_plot()
 
@@ -222,7 +230,7 @@ if __name__ == '__main__':
     construct_master_flat       =   False
     do_noise_estimation         =   False
     do_time_calibration         =   True
-    do_linearity_estimation     =   True
+    do_linearity_estimation     =   False
 
     # These are the paths at which to save the constructed master frames and data sets
     # from the analysis procedures. If these methods are not used in characterization,
@@ -262,6 +270,7 @@ if __name__ == '__main__':
     bias_sequence               =    util.complete_path(file_directory + "BIAS atik414ex 29-9-21 m10deg"                         , here=False)
     flat_sequence               =    util.complete_path(file_directory + "FLATS atik414ex 29-9-21 m10deg"                        , here=False)
     dark_current_sequence       =    util.complete_path(file_directory + "temp seq noise atik414ex 27-9-21"                      , here=False)
+    dark_current_sequence       =    util.complete_path(file_directory + "preliminary dark current"                              , here=False)
     readout_noise_sequence      =    util.complete_path(file_directory + "ron seq atik414ex 27-9-21"                             , here=False)
     # linearity_sequence          =    util.complete_path(file_directory + "total linearity with reference"                        , here=False)
     linearity_sequence_20C      =    util.complete_path(file_directory + "Linearity at 20 degrees celcius atik414ex 29-9-21"     , here=False)

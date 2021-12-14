@@ -1,18 +1,63 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{atik414specs}
 Atik cameras spec sheets.
 \newblock \url{https://www.atik-cameras.com/specification-tables/}.
 \newblock Accessed: 8th October 2021.
 
+\bibitem{teledyneart}
+How a ccd image sensor works – information pamphlet, January 2020.
+\newblock Accessed: December 13th 2021,
+  \url{https://www.teledyneimaging.com/media/1300/2020-01-22_e2v_how-a-charge-coupled-device-works_web.pdf}.
+
+\bibitem{ccdwiki}
+Wikipedia contributors.
+\newblock Charge-coupled device.
+\newblock Accessed: 13th December 2021,
+  \url{https://en.wikipedia.org/wiki/Charge-coupled_device}.
+
+\bibitem{CCDdatareductionguide}
+Matthew Craig.
+\newblock Ccd data reduction guide, 2020.
+\newblock Last visited Nov. 26, 2021.
+
+\bibitem{cameraisadetector}
+Todd~(2009) Gustavson.
+\newblock {\em Camera: a history of photography from daguerreotype to digital}.
+\newblock New York: Sterling Publishing Co., Inc.
+
 \bibitem{solidstatephysicsbook}
 Philip Hoffmann.
 \newblock {\em Solid State Physics. An Introduction 2nd ed.}
 \newblock Wiley-VCH Berlin, 2015.
 
+\bibitem{IEEMOS}
+Eric R. Fossum; Donald~B. Hondongwa.
+\newblock A review of the pinned photodiode for ccd and cmos image sensors.
+\newblock {\em IEEE Journal of the Electron Devices}, 2, May 2014.
+\newblock Accessed: 9th December 2021.
+
 \bibitem{handbookofccdastronomy}
 S.~Howell.
 \newblock {\em Handbook of CCD Astronomy}.
 \newblock Cambridge: Cambridge University Press, 2nd edition, 2006.
+
+\bibitem{comphistmus}
+David Laws.
+\newblock Who invented the transistor?
+\newblock December 2013.
+\newblock Accessed: 13th December 2021.
+
+\bibitem{obsAstMichrichReadout}
+Michael Richmond.
+\newblock Spsp 373: Observational astronomy.
+\newblock Accesed: 13th December 2021,
+  \url{http://spiff.rit.edu/classes/phys373/lectures/readout/readout.html}.
+
+\bibitem{photonnoise}
+Jonas Zmuidzinas.
+\newblock Thermal noise and correlations in photon detection.
+\newblock {\em Applied Optics}, 42, 2003.
+\newblock Accessed: 13th December 2021.
 
 \end{thebibliography}
