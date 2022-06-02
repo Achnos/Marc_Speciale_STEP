@@ -1,0 +1,271 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}       By Marc Breiner Sørensen        \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Implemented:           August    2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Last edit:      29th   October   2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k+kn}{import} \PYG{n+nn}{os}
+\PYG{k+kn}{import} \PYG{n+nn}{pathlib}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{astropy}
+\PYG{k+kn}{from} \PYG{n+nn}{astropy.io} \PYG{k+kn}{import} \PYG{n}{fits}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k+kn}{as} \PYG{n+nn}{plt}
+\PYG{k+kn}{from} \PYG{n+nn}{pathlib} \PYG{k+kn}{import} \PYG{n}{Path}\PYG{p}{,} \PYG{n}{PureWindowsPath}\PYG{p}{,} \PYG{n}{PurePosixPath}
+
+
+\PYG{k}{def} \PYG{n+nf}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{data\PYGZus{}to\PYGZus{}print}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o+ow}{or} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{which\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}  \PYG{o}{=}  \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Simple method to open a file, print the data from an}
+\PYG{l+s+sd}{np.ndarray to it, and close the file again}
+
+\PYG{l+s+sd}{:param str filename:}
+\PYG{l+s+sd}{\PYGZhy{} String representing the filename}
+\PYG{l+s+sd}{:param np.ndarray or list data\PYGZus{}to\PYGZus{}print:}
+\PYG{l+s+sd}{\PYGZhy{} np.ndarray holding the data to print}
+\PYG{l+s+sd}{:param str which\PYGZus{}directory:}
+\PYG{l+s+sd}{\PYGZhy{} String that represents the path of a directory other than the current one}
+\PYG{l+s+sd}{where the default is none, meaning current directory}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k}{if} \PYG{n}{which\PYGZus{}directory} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n+nb}{file}  \PYG{o}{=}  \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{which\PYGZus{}directory} \PYG{o}{+} \PYG{n}{filename}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}w\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{savetxt}\PYG{p}{(}\PYG{n+nb}{file}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{data\PYGZus{}to\PYGZus{}print}\PYG{p}{),} \PYG{n}{newline} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{file}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n+nb}{file}  \PYG{o}{=}  \PYG{n+nb}{open}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}w\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{savetxt}\PYG{p}{(}\PYG{n+nb}{file}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{data\PYGZus{}to\PYGZus{}print}\PYG{p}{),} \PYG{n}{newline} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{file}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{This function returns the absolute path of a file}
+
+\PYG{l+s+sd}{:parameter str path:}
+\PYG{l+s+sd}{\PYGZhy{} path to the file, specified as a string datatype}
+\PYG{l+s+sd}{:returns: PureWindowsPath or PurePosixPath object:}
+\PYG{l+s+sd}{\PYGZhy{} type depends on the operating system in use}
+
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}project\PYGZus{}root}\PYG{p}{()} \PYG{o}{\PYGZhy{}\PYGZgt{}} \PYG{n}{Path}\PYG{p}{:}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}Returns project root folder.\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{return} \PYG{n}{Path}\PYG{p}{(}\PYG{n+nv+vm}{\PYGZus{}\PYGZus{}file\PYGZus{}\PYGZus{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{parent}\PYG{o}{.}\PYG{n}{parent}
+
+\PYG{k}{return} \PYG{n}{get\PYGZus{}project\PYGZus{}root}\PYG{p}{()}\PYG{o}{.}\PYG{n}{joinpath}\PYG{p}{(}\PYG{n}{path}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{dir\PYGZus{}path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{here}\PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=}  \PYG{n+nb+bp}{True}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method to complete a path, given only a string that represents}
+\PYG{l+s+sd}{the name of a directory in the same folder as this program}
+
+\PYG{l+s+sd}{:parameter str dir\PYGZus{}path:}
+\PYG{l+s+sd}{\PYGZhy{} path to the directory, specified as a string datatype}
+\PYG{l+s+sd}{:param here:}
+\PYG{l+s+sd}{\PYGZhy{} If not using the current directory, send as False, and}
+\PYG{l+s+sd}{give a full path as dir\PYGZus{}path}
+\PYG{l+s+sd}{:returns str completed\PYGZus{}path:}
+\PYG{l+s+sd}{\PYGZhy{} The completed path as a string}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{if} \PYG{n}{here}\PYG{p}{:}
+\PYG{n}{path\PYGZus{}here}        \PYG{o}{=}    \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{pathlib}\PYG{o}{.}\PYG{n}{Path}\PYG{p}{()}\PYG{o}{.}\PYG{n}{absolute}\PYG{p}{())}
+\PYG{n}{completed\PYGZus{}path}   \PYG{o}{=}    \PYG{n}{path\PYGZus{}here} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}} \PYG{o}{+} \PYG{n}{dir\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{completed\PYGZus{}path}   \PYG{o}{=}    \PYG{n}{dir\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}}
+
+\PYG{k}{return} \PYG{n}{completed\PYGZus{}path}
+
+
+\PYG{k}{def} \PYG{n+nf}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{:} \PYG{n}{PureWindowsPath} \PYG{o+ow}{or} \PYG{n}{PurePosixPath}\PYG{p}{,} \PYG{n}{scalelimit}\PYG{p}{:} \PYG{n+nb}{float}  \PYG{o}{=}  \PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{show}\PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=}  \PYG{n+nb+bp}{False}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{This function handles the loading and plotting of a FITS file}
+
+\PYG{l+s+sd}{:parameter path filepath:}
+\PYG{l+s+sd}{\PYGZhy{} The absolute path to the file of interest}
+\PYG{l+s+sd}{:parameter dbl scalelimit:}
+\PYG{l+s+sd}{\PYGZhy{} Upper limit of the normalization of the image produced, numerical value}
+\PYG{l+s+sd}{:returns:}
+\PYG{l+s+sd}{\PYGZhy{} hdulist, an HDU list, an astropy type}
+\PYG{l+s+sd}{\PYGZhy{} header, the header information from the HDU list}
+\PYG{l+s+sd}{\PYGZhy{} imagedata, 2D list (matrix) of image data numerical values}
+\PYG{l+s+sd}{:parameter bool show:}
+\PYG{l+s+sd}{\PYGZhy{} A bool that enables showing of the images if set to true}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{hdulist}      \PYG{o}{=}    \PYG{n}{astropy}\PYG{o}{.}\PYG{n}{io}\PYG{o}{.}\PYG{n}{fits}\PYG{o}{.}\PYG{n}{open}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{header}       \PYG{o}{=}    \PYG{n}{hdulist}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{header}
+\PYG{n}{imagedata}    \PYG{o}{=}    \PYG{n}{hdulist}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{data}
+
+\PYG{k}{if} \PYG{n}{show}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{imshow}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{,} \PYG{n}{vmin} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{vmax} \PYG{o}{=} \PYG{n}{scalelimit}\PYG{p}{,} \PYG{n}{cmap} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}gray\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{colorbar}\PYG{p}{()}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}test.pdf\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{hdulist}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}
+
+
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}dims}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{:} \PYG{n}{PureWindowsPath} \PYG{o+ow}{or} \PYG{n}{PurePosixPath}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{This is a helper function that returns the dimensions of}
+\PYG{l+s+sd}{the data we are interested in, found at the location of}
+\PYG{l+s+sd}{filepath}
+
+\PYG{l+s+sd}{:parameter filepath:}
+\PYG{l+s+sd}{\PYGZhy{} The path of the (series of) data that we are}
+\PYG{l+s+sd}{interested in obtaining the dimensionality of}
+\PYG{l+s+sd}{:returns tuple extracted\PYGZus{}dims:}
+\PYG{l+s+sd}{\PYGZhy{} A tuple of [a, b, ....] fit for numpy, that}
+\PYG{l+s+sd}{represents the dimensionality of the data}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}  \PYG{o}{=}  \PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{extracted\PYGZus{}dims}  \PYG{o}{=}  \PYG{n}{imagedata}\PYG{o}{.}\PYG{n}{shape}
+\PYG{k}{return} \PYG{n}{extracted\PYGZus{}dims}
+
+
+\PYG{k}{def} \PYG{n+nf}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{dirpath}\PYG{p}{:} \PYG{n}{PureWindowsPath} \PYG{o+ow}{or} \PYG{n}{PurePosixPath}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{This is a helper function that returns a list of filenames}
+\PYG{l+s+sd}{of the data, in the data series found in the directory}
+\PYG{l+s+sd}{specified by dirpath.}
+
+\PYG{l+s+sd}{:parameter dirpath:}
+\PYG{l+s+sd}{\PYGZhy{} The path of the directory containing the (series of)}
+\PYG{l+s+sd}{data that we wish to list the filenames of}
+\PYG{l+s+sd}{:returns list data\PYGZus{}list:}
+\PYG{l+s+sd}{\PYGZhy{} A list of filenames found in the directory specified}
+\PYG{l+s+sd}{by dirpath}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{data\PYGZus{}list}  \PYG{o}{=}  \PYG{n}{os}\PYG{o}{.}\PYG{n}{listdir}\PYG{p}{(}\PYG{n}{dirpath}\PYG{p}{)}
+\PYG{n}{data\PYGZus{}list}\PYG{o}{.}\PYG{n}{sort}\PYG{p}{()}
+
+\PYG{k}{return} \PYG{n}{data\PYGZus{}list}
+
+
+\PYG{k}{def} \PYG{n+nf}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{p}{:}       \PYG{n+nb}{int}     \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{p}{:}          \PYG{n+nb}{int}     \PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{:} \PYG{n+nb}{list}    \PYG{p}{,}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{p}{:}              \PYG{n+nb}{list}        \PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that will reorder the data\PYGZus{}sequence. When loaded, data from a folder}
+\PYG{l+s+sd}{is sorted according to names. It is instead necessary to reorder the data}
+\PYG{l+s+sd}{in a structured format, where repeats of a data point (the repeat sequence) is}
+\PYG{l+s+sd}{grouped together.}
+
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input:}
+\PYG{l+s+sd}{\PYGZhy{} The number of repeat sequences}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input:}
+\PYG{l+s+sd}{\PYGZhy{} The number of repeats in a repeat sequence (the length of the sequence)}
+\PYG{l+s+sd}{:parameter list where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string:}
+\PYG{l+s+sd}{\PYGZhy{} An index telling the method where to find the repeat num in the filename string}
+\PYG{l+s+sd}{:parameter list data\PYGZus{}series\PYGZus{}list:}
+\PYG{l+s+sd}{\PYGZhy{} A list of the data series, constructed from the list\PYGZus{}data() method above}
+\PYG{l+s+sd}{:returns:}
+\PYG{l+s+sd}{\PYGZhy{} Restructured data set of repeat sequences, where repeats of a datapoint}
+\PYG{l+s+sd}{are grouped together in ascending order.}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{reordered\PYGZus{}data}  \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{empty}\PYG{p}{([}\PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{p}{],} \PYG{n}{dtype} \PYG{o}{=} \PYG{n+nb}{object}\PYG{p}{)}
+
+\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str}   \PYG{o}{=}    \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}     \PYG{o}{=}    \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{index}  \PYG{o}{=}  \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{p}{:}
+\PYG{n}{repeat\PYGZus{}num}  \PYG{o}{=}  \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str} \PYG{p}{:} \PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{])}
+\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{index}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}num}\PYG{p}{]}  \PYG{o}{=}  \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{index} \PYG{o}{+} \PYG{o}{=}  \PYG{l+m+mi}{1}
+\PYG{k}{if} \PYG{n}{index}  \PYG{o}{=}  \PYG{o}{=}  \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{p}{:}
+\PYG{n}{index}  \PYG{o}{=}  \PYG{l+m+mi}{0}
+
+\PYG{k}{return} \PYG{n}{reordered\PYGZus{}data}
+
+
+\PYG{k}{def} \PYG{n+nf}{compute\PYGZus{}errorbar}\PYG{p}{(}\PYG{n}{filelist}\PYG{p}{:} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{dirpath}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will construct errorbars for a data sequence.}
+\PYG{l+s+sd}{If a series of data consists of N datapoints, each constructed}
+\PYG{l+s+sd}{from a repeat sequence of M images, this method will compute}
+\PYG{l+s+sd}{the M individual image means, associate these with a gaussian}
+\PYG{l+s+sd}{distribution, of which the width will represent the error in}
+\PYG{l+s+sd}{the n\PYGZsq{}th data points of the N lenght data series.}
+
+\PYG{l+s+sd}{:parameter list filelist:}
+\PYG{l+s+sd}{\PYGZhy{} A list of images in the repeat sequence, constructed by}
+\PYG{l+s+sd}{the list\PYGZus{}data() method above}
+\PYG{l+s+sd}{:parameter str dirpath:}
+\PYG{l+s+sd}{\PYGZhy{} The path of the directory containing the (series of)}
+\PYG{l+s+sd}{data that we wish to list the filenames of}
+\PYG{l+s+sd}{:returns float errorbar:}
+\PYG{l+s+sd}{\PYGZhy{} Computed errorbar for the datapoint that is to be constructed}
+\PYG{l+s+sd}{from the M images in the repeat sequence}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}  \PYG{o}{=}  \PYG{p}{[]}
+
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{filelist}\PYG{p}{:}
+\PYG{n}{filepath}  \PYG{o}{=}  \PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{dirpath} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}  \PYG{o}{=}  \PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{))}
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{n}{errorbar}  \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}\PYG{p}{))}
+\PYG{k}{return} \PYG{n}{errorbar}
+
+
+\PYG{k}{def} \PYG{n+nf}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{filelist}\PYG{p}{:} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{dirpath}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{This is a helper function that returns the mean image from}
+\PYG{l+s+sd}{a data series of images in .fit(s) file format. Use list\PYGZus{}data()}
+\PYG{l+s+sd}{to generate parameter filelist}
+
+\PYG{l+s+sd}{:parameter filelist:}
+\PYG{l+s+sd}{\PYGZhy{} A list containing filenames to be imported by}
+\PYG{l+s+sd}{fits\PYGZus{}handler() as images, type np.ndarray numpy arrays,}
+\PYG{l+s+sd}{which will then be meaned over. Generate with list\PYGZus{}data()}
+\PYG{l+s+sd}{:parameter dirpath:}
+\PYG{l+s+sd}{\PYGZhy{} The path of the directory containing the images we wish}
+\PYG{l+s+sd}{to mean over. A sequence of data in the form of .fit(s)}
+\PYG{l+s+sd}{files. Use list\PYGZus{}data() in conjunction to obtain filelist}
+\PYG{l+s+sd}{:returns np.ndarray mean\PYGZus{}image\PYGZus{}array:}
+\PYG{l+s+sd}{\PYGZhy{} The mean image constructed form the data series}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{dim\PYGZus{}path}             \PYG{o}{=}    \PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{dirpath} \PYG{o}{+} \PYG{n}{filelist}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{image\PYGZus{}shape}          \PYG{o}{=}    \PYG{n}{get\PYGZus{}dims}\PYG{p}{(}\PYG{n}{dim\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{number\PYGZus{}of\PYGZus{}images}     \PYG{o}{=}    \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{filelist}\PYG{p}{)}
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array}     \PYG{o}{=}    \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{image\PYGZus{}shape}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{filelist}\PYG{p}{:}
+\PYG{n}{filepath}                     \PYG{o}{=}    \PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{dirpath} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}      \PYG{o}{=}    \PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{+} \PYG{o}{=}  \PYG{n}{imagedata}
+
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{/} \PYG{o}{=}  \PYG{n}{number\PYGZus{}of\PYGZus{}images}
+\PYG{k}{return} \PYG{n}{mean\PYGZus{}image\PYGZus{}array}
+
+
+\PYG{k}{def} \PYG{n+nf}{gaussian}\PYG{p}{(}\PYG{n}{data}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o+ow}{or} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{height}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{mean}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{width}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that represents a gaussian/normal distribution. For a list}
+\PYG{l+s+sd}{of data the gaussian function value is computed at each bin value.}
+\PYG{l+s+sd}{The distribution is defined according to the wikipedia article on}
+\PYG{l+s+sd}{normal distributions.}
+
+\PYG{l+s+sd}{:parameter np.ndarray or list data:}
+\PYG{l+s+sd}{\PYGZhy{} Data set from which to construct distribution}
+\PYG{l+s+sd}{:parameter float height:}
+\PYG{l+s+sd}{\PYGZhy{} The normalization/heigh of the distribution at the mean}
+\PYG{l+s+sd}{:parameter float mean:}
+\PYG{l+s+sd}{\PYGZhy{} The mean, around which the distribution is centered}
+\PYG{l+s+sd}{:parameter float width:}
+\PYG{l+s+sd}{\PYGZhy{} The width of the distribution, around the mean, defined}
+\PYG{l+s+sd}{from the standard deviation of the distribution}
+\PYG{l+s+sd}{:returns:}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{gaussian\PYGZus{}distribution}    \PYG{o}{=}    \PYG{n}{height} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{p}{((}\PYG{n}{data} \PYG{o}{\PYGZhy{}} \PYG{n}{mean}\PYG{p}{)} \PYG{o}{**} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{p}{(}\PYG{n}{width} \PYG{o}{**} \PYG{l+m+mi}{2}\PYG{p}{)))}
+
+\PYG{k}{return} \PYG{n}{gaussian\PYGZus{}distribution}
+\end{Verbatim}

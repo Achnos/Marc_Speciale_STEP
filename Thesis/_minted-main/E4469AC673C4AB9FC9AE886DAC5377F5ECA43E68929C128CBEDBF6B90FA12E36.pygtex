@@ -1,0 +1,312 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}       By Marc Breiner Sørensen        \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Implemented:           August    2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Last edit:           25th  May   2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k+kn}{import} \PYG{n+nn}{utilities} \PYG{k+kn}{as} \PYG{n+nn}{util}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{ccd}
+\PYG{k+kn}{import} \PYG{n+nn}{plots}
+\PYG{k+kn}{import} \PYG{n+nn}{mission\PYGZus{}requirements} \PYG{k+kn}{as} \PYG{n+nn}{mreq}
+
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZsq{}}\PYG{p}{:}
+\PYG{c+c1}{\PYGZsh{} These bools can be changed in order to change the characterization procedure. For example  if \PYGZdq{}construct\PYGZus{}master\PYGZus{}bias\PYGZdq{} is set to \PYGZdq{}True\PYGZdq{}, then the characterization method will construct a new master bias frame from the data fed to the procedure. If these are set to \PYGZdq{}False\PYGZdq{} data from previous runs are used instead.}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}bias\PYGZus{}atik}       \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}dark\PYGZus{}atik}       \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}flat\PYGZus{}atik}       \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation\PYGZus{}atik}         \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation\PYGZus{}atik}   \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}old\PYGZus{}time\PYGZus{}calibration\PYGZus{}atik}     \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation\PYGZus{}atik}     \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{produce\PYGZus{}plots\PYGZus{}atik}               \PYG{o}{=}   \PYG{n+nb+bp}{False}
+
+\PYG{n}{construct\PYGZus{}master\PYGZus{}bias\PYGZus{}AVT}        \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}dark\PYGZus{}AVT}        \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}flat\PYGZus{}AVT}        \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation\PYGZus{}AVT}          \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation\PYGZus{}AVT}    \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}old\PYGZus{}time\PYGZus{}calibration\PYGZus{}AVT}      \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation\PYGZus{}AVT}      \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{n}{produce\PYGZus{}plots\PYGZus{}AVT}                \PYG{o}{=}   \PYG{n+nb+bp}{False}
+
+\PYG{c+c1}{\PYGZsh{} These are the paths at which to save the constructed master frames and data sets from the analysis procedures. If these methods are not used in characterization, these paths are used as paths at which to collect the data}
+\PYG{n}{analysis\PYGZus{}data\PYGZus{}path}  \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/home/marc/Dropbox/STEP\PYGZus{}Speciale\PYGZus{}Marc/data\PYGZus{}from\PYGZus{}characterization/\PYGZdq{}}
+\PYG{n}{master\PYGZus{}frame\PYGZus{}path}   \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}/home/marc/Documents/Master\PYGZus{}frames/\PYGZdq{}}
+
+\PYG{c+c1}{\PYGZsh{} Define the path of the data and where to put the figures}
+\PYG{n}{file\PYGZus{}directory}      \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}/home/marc/Documents/FITS\PYGZus{}files/\PYGZdq{}}
+\PYG{n}{figure\PYGZus{}directory}    \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}/home/marc/Dropbox/STEP\PYGZus{}Speciale\PYGZus{}Marc/figures/\PYGZdq{}}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Directory of data:    \PYGZdq{}}\PYG{p}{,} \PYG{n}{file\PYGZus{}directory}        \PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Directory of figures: \PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Initialize the camera in question}
+\PYG{n}{atik\PYGZus{}camera} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{CCD}\PYG{p}{(} \PYG{n}{name}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}Atik 414EX mono\PYGZdq{}}  \PYG{p}{,}
+\PYG{n}{gain\PYGZus{}factor}                  \PYG{o}{=}   \PYG{l+m+mf}{0.28}               \PYG{p}{,}
+\PYG{n}{analysis\PYGZus{}data\PYGZus{}path}           \PYG{o}{=}   \PYG{n}{analysis\PYGZus{}data\PYGZus{}path} \PYG{p}{,}
+\PYG{n}{master\PYGZus{}frame\PYGZus{}path}            \PYG{o}{=}   \PYG{n}{master\PYGZus{}frame\PYGZus{}path}  \PYG{p}{,}
+\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}atikcam\PYGZdq{}}         \PYG{p}{,}
+\PYG{n}{figure\PYGZus{}directory\PYGZus{}path}        \PYG{o}{=}   \PYG{n}{figure\PYGZus{}directory}    \PYG{p}{)}
+
+\PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{load\PYGZus{}ccd\PYGZus{}characterization\PYGZus{}data}\PYG{p}{(}
+	\PYG{n}{construct\PYGZus{}master\PYGZus{}bias} 		\PYG{o}{=}  \PYG{n}{construct\PYGZus{}master\PYGZus{}bias\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{construct\PYGZus{}master\PYGZus{}dark}       \PYG{o}{=}   \PYG{n}{construct\PYGZus{}master\PYGZus{}dark\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{construct\PYGZus{}master\PYGZus{}flat}       \PYG{o}{=}   \PYG{n}{construct\PYGZus{}master\PYGZus{}flat\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}         \PYG{o}{=}   \PYG{n}{do\PYGZus{}noise\PYGZus{}estimation\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}time\PYGZus{}calibration}         \PYG{o}{=}   \PYG{n}{do\PYGZus{}old\PYGZus{}time\PYGZus{}calibration\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation}     \PYG{o}{=}   \PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation}   \PYG{o}{=}   \PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}bias\PYGZus{}frame}   \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}bias\PYGZdq{}} \PYG{o}{+} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}dark\PYGZus{}frame}   \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}dark\PYGZdq{}} \PYG{o}{+} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}flat\PYGZus{}frame}   \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}flat\PYGZdq{}} \PYG{o}{+} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}linearity\PYGZus{}data}      \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}dark\PYGZus{}current\PYGZus{}data}   \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}readout\PYGZus{}noise\PYGZus{}data}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}
+\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Get the paths of the individual data sequences}
+\PYG{n}{shutter\PYGZus{}test}                      \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}laser\PYGZus{}000(2).fit\PYGZdq{}}                \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{bias\PYGZus{}sequence\PYGZus{}AVT}                 \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}AVT\PYGZus{}camera/Bias\PYGZdq{}}                 \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{bias\PYGZus{}sequence\PYGZus{}atik}                \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}BIAS atik414ex 29\PYGZhy{}9\PYGZhy{}21 m10deg\PYGZdq{}}   \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{flat\PYGZus{}sequence\PYGZus{}AVT}                 \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}AVT\PYGZus{}camera/Flats\PYGZdq{}} 				  \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{flat\PYGZus{}sequence\PYGZus{}atik}                \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}FLATS atik414ex 29\PYGZhy{}9\PYGZhy{}21 m10deg\PYGZdq{}}  \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}sequence\PYGZus{}atik}        \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}temp seq noise atik414ex 27\PYGZhy{}9\PYGZhy{}21\PYGZdq{}}\PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} dark\PYGZus{}current\PYGZus{}sequence           =    util.complete\PYGZus{}path(file\PYGZus{}directory + \PYGZdq{}preliminary dark current\PYGZdq{}        , here=False)}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}sequence\PYGZus{}atik}       \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}ron seq atik414ex 27\PYGZhy{}9\PYGZhy{}21\PYGZdq{}}       \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} linearity\PYGZus{}sequence              =    util.complete\PYGZus{}path(file\PYGZus{}directory + \PYGZdq{}total linearity with reference\PYGZdq{}  , here=False)}
+\PYG{c+c1}{\PYGZsh{} linearity\PYGZus{}sequence\PYGZus{}20C          =    util.complete\PYGZus{}path(file\PYGZus{}directory + \PYGZdq{}Linearity at 20 degrees celcius atik414ex 29\PYGZhy{}9\PYGZhy{}21\PYGZdq{}     , here=False)}
+\PYG{n}{linearity\PYGZus{}sequence\PYGZus{}AVT}            \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}AVT\PYGZus{}camera/linearity\PYGZdq{}}            \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{linearity\PYGZus{}sequence\PYGZus{}atik}           \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}linearity dimmed\PYGZdq{}}                \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{time\PYGZus{}calibration\PYGZus{}sequence\PYGZus{}atik}    \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}time calibration 15\PYGZhy{}11\PYGZhy{}21\PYGZdq{}}       \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{new\PYGZus{}timecal\PYGZus{}sequence\PYGZus{}AVT}          \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}AVT\PYGZus{}camera/timecal\PYGZdq{}}              \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{new\PYGZus{}timecal\PYGZus{}sequence\PYGZus{}atik}         \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}new time calibration\PYGZdq{}}            \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}sequence\PYGZus{}AVT}            \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}AVT\PYGZus{}camera/hotpix\PYGZdq{}}               \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}sequence\PYGZus{}atik}           \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}hotpix atik414ex 27\PYGZhy{}9\PYGZhy{}21\PYGZdq{}}        \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{zeropoint\PYGZus{}sequence\PYGZus{}atik}           \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}zeropoint value\PYGZdq{}}                 \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{gaintemp\PYGZus{}sequence\PYGZus{}atik}            \PYG{o}{=}    \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}gain vs temp\PYGZdq{}}                    \PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{} exposures = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])}
+\PYG{n}{exposures\PYGZus{}atik} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{7}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{20}\PYG{p}{,} \PYG{l+m+mi}{30}\PYG{p}{,} \PYG{l+m+mi}{40}\PYG{p}{,} \PYG{l+m+mi}{50}\PYG{p}{,} \PYG{l+m+mi}{60}\PYG{p}{,} \PYG{l+m+mi}{70}\PYG{p}{,} \PYG{l+m+mi}{80}\PYG{p}{,} \PYG{l+m+mi}{90}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{,} \PYG{l+m+mi}{110}\PYG{p}{,} \PYG{l+m+mi}{120}\PYG{p}{,} \PYG{l+m+mi}{130}\PYG{p}{,} \PYG{l+m+mi}{140}\PYG{p}{,} \PYG{l+m+mi}{150}\PYG{p}{,} \PYG{l+m+mi}{160}\PYG{p}{,} \PYG{l+m+mi}{170}\PYG{p}{,} \PYG{l+m+mi}{180}\PYG{p}{,} \PYG{l+m+mi}{190}\PYG{p}{,} \PYG{l+m+mi}{200}\PYG{p}{,} \PYG{l+m+mi}{210}\PYG{p}{,} \PYG{l+m+mi}{220}\PYG{p}{,} \PYG{l+m+mi}{230}\PYG{p}{,} \PYG{l+m+mi}{240}\PYG{p}{])}
+
+\PYG{c+c1}{\PYGZsh{} Construct data sequence class instances for use with the CCD class}
+\PYG{n}{bias\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}  		
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{bias\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mf}{0.001}
+\PYG{p}{)}
+\PYG{n}{flat\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{flat\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mi}{10}
+\PYG{p}{)}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{16}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{100}
+\PYG{p}{)}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{16}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{100}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mi}{10}
+\PYG{p}{)}
+\PYG{n}{linearity\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{27}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{10}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mi}{10}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}list\PYGZus{}input}         \PYG{o}{=}   \PYG{n}{exposures\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{milliseconds\PYGZus{}input}          \PYG{o}{=}   \PYG{n+nb+bp}{False}
+\PYG{p}{)}
+\PYG{n}{old\PYGZus{}time\PYGZus{}calibration\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{time\PYGZus{}calibration\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{20}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{10}
+\PYG{p}{)}
+\PYG{n}{new\PYGZus{}timecal\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{new\PYGZus{}timecal\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{10}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}list\PYGZus{}input}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{])}
+\PYG{p}{)}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   	\PYG{n}{hot\PYGZus{}pixel\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{2}\PYG{p}{,}
+	\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{p}{[}\PYG{l+m+mi}{90}\PYG{p}{,} \PYG{l+m+mi}{1000}\PYG{p}{],}
+	\PYG{n}{cutoff\PYGZus{}input}                \PYG{o}{=}   \PYG{l+m+mf}{7.5}
+\PYG{p}{)}
+\PYG{n}{zeropoint\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   	\PYG{n}{zeropoint\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{8}\PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{100}
+\PYG{p}{)}
+\PYG{n}{gaintemp\PYGZus{}dataseq\PYGZus{}atik} \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(}  \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}
+	\PYG{n}{gaintemp\PYGZus{}sequence\PYGZus{}atik}        \PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{16}                              \PYG{p}{,}
+	\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{20}                              \PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{n}{characterization\PYGZus{}atik} \PYG{o}{=} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{characterize}\PYG{p}{(}
+	\PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}               \PYG{o}{=}   \PYG{n}{bias\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{flat\PYGZus{}data\PYGZus{}sequence}               \PYG{o}{=}   \PYG{n}{flat\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}sequence}       \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}sequence}      \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}          \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}          \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence}         \PYG{o}{=}   \PYG{n}{zeropoint\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{old\PYGZus{}timecal\PYGZus{}data\PYGZus{}sequence}        \PYG{o}{=}   \PYG{n}{old\PYGZus{}time\PYGZus{}calibration\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{time\PYGZus{}calibration\PYGZus{}data\PYGZus{}sequence}   \PYG{o}{=}   \PYG{n}{new\PYGZus{}timecal\PYGZus{}dataseq\PYGZus{}atik}\PYG{p}{,}
+	\PYG{n}{gain\PYGZus{}data\PYGZus{}sequence}               \PYG{o}{=}   \PYG{n}{gaintemp\PYGZus{}dataseq\PYGZus{}atik}
+\PYG{p}{)}
+
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}atik}       \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}atik}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}atik}      \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}atik}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}calibration\PYGZus{}atik}        \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}atik}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{linearity\PYGZus{}data\PYGZus{}atik}          \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}atik}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}
+\PYG{n}{gain\PYGZus{}data\PYGZus{}atik}               \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}atik}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{ideal\PYGZus{}linear\PYGZus{}relation\PYGZus{}atik   =   characterization\PYGZus{}atik[3]}
+\PYG{l+s+sd}{linearity\PYGZus{}deviations\PYGZus{}atik    =   characterization\PYGZus{}atik[4]}
+\PYG{l+s+sd}{linearity\PYGZus{}dev\PYGZus{}err\PYGZus{}atik       =   characterization\PYGZus{}atik[5]}
+\PYG{l+s+sd}{stabillity\PYGZus{}data\PYGZus{}atik         =   characterization\PYGZus{}atik[6]}
+\PYG{l+s+sd}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp\PYGZus{}atik       =   characterization\PYGZus{}atik[7]}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{k}{if} \PYG{n}{produce\PYGZus{}plots\PYGZus{}atik}\PYG{p}{:}
+\PYG{n}{plots}\PYG{o}{.}\PYG{n}{produce\PYGZus{}plots}\PYG{p}{(}\PYG{n}{atik\PYGZus{}camera}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data\PYGZus{}atik}\PYG{p}{,} \PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}atik}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}atik}\PYG{p}{,} \PYG{n}{gain\PYGZus{}data\PYGZus{}atik}\PYG{p}{,} \PYG{n}{time\PYGZus{}calibration\PYGZus{}atik}\PYG{p}{,} \PYG{n}{hot\PYGZus{}pixels}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{shutter\PYGZus{}test}\PYG{o}{=}\PYG{n}{shutter\PYGZus{}test}\PYG{p}{,} \PYG{n}{lightsource\PYGZus{}stabillity}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{bias\PYGZus{}sequence}\PYG{o}{=}\PYG{n}{bias\PYGZus{}sequence\PYGZus{}atik}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{n}{AVT\PYGZus{}camera}  \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{CCD}\PYG{p}{(}
+	\PYG{n}{name}                         \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}AVT GC660M\PYGZdq{}}       \PYG{p}{,}
+	\PYG{n}{gain\PYGZus{}factor}                  \PYG{o}{=}   \PYG{l+m+mf}{5.3}                \PYG{p}{,}
+	\PYG{n}{analysis\PYGZus{}data\PYGZus{}path}           \PYG{o}{=}   \PYG{n}{analysis\PYGZus{}data\PYGZus{}path} \PYG{p}{,}
+	\PYG{n}{master\PYGZus{}frame\PYGZus{}path}            \PYG{o}{=}   \PYG{n}{master\PYGZus{}frame\PYGZus{}path}  \PYG{p}{,}
+	\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}AVT\PYGZdq{}}             \PYG{p}{,}
+	\PYG{n}{figure\PYGZus{}directory\PYGZus{}path}        \PYG{o}{=}   \PYG{n}{figure\PYGZus{}directory}
+\PYG{p}{)}
+
+\PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{load\PYGZus{}ccd\PYGZus{}characterization\PYGZus{}data}\PYG{p}{(}
+	\PYG{n}{construct\PYGZus{}master\PYGZus{}bias}      \PYG{o}{=}   \PYG{n}{construct\PYGZus{}master\PYGZus{}bias\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{construct\PYGZus{}master\PYGZus{}dark}      \PYG{o}{=}   \PYG{n}{construct\PYGZus{}master\PYGZus{}dark\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{construct\PYGZus{}master\PYGZus{}flat}      \PYG{o}{=}   \PYG{n}{construct\PYGZus{}master\PYGZus{}flat\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}        \PYG{o}{=}   \PYG{n}{do\PYGZus{}noise\PYGZus{}estimation\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}time\PYGZus{}calibration}        \PYG{o}{=}   \PYG{n}{do\PYGZus{}old\PYGZus{}time\PYGZus{}calibration\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation}    \PYG{o}{=}   \PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation}  \PYG{o}{=}   \PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation\PYGZus{}AVT}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}bias\PYGZus{}frame}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}bias\PYGZdq{}} \PYG{o}{+} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}dark\PYGZus{}frame}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}dark\PYGZdq{}} \PYG{o}{+} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}flat\PYGZus{}frame}  \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}flat\PYGZdq{}} \PYG{o}{+} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+	\PYG{n}{path\PYGZus{}of\PYGZus{}linearity\PYGZus{}data}     \PYG{o}{=}   \PYG{l+s+s2}{\PYGZdq{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}
+\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Define the exposure series used for the AVT camera}
+\PYG{n}{exposures\PYGZus{}AVT} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{number} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{):}
+	\PYG{k}{for} \PYG{n}{decimal} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{):}
+		\PYG{k}{if} \PYG{n}{number} \PYG{o}{==} \PYG{l+m+mi}{0} \PYG{o+ow}{and} \PYG{n}{decimal} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+		\PYG{k}{continue}
+		\PYG{n}{exposures\PYGZus{}AVT}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{number}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.\PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{decimal}\PYG{p}{)))}
+		\PYG{n}{exposures\PYGZus{}AVT} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{exposures\PYGZus{}AVT}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Construct data sequence class instances for use with the CCD class}
+\PYG{n}{bias\PYGZus{}dataseq\PYGZus{}AVT}            \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{bias\PYGZus{}sequence\PYGZus{}AVT}           \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mf}{0.001}                        \PYG{p}{)}
+\PYG{n}{flat\PYGZus{}dataseq\PYGZus{}AVT}            \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{flat\PYGZus{}sequence\PYGZus{}AVT}           \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mi}{1}                            \PYG{p}{)}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}dataseq\PYGZus{}AVT}   \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}sequence\PYGZus{}atik} \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{16}                          \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{100}                          \PYG{p}{)}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}dataseq\PYGZus{}AVT}    \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}sequence\PYGZus{}atik}  \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{16}                          \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{100}                         \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mi}{10}                           \PYG{p}{)}
+\PYG{n}{linearity\PYGZus{}dataseq\PYGZus{}AVT}       \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}sequence\PYGZus{}AVT}      \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{39}                          \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{10}                          \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{l+m+mi}{1}                           \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}list\PYGZus{}input}         \PYG{o}{=}   \PYG{n}{exposures\PYGZus{}AVT}               \PYG{p}{,}
+\PYG{n}{milliseconds\PYGZus{}input}          \PYG{o}{=}   \PYG{n+nb+bp}{True}                         \PYG{p}{)}
+\PYG{n}{new\PYGZus{}timecal\PYGZus{}dataseq\PYGZus{}AVT}     \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{new\PYGZus{}timecal\PYGZus{}sequence\PYGZus{}AVT}    \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{10}                          \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}list\PYGZus{}input}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mf}{0.2}\PYG{p}{])}         \PYG{p}{)}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}dataseq\PYGZus{}AVT}       \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}sequence\PYGZus{}AVT}      \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{2}                           \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}         \PYG{o}{=}   \PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{50}\PYG{p}{]}                     \PYG{p}{,}
+\PYG{n}{cutoff\PYGZus{}input}                \PYG{o}{=}   \PYG{l+m+mf}{49.5}                         \PYG{p}{)}
+\PYG{n}{zeropoint\PYGZus{}dataseq\PYGZus{}AVT}       \PYG{o}{=} \PYG{n}{ccd}\PYG{o}{.}\PYG{n}{DataSequence}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}   \PYG{o}{=}   \PYG{n}{zeropoint\PYGZus{}sequence\PYGZus{}atik}     \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}    \PYG{o}{=}   \PYG{l+m+mi}{8}                           \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}        \PYG{o}{=}   \PYG{l+m+mi}{100}                          \PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+	\PYG{n}{characterization\PYGZus{}AVT} \PYG{o}{=} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{characterize}\PYG{p}{(} \PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}              \PYG{o}{=}   \PYG{n}{bias\PYGZus{}dataseq\PYGZus{}AVT}            \PYG{p}{,}
+	\PYG{n}{flat\PYGZus{}data\PYGZus{}sequence}              \PYG{o}{=}   \PYG{n}{flat\PYGZus{}dataseq\PYGZus{}AVT}            \PYG{p}{,}
+	\PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}sequence}      \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}dataseq\PYGZus{}AVT}    \PYG{p}{,}
+	\PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}sequence}     \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}dataseq\PYGZus{}AVT}   \PYG{p}{,}
+	\PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}         \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}dataseq\PYGZus{}AVT}       \PYG{p}{,}
+	\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}         \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}dataseq\PYGZus{}AVT}       \PYG{p}{,}
+	\PYG{n}{zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence}        \PYG{o}{=}   \PYG{n}{zeropoint\PYGZus{}dataseq\PYGZus{}AVT}       \PYG{p}{,}
+	\PYG{n}{time\PYGZus{}calibration\PYGZus{}data\PYGZus{}sequence}  \PYG{o}{=}   \PYG{n}{new\PYGZus{}timecal\PYGZus{}dataseq\PYGZus{}AVT}     \PYG{p}{,}
+	\PYG{n}{gain\PYGZus{}data\PYGZus{}sequence}\PYG{o}{=}\PYG{n}{gaintemp\PYGZus{}dataseq\PYGZus{}atik}
+\PYG{p}{)}
+
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}AVT}   \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}AVT}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}AVT}  \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}AVT}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}calibration\PYGZus{}AVT}    \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}AVT}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{linearity\PYGZus{}data\PYGZus{}AVT}      \PYG{o}{=}   \PYG{n}{characterization\PYGZus{}AVT}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{ideal\PYGZus{}linear\PYGZus{}relation\PYGZus{}AVT   =   characterization\PYGZus{}AVT[3]}
+\PYG{l+s+sd}{linearity\PYGZus{}deviations\PYGZus{}AVT    =   characterization\PYGZus{}AVT[4]}
+\PYG{l+s+sd}{linearity\PYGZus{}dev\PYGZus{}err\PYGZus{}AVT       =   characterization\PYGZus{}AVT[5]}
+\PYG{l+s+sd}{stabillity\PYGZus{}data\PYGZus{}AVT         =   characterization\PYGZus{}AVT[6]}
+\PYG{l+s+sd}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp\PYGZus{}AVT       =   characterization\PYGZus{}AVT[7]}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{k}{if} \PYG{n}{produce\PYGZus{}plots\PYGZus{}AVT}\PYG{p}{:}
+\PYG{n}{plots}\PYG{o}{.}\PYG{n}{produce\PYGZus{}plots}\PYG{p}{(}\PYG{n}{AVT\PYGZus{}camera}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data\PYGZus{}AVT}\PYG{p}{,} \PYG{n}{hot\PYGZus{}pixels}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n\PYGZbs{}n}\PYG{l+s+s2}{\PYGZhy{}\PYGZhy{}\PYGZhy{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Mission requirements:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{requirement\PYGZus{}input} \PYG{o}{=} \PYG{l+m+mf}{0.01}  \PYG{c+c1}{\PYGZsh{} Allowable flux deviaion in percent}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} The input mission requirement is an allowable flux change of \PYGZdq{}}\PYG{p}{,} \PYG{n}{requirement\PYGZus{}input}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  (\PYGZdq{}}\PYG{p}{,} \PYG{n}{requirement\PYGZus{}input} \PYG{o}{/} \PYG{l+m+mi}{100}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} absolute flux change )\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{difftest\PYGZus{}ATIK} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}difftest tidsvar lang ATIK\PYGZdq{}}\PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{mreq}\PYG{o}{.}\PYG{n}{pointing\PYGZus{}requirements}\PYG{p}{(}\PYG{n}{atik\PYGZus{}camera}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{o}{=}\PYG{n}{difftest\PYGZus{}ATIK}\PYG{p}{,}
+\PYG{n}{requirement\PYGZus{}input} \PYG{o}{=} \PYG{n}{requirement\PYGZus{}input}\PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}positions}\PYG{o}{=}\PYG{p}{[(}\PYG{l+m+mf}{643.}\PYG{p}{,} \PYG{l+m+mf}{676.}\PYG{p}{),} \PYG{p}{(}\PYG{l+m+mf}{434.}\PYG{p}{,} \PYG{l+m+mf}{503.}\PYG{p}{)],} \PYG{n}{aperture\PYGZus{}radius}\PYG{o}{=}\PYG{l+m+mf}{65.}\PYG{p}{,}
+\PYG{n}{annulus\PYGZus{}radii}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mf}{75.}\PYG{p}{,} \PYG{l+m+mf}{150.}\PYG{p}{],} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{o}{=}\PYG{l+m+mi}{500}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{o}{=}\PYG{l+m+mi}{40}\PYG{p}{,} \PYG{n}{cutoffs}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{60}\PYG{p}{,} \PYG{l+m+mi}{499}\PYG{p}{])}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Linearity errors for detector :\PYGZdq{}}\PYG{p}{,} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{atik\PYGZus{}camera}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{])}
+
+\PYG{n}{difftest\PYGZus{}AVT} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{complete\PYGZus{}path}\PYG{p}{(}\PYG{n}{file\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}AVT\PYGZus{}camera/difftest\PYGZus{}tid\PYGZus{}2\PYGZdq{}}\PYG{p}{,} \PYG{n}{here}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{mreq}\PYG{o}{.}\PYG{n}{pointing\PYGZus{}requirements}\PYG{p}{(}\PYG{n}{AVT\PYGZus{}camera}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{o}{=}\PYG{n}{difftest\PYGZus{}AVT}\PYG{p}{,}
+\PYG{n}{requirement\PYGZus{}input} \PYG{o}{=} \PYG{n}{requirement\PYGZus{}input}\PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}positions}\PYG{o}{=}\PYG{p}{[(}\PYG{l+m+mf}{359.}\PYG{p}{,} \PYG{l+m+mf}{229.}\PYG{p}{),} \PYG{p}{(}\PYG{l+m+mf}{204.}\PYG{p}{,} \PYG{l+m+mf}{104.}\PYG{p}{)],} \PYG{n}{aperture\PYGZus{}radius}\PYG{o}{=}\PYG{l+m+mf}{65.}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}radii}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mf}{70.}\PYG{p}{,} \PYG{l+m+mf}{100.}\PYG{p}{],} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{o}{=}\PYG{l+m+mi}{4000} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1751}\PYG{p}{,} \PYG{n}{cutoffs}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{1750}\PYG{p}{,} \PYG{l+m+mi}{3999}\PYG{p}{],} \PYG{n}{exposure\PYGZus{}time}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Linearity errors for detector :\PYGZdq{}}\PYG{p}{,} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{AVT\PYGZus{}camera}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{])}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+
+\PYG{c+c1}{\PYGZsh{} exit()}
+\PYG{k+kn}{import} \PYG{n+nn}{pubplot} \PYG{k+kn}{as} \PYG{n+nn}{pp}
+\PYG{n}{filepath} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{difftest\PYGZus{}ATIK} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}differentialtest\PYGZus{}033.fit\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test.png\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test\PYGZdq{}}\PYG{p}{,} \PYG{n}{raisetitle}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Pointing test Atik 414EX\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Atik 414EX\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}pointingtest\PYGZus{}atik.png\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test\PYGZdq{}}\PYG{p}{,}
+\PYG{n}{raisetitle}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+\PYG{n}{filepath} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{difftest\PYGZus{}AVT} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}difftest\PYGZus{}time\PYGZus{}0013.fit\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test.png\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test\PYGZdq{}}\PYG{p}{,} \PYG{n}{raisetitle}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Pointing test AVT GC660M\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}AVT GC660M\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}pointingtest\PYGZus{}avt.png\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}test\PYGZdq{}}\PYG{p}{,}
+\PYG{n}{raisetitle}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+	
+\end{Verbatim}

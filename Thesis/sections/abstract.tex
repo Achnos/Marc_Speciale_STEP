@@ -1,0 +1,48 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+\begin{document}
+	\thispagestyle{empty}
+	\chapter*{Acknowledgements}
+	\addcontentsline{toc}{chapter}{Acknowledgements}
+	I would like to thank both professor Hans Kjeldsen and Mads Fredslund Andersen for the opportunity to work on this master's project. Thank you for the supervision and support I have received. I am a physicist and not an astronomer, so naturally, some topics were alien to me. I owe both of you thanks for your patience.
+	To Hans in particular: My motivation for studying physics in the first place was spacecraft technology. I have always been deeply fascinated by spacecraft. I have appreciated our many talks about historical technologies, rocket launchers, and probes in deep space. Your ability to fill a conversational void with stories is fascinating. 
+	
+	I owe a sincere thank you to my very dear friends Sofie, Johan, Morten, Hovsep, and Peter. Your friendship throughout my time at the university is one of the key reasons I made it through, and I hope to keep you close in the future. To my partner in life, Sofie, thank you for everything thus, and all that is yet to come. I am, above all, grateful for your immense patience with me. I know I challenge it often, and I will do so many times in the future. 
+	
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+	\clearpage
+	\thispagestyle{empty}
+	\chapter*{Abstract}
+	\addcontentsline{toc}{chapter}{Abstract}
+	This work is a study of the usage of CCDs in astronomical satellite missions. The main focus is on the proposed Danish astronomical microsatellite mission, STEP. STEP will provide photometric time-series data of stars to study exoplanet transits and stellar properties. Scientific requirements for the mission were derived from a case study of systemic effects in the Kepler seasonal data given in \cite{hatp7}. The two requirements are a photometric precision of at least  $5*10^{-4}$ in the linearity curve of the CCD and a maximum flux variability resulting from spacecraft attitude errors of $10^{-4}$. A characterization procedure was designed and validated. Here it is found that, for the detector used to develop the test procedure, to meet this requirement, it is adequate to use $10$ repeats of the measurement of the linearity curve. Arbitrary precision can be obtained for a given detector with enough measurements. A test to output technical requirements for the ADCS subsystem was developed and verified. For requirements to be met the light was allowed to move at most $ 0.2 $ pixels during observation. If optics like those used on the TESS space mission are assumed, this requirement corresponds to stabilizing the satellite attitude to within $4.2''$ during observation. 
+	
+	In the presently developed characterization procedure, a simple setup of inexpensive equipment found in any university teaching lab, is used. The light source used is ambient room lighting from a fluorescent bulb. A measurement acquisition scheme to prevent effects from drifting of the intensity, is presented along with a detector time calibration. The consequence is that this characterization may be performed using an arbitrary light source. The light soure does not need to be calibrated, enabling small missions with constrained budgets to characterize and test their detectors thoroughly. In addition, the characterization may be redone or validated in space, and the author suggests an approach using the moon as a light source. 
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+	\newpage
+	\thispagestyle{empty}
+	\chapter*{Dansk resumé}
+	\addcontentsline{toc}{chapter}{Dansk resumé}
+	Dette speciale omhandler brugen af CCD detektorer i astronomiske satellitmissioner. Fokusset er på den foreslåede danske astronomiske mikrosatellitmission, STEP. Hovedmålet med STEP er at producere tidsseriedata af stjernefluxer, til brug i fotometriske målinger af exoplanettransitkurver og andre stellare egenskaber. De videnskabelige krav til missionen præsenteres. Det første krav er en fotometrisk præcision på mindst $5*10^{-4}$ i kendskabet af linearitetskurven for CCD'en. Det andet krav omhandler den maksimale tilladte fluxændring som følge af fejl i pegestabilliteten af rumfartøjet, og sættes til $10^{-4}$. En karakteriseringsprocedure udvikles og valideres. Her vises det, at for den detektor som benyttes til at udvikle proceduren, er det tilstrækkeligt at gentage målingen af linearitetskurven $10$ gange. For en given detektor kan en arbitrær præcision opnås ved at gentage målingerne nok gange. En test til at beregne stabillitetskravet til rumfartøjets ADCS system udvikles og beskrives. Resultatet for detektoren benyttet til at udvikle testen er, at en lysprik på detektoren maksimalt må flytte sig $ 0.2 $ pixler, saverende til $4.2 ''$ hvis det antages at der benyttes optik lige som den der findes på TESS rumfartøjet.
+	
+	Til at udvikle test- og karakteriseringsprocedurerne er en meget simpel opstilling benyttet, hvor det udstyr der indgår, kan findes i et normalt universitets undervisningslaboratorie. Som lyskilde benyttes loftsbelysningen, der består af lysstofrør. En måleplan der kan eliminere effekter fra drift eller andre ændringer i fluxen beskrives, sammen med en tidskalibrering af detektoren. Konsekvensen er at en tilfredsstillende karakteristik af CCD'en kan opnås, til brug i rummet, uden velkalibrerede dyre lyskilder. Dermed kan proceduren udføres af alle, og desuden gentages eller valideres i rummet. En tilgang til sidstnævnte, hvor månen benyttes som lyskilde, foreslås af forfatteren.
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+	\newpage
+	\thispagestyle{empty}
+	\chapter*{Preface}
+	\addcontentsline{toc}{chapter}{Preface}
+	
+	I remember vividly gazing at the night sky with fascination throughout my life. The night sky is beautiful, and it is hard to not feel dwarfed at the immense scales we are so lucky to be able to gaze at. Is there life on distant worlds in the universe? This is a fundamental question that all of us have probably asked ourselves. 
+	This text is about CCD detectors used in astronomical space missions and constitutes my master's thesis. It is the culmination of 5 years of study at the Department of Physics and Astronomy at Aarhus University. In some way, this work is my chance to contribute to the answer to the question posed above. It is quite peculiar that I found myself here at the end of my physics studies. 
+	When I began my life as a physics student, I dreamed of becoming a theoretical astrophysicist. After a semester of astrophysics, I quickly realized that I don't think stars and planets are that interesting. \textbf{Rockets, space stations, space probes, and Mars rovers} are, however, \textit{truly fascinating}! Thus, my interests are in technologies, especially those that further our presence in space. To put it briefly: I like \textbf{cool things that do cool stuff}. The CCD is an example of such a piece of technology. At the deepest level, a photon is incident on a slab of solid-state material made up of atoms in a lattice structure. This interaction is a deep theoretical topic rooted in quantum mechanics and special relativity, or more precisely \textbf{quantum field theory}. Electrons are generated via the \textbf{photoelectric effect}. The electrons are converted to a digital signal and visualized on a computer screen. All of this is based on the brilliant work of physicists and engineers. This is only half the story, and the interesting (to some, \textit{boring}) details have been left out. As a physicist, I can understand every step of this process, from fundamental particle interactions to the picture of something, perhaps a star. \textit{That} is truly fascinating
+	
+	Hopefully, the results are helpful to someone, if not those who participate in the STEP project. Hopefully, the fascination for physics and space technology will shine through, at least in some sense.
+	\clearpage
+	\thispagestyle{empty}
+	\mbox{}
+\end{document}

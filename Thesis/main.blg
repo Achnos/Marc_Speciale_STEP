@@ -1,0 +1,238 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plain.bst
+Database file #1: refs.bib
+I was expecting a `,' or a `}'---line 27 of file refs.bib
+ :  
+ :  publisher = {J. Inst. Electr & Radio Eng.},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 59 of file refs.bib
+ :  
+ :  year = {2009},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 229 of file refs.bib
+ :  title = {AVT Prosilica GC 660M camera data sheet}
+ :                                                   .
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 265 of file refs.bib
+ :  
+ :  note = {Cambridge Observing Handbooks for Research Astronomers}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--entry type for "larry_bradley_2020_4044744" isn't style-file defined
+--line 483 of file refs.bib
+I was expecting a `,' or a `}'---line 609 of file refs.bib
+ :  
+ :  year = {2016},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 669 of file refs.bib
+ :  
+ :  publisher ={John Wiley and Sons. ISBN 978-0-471-14323-9.}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 687 of file refs.bib
+ :  
+ :  publisher = {thermoscientific},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 885 of file refs.bib
+ :  
+ :  author = {Benz, W., et. al.},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 901 of file refs.bib
+ :  
+ :  author = {Deline, A., et. al.},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field part---line 921 of file refs.bib
+ : isbn = 
+ :        = {978-0-12-801363-2},
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in stepprodex
+Too many commas in name 1 of "Fortescue, P, Swinerd, G., Stark, J." for entry SSE
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Fortescue, P, Swinerd, G., Stark, J." for entry SSE
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Fortescue, P, Swinerd, G., Stark, J." for entry SSE
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Helvajian, H., Janson, S.W" for entry cubesatref
+while executing---line 1049 of file plain.bst
+Warning--to sort, need author or key in cubesatimage
+Too many commas in name 1 of "Mayor, M., Queloz, D." for entry firstexoplanet
+while executing---line 1049 of file plain.bst
+Warning--to sort, need author or key in habitablezone
+Too many commas in name 1 of "Deming, D., Knutson, H.A." for entry naturetransitfig
+while executing---line 1049 of file plain.bst
+Warning--to sort, need author or key in keplerlaunch
+Warning--to sort, need author or key in planetarchive
+Warning--to sort, need author or key in keplerfocalplaneimage
+Warning--to sort, need author or key in teledyneart
+Too many commas in name 1 of "Coates, C., Mullan, A." for entry EM-CCD
+while executing---line 1049 of file plain.bst
+Warning--to sort, need author or key in atik414specs
+Warning--to sort, need author or key in avtcamspecs
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1049 of file plain.bst
+Warning--to sort, need author or key in cheopsmission
+Warning--to sort, need author or key in cheopschar
+Warning--empty author in cheopsmission
+Warning--empty year in cheopsmission
+Warning--empty author in cheopschar
+Warning--empty year in cheopschar
+Too many commas in name 1 of "Coates, C., Mullan, A." for entry EM-CCD
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Deming, D., Knutson, H.A." for entry naturetransitfig
+while executing---line 1090 of file plain.bst
+Warning--empty journal in naturetransitfig
+Warning--empty title in hatp7
+Too many commas in name 1 of "Fortescue, P, Swinerd, G., Stark, J." for entry SSE
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Fortescue, P, Swinerd, G., Stark, J." for entry SSE
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Fortescue, P, Swinerd, G., Stark, J." for entry SSE
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Helvajian, H., Janson, S.W" for entry cubesatref
+while executing---line 1090 of file plain.bst
+Warning--empty publisher in cubesatref
+Warning--empty year in cubesatref
+Warning--empty publisher in CCDbook
+Warning--empty journal in comphistmus
+Too many commas in name 1 of "Mayor, M., Queloz, D." for entry firstexoplanet
+while executing---line 1090 of file plain.bst
+Warning--empty journal in firstexoplanet
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "N.M. Batalha, J.F. Rowe, R.L. Gilliland, J.J. Jenkins, D.A. Caldwell, W.J. Borucki, D. G. Koch, J.J. Lissauer, E.W. Dunham, T.N. Gautier, S.B. Howell, D.W. Latham, G.W. Marcy, A. Prsa" for entry keplertimeseriessource
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Roland Vanderspek, John P. Doty, Michael Fausnaugh, Jesus Noel S. Villaseñor, Jon M. Jenkins, Zachory K. Berta-Thompson, Christopher J. Burke, George R. Ricker" for entry tessinstrumenthandbook
+while executing---line 1090 of file plain.bst
+Warning--empty journal in tessinstrumenthandbook
+Warning--empty journal in uosat
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "Thayer, C., J. Villasenor, S. Kissel, B. LaMarr, E. Morgan, G. Prigozhin, I. Prigozhin, et al." for entry tesscharacterization
+while executing---line 1090 of file plain.bst
+Warning--there's a month but no year in tesscharacterization
+You've used 48 entries,
+            2118 wiz_defined-function locations,
+            737 strings with 13409 characters,
+and the built_in function-call counts, 14192 in all, are:
+= -- 1203
+> -- 994
+< -- 0
++ -- 420
+- -- 362
+* -- 1010
+:= -- 2476
+add.period$ -- 135
+call.type$ -- 48
+change.case$ -- 321
+chr.to.int$ -- 0
+cite$ -- 73
+duplicate$ -- 447
+empty$ -- 979
+format.name$ -- 362
+if$ -- 2799
+int.to.chr$ -- 0
+int.to.str$ -- 48
+missing$ -- 40
+newline$ -- 234
+num.names$ -- 74
+pop$ -- 462
+preamble$ -- 1
+purify$ -- 277
+quote$ -- 0
+skip$ -- 328
+stack$ -- 0
+substring$ -- 271
+swap$ -- 43
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 172
+warning$ -- 25
+while$ -- 75
+width$ -- 50
+write$ -- 463
+(There were 68 error messages)

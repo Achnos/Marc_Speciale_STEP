@@ -1,0 +1,282 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{import} \PYG{n+nn}{ccd}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k+kn}{as} \PYG{n+nn}{plt}
+\PYG{k+kn}{import} \PYG{n+nn}{pubplot} \PYG{k+kn}{as} \PYG{n+nn}{pp}
+\PYG{k+kn}{import} \PYG{n+nn}{utilities} \PYG{k+kn}{as} \PYG{n+nn}{util}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+
+
+\PYG{k}{def} \PYG{n+nf}{gauss\PYGZus{}dist\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{bias\PYGZus{}sequence}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method for plotting the distribution in bias frames}
+\PYG{l+s+sd}{to show that there is a 1/sqrt(N) reduction in the noise}
+\PYG{l+s+sd}{for the master bias frame, in comparison to the individual}
+\PYG{l+s+sd}{arbitrarily chosen bias frame}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{c+c1}{\PYGZsh{} Start by plotting the distribution of an individual bias frame}
+\PYG{n}{data\PYGZus{}series}                 \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{bias\PYGZus{}sequence}\PYG{p}{)}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{bias\PYGZus{}sequence} \PYG{o}{+} \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+
+\PYG{n}{bias\PYGZus{}dist}           \PYG{o}{=}   \PYG{n}{imagedata}\PYG{o}{.}\PYG{n}{flatten}\PYG{p}{()}
+\PYG{n}{n}\PYG{p}{,} \PYG{n}{bins}\PYG{p}{,} \PYG{n}{patches}    \PYG{o}{=}   \PYG{n}{plt}\PYG{o}{.}\PYG{n}{hist}\PYG{p}{(}\PYG{n}{bias\PYGZus{}dist}\PYG{p}{,} \PYG{n}{bins}\PYG{o}{=}\PYG{l+m+mi}{1000}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}dodgerblue\PYGZsq{}}\PYG{p}{,} \PYG{n}{width}\PYG{o}{=}\PYG{l+m+mf}{0.8}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Arbitrary individual bias frame\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{gaussdata}           \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{240}\PYG{p}{,} \PYG{l+m+mi}{375}\PYG{p}{,} \PYG{l+m+mi}{1000}\PYG{p}{)}
+\PYG{n}{gaussheight}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{amax}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)}
+\PYG{n}{gaussmean}           \PYG{o}{=}   \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{))}
+\PYG{n}{gausswidth}          \PYG{o}{=}   \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{bias\PYGZus{}dist}\PYG{p}{))}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{gaussdata}\PYG{p}{,} \PYG{n}{util}\PYG{o}{.}\PYG{n}{gaussian}\PYG{p}{(}\PYG{n}{gaussdata}\PYG{p}{,} \PYG{n}{gaussheight}\PYG{p}{,} \PYG{n}{gaussmean}\PYG{p}{,} \PYG{n}{gausswidth}\PYG{p}{),} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}navy\PYGZsq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Gauss. dist.\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{individual\PYGZus{}gauss\PYGZus{}width} \PYG{o}{=} \PYG{n}{gausswidth}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{The found width of the ADU distribution is \PYGZdq{}}\PYG{p}{,} \PYG{n}{individual\PYGZus{}gauss\PYGZus{}width}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} ADUs\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}This corresponds to a readout noise of \PYGZdq{}}\PYG{p}{,} \PYG{n}{individual\PYGZus{}gauss\PYGZus{}width} \PYG{o}{*} \PYG{l+m+mf}{0.28} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{8} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{log}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)))}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{c+c1}{\PYGZsh{} Then plot the distribution of the master bias frame with reduced noise}
+\PYG{n}{bias\PYGZus{}dist}           \PYG{o}{=}   \PYG{n}{detector}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias}\PYG{o}{.}\PYG{n}{flatten}\PYG{p}{()}
+\PYG{n}{n}\PYG{p}{,} \PYG{n}{bins}\PYG{p}{,} \PYG{n}{patches}    \PYG{o}{=}   \PYG{n}{plt}\PYG{o}{.}\PYG{n}{hist}\PYG{p}{(}\PYG{n}{bias\PYGZus{}dist}\PYG{p}{,} \PYG{n}{bins}\PYG{o}{=}\PYG{l+m+mi}{350}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}steelblue\PYGZsq{}}\PYG{p}{,} \PYG{n}{width}\PYG{o}{=}\PYG{l+m+mf}{0.4}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Master bias frame\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{gaussheight}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{amax}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)}
+\PYG{n}{gaussmean}           \PYG{o}{=}   \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{bias\PYGZus{}dist}\PYG{p}{))}
+\PYG{n}{gausswidth}          \PYG{o}{=}   \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{bias\PYGZus{}dist}\PYG{p}{))}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{gaussdata}\PYG{p}{,} \PYG{n}{util}\PYG{o}{.}\PYG{n}{gaussian}\PYG{p}{(}\PYG{n}{gaussdata}\PYG{p}{,} \PYG{n}{gaussheight}\PYG{p}{,} \PYG{n}{gaussmean}\PYG{p}{,} \PYG{n}{gausswidth}\PYG{p}{),} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}\PYGZhy{}\PYGZhy{}\PYGZdq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Reduced wdith gauss. dist.\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}The found, reduced width of the ADU distribution is \PYGZdq{}}\PYG{p}{,} \PYG{n}{gausswidth}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} ADUs\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}It should be equal to \PYGZdq{}}\PYG{p}{,}  \PYG{n}{individual\PYGZus{}gauss\PYGZus{}width}\PYG{o}{/}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{300}\PYG{p}{))}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}This corresponds to a readout noise of \PYGZdq{}}\PYG{p}{,} \PYG{n}{gausswidth} \PYG{o}{*} \PYG{l+m+mf}{0.28} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{8} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{log}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)))}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Bias\PYGZbs{};\PYGZbs{};distribution:\PYGZcb{}\PYGZdl{} \PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Bias value\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Arb. units.\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}gauss\PYGZus{}bias.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{xlim}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{260}\PYG{p}{,} \PYG{l+m+mi}{350}\PYG{p}{])}
+
+
+\PYG{k}{def} \PYG{n+nf}{master\PYGZus{}frame\PYGZus{}plot}\PYG{p}{(}\PYG{n}{image}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,} \PYG{n}{figurename}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{title}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{label}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{filename}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{raisetitle}\PYG{p}{:} \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{scaling} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that will produce a plot of a given master frame (bias, dark or flat).}
+
+\PYG{l+s+sd}{:param np.ndarray image:}
+\PYG{l+s+sd}{\PYGZhy{} np.ndarray representing the image}
+\PYG{l+s+sd}{:param str figurename:}
+\PYG{l+s+sd}{\PYGZhy{} str representing the figurename}
+\PYG{l+s+sd}{:param str title:}
+\PYG{l+s+sd}{\PYGZhy{} str representing the title of the figure for printing}
+\PYG{l+s+sd}{:parameter str label:}
+\PYG{l+s+sd}{\PYGZhy{} The detector name used as a label in the plot}
+\PYG{l+s+sd}{:param str filename:}
+\PYG{l+s+sd}{\PYGZhy{} str representing the name of the file to be printed to}
+\PYG{l+s+sd}{:param bool raisetitle:}
+\PYG{l+s+sd}{\PYGZhy{} bool that toggles raising of the title in the figure}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{image}\PYG{p}{,} \PYG{n}{title}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}detector: \PYGZdq{}} \PYG{o}{+} \PYG{n}{label}\PYG{p}{,} \PYG{n}{filename}\PYG{p}{,} \PYG{n}{figurename}\PYG{p}{,} \PYG{n}{raisetitle}\PYG{o}{=}\PYG{n}{raisetitle}\PYG{p}{,} \PYG{n}{scale}\PYG{o}{=}\PYG{n}{scaling}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{noise\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{dark\PYGZus{}current\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that will produce a plot of the stability data}
+\PYG{l+s+sd}{from the ccd.dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature() and ccd.readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature() methods}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{dark\PYGZus{}current\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{dark\PYGZus{}current\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Dark current\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylim}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{0.1}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Dark\PYGZbs{};current\PYGZbs{};\PYGZcb{}\PYGZdl{} \PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Temperature [\PYGZdl{}\PYGZca{}\PYGZbs{}circ\PYGZdl{}C]\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}e\PYGZcb{}\PYGZca{}\PYGZhy{}\PYGZdl{}/s/pixel\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}darkcurrent\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Readout noise\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylim}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mi}{14}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Readout\PYGZbs{};noise\PYGZbs{};\PYGZcb{}\PYGZdl{}\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Temperature [\PYGZdl{}\PYGZca{}\PYGZbs{}circ\PYGZdl{}C]\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Readout Noise [RMS \PYGZdl{}\PYGZbs{}mathbf\PYGZob{}e\PYGZcb{}\PYGZca{}\PYGZhy{}\PYGZdl{}/pixel]\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}readoutnoise\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{gain\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{gain\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{gain\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{gain\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{yerr}\PYG{o}{=}\PYG{n}{gain\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Gain factor\PYGZdq{}}\PYG{p}{,} \PYG{n}{capsize}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Gain\PYGZbs{};Factor\PYGZbs{};\PYGZcb{}\PYGZdl{} \PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Temperature [\PYGZdl{}\PYGZca{}\PYGZbs{}circ\PYGZdl{}C]\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Gain factor\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}gain\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+
+\PYG{k}{def} \PYG{n+nf}{linearity\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that will produce a plot of the stability data}
+\PYG{l+s+sd}{from the ccd.linearity\PYGZus{}estimation() and ccd.linearity\PYGZus{}deviations() methods}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{c+c1}{\PYGZsh{} Plot the linearity data as a function of exposure times, and plot the ideal linear relation}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{],} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{yerr}\PYG{o}{=}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{capsize}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{])),} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}dodgerblue\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Ideal linear relation\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Linearity\PYGZcb{}\PYGZdl{} \PYGZdl{}\PYGZhy{}10.0\PYGZca{}\PYGZbs{}circ \PYGZdl{} C \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Mean ADU / pixel\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Deviation in \PYGZbs{}\PYGZpc{}\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}lower left\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{],} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{yerr}\PYG{o}{=}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{capsize}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{])),} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}dodgerblue\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Ideal linear relation\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Linearity\PYGZcb{}\PYGZdl{} \PYGZdl{}\PYGZhy{}10.0\PYGZca{}\PYGZbs{}circ \PYGZdl{} C \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Mean ADU / pixel\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Deviation in \PYGZbs{}\PYGZpc{}\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}linearity\PYGZus{}zoom\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}lower left\PYGZdq{}}\PYG{p}{,} \PYG{n}{xlim}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mf}{60e3}\PYG{p}{],} \PYG{n}{ylim}\PYG{o}{=}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{7.5}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{])}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{def lightsource\PYGZus{}stability\PYGZus{}plot():}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{c+c1}{\PYGZsh{} A method that will produce a plot of the stability data}
+\PYG{c+c1}{\PYGZsh{} from the ccd.lightsource\PYGZus{}stability() method}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{l+s+sd}{params = \PYGZob{}\PYGZsq{}legend.fontsize\PYGZsq{}: 7, \PYGZsq{}legend.handlelength\PYGZsq{}: 2\PYGZcb{}}
+\PYG{l+s+sd}{plt.rcParams.update(params)}
+
+\PYG{l+s+sd}{new = 0}
+\PYG{l+s+sd}{for exposure in range(0, 29):}
+\PYG{l+s+sd}{if exposure \PYGZlt{}= 10:}
+\PYG{l+s+sd}{plt.plot(np.asarray(range(0, 100)), stabillity\PYGZus{}data[exposure, :], ls=\PYGZsq{}\PYGZhy{}\PYGZsq{}, lw=1, label=\PYGZdq{}No. \PYGZdq{} + str(exposure))}
+\PYG{l+s+sd}{if 20 \PYGZgt{} exposure \PYGZgt{} 10:}
+\PYG{l+s+sd}{plt.plot(np.asarray(range(0, 100)), stabillity\PYGZus{}data[exposure, :], ls=\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}, lw=1, label=\PYGZdq{}No. \PYGZdq{} + str(exposure))}
+\PYG{l+s+sd}{if exposure \PYGZgt{}= 20:}
+\PYG{l+s+sd}{plt.plot(np.asarray(range(0, 100)), stabillity\PYGZus{}data[exposure, :], ls=\PYGZsq{}\PYGZhy{}.\PYGZsq{}, lw=1, label=\PYGZdq{}No. \PYGZdq{} + str(exposure))}
+
+\PYG{l+s+sd}{plt.legend(bbox\PYGZus{}to\PYGZus{}anchor=(1, 1), loc=\PYGZdq{}upper left\PYGZdq{})}
+\PYG{l+s+sd}{pp.pubplot(\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Lightsource\PYGZbs{};\PYGZbs{};stabillity\PYGZcb{}\PYGZdl{}\PYGZdq{}, \PYGZdq{}Repeat no.\PYGZdq{}, \PYGZdq{}\PYGZbs{}\PYGZpc{}\PYGZhy{} dev. from seq. mean\PYGZdq{}, figure\PYGZus{}directory + \PYGZdq{}lightsource.png\PYGZdq{}, legend=False)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+
+\PYG{k}{def} \PYG{n+nf}{lightsource\PYGZus{}stability\PYGZus{}from\PYGZus{}datafile\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that will produce a plot of the stability data}
+\PYG{l+s+sd}{from the ccd.lightsource\PYGZus{}stability() method}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{n}{filename} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}lightsource\PYGZus{}stability\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}
+\PYG{n}{fullpath\PYGZus{}lightsource\PYGZus{}stability\PYGZus{}data} \PYG{o}{=} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path} \PYG{o}{+} \PYG{n}{filename}
+\PYG{n}{stability\PYGZus{}data} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n}{fullpath\PYGZus{}lightsource\PYGZus{}stability\PYGZus{}data}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{exposure} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{):}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{)),} \PYG{n}{stability\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure}\PYG{p}{,} \PYG{p}{:],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{exposure} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} s\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{,} \PYG{n}{fancybox}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{framealpha}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{edgecolor}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}inherit\PYGZsq{}}\PYG{p}{,} \PYG{n}{fontsize} \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Lightsource\PYGZbs{};\PYGZbs{};stabillity\PYGZcb{}\PYGZdl{}\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Repeat no.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}}\PYG{l+s+si}{\PYGZpc{}\PYGZhy{} d}\PYG{l+s+s2}{ev. from seq. mean\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}lightsource\PYGZus{}1to10\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+\PYG{n}{exp\PYGZus{}time} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{exposure} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{11}\PYG{p}{,} \PYG{l+m+mi}{20}\PYG{p}{):}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{99}\PYG{p}{)),} \PYG{n}{stability\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure}\PYG{p}{,} \PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{o}{*}\PYG{p}{(}\PYG{n}{exp\PYGZus{}time} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{10}\PYG{p}{)} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} s\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{exp\PYGZus{}time} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{,} \PYG{n}{fancybox}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{framealpha}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{edgecolor}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}inherit\PYGZsq{}}\PYG{p}{,} \PYG{n}{fontsize} \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Lightsource\PYGZbs{};\PYGZbs{};stabillity\PYGZcb{}\PYGZdl{}\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Repeat no.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}}\PYG{l+s+si}{\PYGZpc{}\PYGZhy{} d}\PYG{l+s+s2}{ev. from seq. mean\PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}lightsource\PYGZus{}20to100\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{xlim}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{])}
+
+\PYG{n}{exp\PYGZus{}time} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{exposure} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{,} \PYG{l+m+mi}{29}\PYG{p}{):}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{)),} \PYG{n}{stability\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure}\PYG{p}{,} \PYG{p}{:],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n+nb}{str}\PYG{p}{(}\PYG{l+m+mi}{100} \PYG{o}{+} \PYG{p}{(}\PYG{n}{exp\PYGZus{}time} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{))} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} s\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{exp\PYGZus{}time} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{,} \PYG{n}{fancybox}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{framealpha}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{edgecolor}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}inherit\PYGZsq{}}\PYG{p}{,} \PYG{n}{fontsize} \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Lightsource\PYGZbs{};\PYGZbs{};stabillity\PYGZcb{}\PYGZdl{}\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Repeat no.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZbs{}}\PYG{l+s+si}{\PYGZpc{}\PYGZhy{} d}\PYG{l+s+s2}{ev. from seq. mean\PYGZdq{}}\PYG{p}{,}
+\PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}lightsource\PYGZus{}101to110\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{xlim}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{100}\PYG{p}{])}
+
+
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{def ron\PYGZus{}dist\PYGZus{}plot():}
+\PYG{l+s+sd}{plt.figure()}
+\PYG{l+s+sd}{i = 0}
+\PYG{l+s+sd}{temperatures = [\PYGZhy{}10, \PYGZhy{}8, \PYGZhy{}6, \PYGZhy{}4, \PYGZhy{}2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]}
+\PYG{l+s+sd}{for dist in ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp:}
+\PYG{l+s+sd}{n, bins, patches = plt.hist(dist, bins=500, width=0.8, label= str(temperatures[i]) + \PYGZdq{}s\PYGZdq{})}
+\PYG{l+s+sd}{i += 1}
+
+\PYG{l+s+sd}{plt.legend(bbox\PYGZus{}to\PYGZus{}anchor=(1, 1), loc=\PYGZdq{}upper left\PYGZdq{})}
+\PYG{l+s+sd}{pp.pubplot(\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Readout\PYGZbs{};\PYGZbs{};noise\PYGZbs{};\PYGZbs{};distributions\PYGZcb{}\PYGZdl{} \PYGZdq{}, \PYGZdq{}Bias value\PYGZdq{}, \PYGZdq{}Arb. units.\PYGZdq{}, figure\PYGZus{}directory + \PYGZdq{}ron\PYGZus{}dists.png\PYGZdq{}, legend=False, xlim=[300, 475])}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+
+\PYG{k}{def} \PYG{n+nf}{time\PYGZus{}calibration\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}    \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}linear\PYGZus{}model\PYGZus{}data}  \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}corrected\PYGZus{}data}     \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}new\PYGZus{}linear\PYGZus{}model}   \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}deviations}         \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}errors}             \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{]}
+\PYG{n}{time\PYGZus{}cal\PYGZus{}new\PYGZus{}deviations}     \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{]}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{time\PYGZus{}cal\PYGZus{}linear\PYGZus{}model\PYGZus{}data}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}dodgerblue\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Ideal relationship\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{yerr}\PYG{o}{=}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{capsize}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} + \PYGZdq{}\PYGZdl{}\PYGZhy{}10.0\PYGZca{}\PYGZbs{}circ \PYGZdl{} C\PYGZdq{})}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}corrected\PYGZus{}data}\PYG{p}{,} \PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Corrected data\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}corrected\PYGZus{}data}\PYG{p}{,} \PYG{n}{time\PYGZus{}cal\PYGZus{}new\PYGZus{}linear\PYGZus{}model}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}red\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}New ideal relationship\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Time calibration\PYGZcb{}\PYGZdl{} \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Exposure time [s]\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Mean ADU/pixel\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}time\PYGZus{}calibration\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}lower right\PYGZdq{}}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} xlim=[0, 2], ylim=[0,   1])}
+\PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+
+\PYG{c+c1}{\PYGZsh{} Plot the relative linearity deviations and the ideal relation}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{errorbar}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{time\PYGZus{}cal\PYGZus{}deviations}\PYG{p}{,} \PYG{n}{yerr}\PYG{o}{=}\PYG{n}{time\PYGZus{}cal\PYGZus{}errors}\PYG{p}{[:],} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{capsize}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{])),} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}dodgerblue\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Ideal relation\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{time\PYGZus{}cal\PYGZus{}linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{time\PYGZus{}cal\PYGZus{}new\PYGZus{}deviations}\PYG{p}{,}  \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{marker}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}o\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
+
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Linearity\PYGZcb{}\PYGZdl{} \PYGZdl{}\PYGZhy{}10.0\PYGZca{}\PYGZbs{}circ \PYGZdl{} C \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Mean ADU/pixel\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Percentage deviation \PYGZdq{}}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}time\PYGZus{}calibration\PYGZus{}deviations\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{shutter\PYGZus{}test\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{shutter\PYGZus{}test}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{n}{filepath} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{shutter\PYGZus{}test}\PYG{p}{[:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{),} \PYG{l+s+s2}{\PYGZdq{}Shuttertest\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}detector: \PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}shutter\PYGZus{}test\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}shutter\PYGZus{}test\PYGZdq{}}\PYG{p}{,} \PYG{n}{scale}\PYG{o}{=}\PYG{l+m+mi}{400}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{hot\PYGZus{}pixels\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{):}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data} \PYG{o}{=} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{hot\PYGZus{}pixel\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}k\PYGZdq{}}\PYG{p}{,} \PYG{n}{markersize} \PYG{o}{=} \PYG{l+m+mf}{2.5}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Data\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{([}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mf}{1e3}\PYG{p}{],} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mf}{1e3}\PYG{p}{],} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}dodgerblue\PYGZdq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Ideal relationship\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Hot pixels\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}e\PYGZca{}\PYGZhy{}\PYGZdl{}/sec [90s]\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}e\PYGZca{}\PYGZhy{}\PYGZdl{}/sec [1000s]\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}hot\PYGZus{}pixels\PYGZus{}test\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{xlim}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mf}{100.0}\PYG{p}{],} \PYG{n}{ylim}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mi}{200}\PYG{p}{],} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}lower right\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{mask} \PYG{o}{=} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}
+\PYG{n}{padding} \PYG{o}{=} \PYG{l+m+mi}{10}
+\PYG{k}{for} \PYG{n}{first\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{padding}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{mask}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{])):}
+\PYG{k}{for} \PYG{n}{second\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{padding}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{mask}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{p}{:])):}
+\PYG{k}{if} \PYG{n}{mask}\PYG{p}{[}\PYG{n}{first\PYGZus{}id}\PYG{p}{,} \PYG{n}{second\PYGZus{}id}\PYG{p}{]} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{new\PYGZus{}first\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{first\PYGZus{}id} \PYG{o}{\PYGZhy{}} \PYG{n}{padding}\PYG{p}{,} \PYG{n}{first\PYGZus{}id}\PYG{p}{):}
+\PYG{k}{for} \PYG{n}{new\PYGZus{}second\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{second\PYGZus{}id} \PYG{o}{\PYGZhy{}} \PYG{n}{padding}\PYG{p}{,} \PYG{n}{second\PYGZus{}id}\PYG{p}{):}
+\PYG{n}{mask}\PYG{p}{[}\PYG{n}{new\PYGZus{}first\PYGZus{}id}\PYG{p}{,} \PYG{n}{new\PYGZus{}second\PYGZus{}id}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}
+
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{plot\PYGZus{}image}\PYG{p}{(}\PYG{n}{mask}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Hot pixel mask\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}x\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}y\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}detector: \PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}hot\PYGZus{}pixel\PYGZus{}mask\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}hot\PYGZus{}pixel\PYGZus{}mask\PYGZdq{}}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{produce\PYGZus{}plots}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,}
+\PYG{n}{figure\PYGZus{}directory}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,}
+\PYG{n}{analysis\PYGZus{}data\PYGZus{}path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,}
+\PYG{n}{linearity\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{gain\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{time\PYGZus{}calibration} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{shutter\PYGZus{}test}\PYG{p}{:} \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{hot\PYGZus{}pixels} \PYG{o}{=} \PYG{n+nb+bp}{False}\PYG{p}{,}
+\PYG{n}{lightsource\PYGZus{}stabillity} \PYG{o}{=} \PYG{n+nb+bp}{False}\PYG{p}{,}
+\PYG{n}{bias\PYGZus{}sequence}\PYG{p}{:} \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{,}
+\PYG{n}{bias\PYGZus{}frame\PYGZus{}scaling}\PYG{p}{:}\PYG{n+nb}{float} \PYG{o}{=} \PYG{n+nb+bp}{None}
+\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method that will produce all the relevant plots, from the data constructed}
+\PYG{l+s+sd}{from the characterization procedure.}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Producing plots for CCD: \PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} ...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n}{bias\PYGZus{}sequence} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n}{gauss\PYGZus{}dist\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{bias\PYGZus{}sequence}\PYG{p}{)}
+\PYG{k}{if} \PYG{n}{shutter\PYGZus{}test} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n}{shutter\PYGZus{}test\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{,} \PYG{n}{shutter\PYGZus{}test}\PYG{p}{)}
+\PYG{k}{if} \PYG{n}{hot\PYGZus{}pixels}\PYG{p}{:}
+\PYG{n}{hot\PYGZus{}pixels\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{)}
+
+\PYG{n}{master\PYGZus{}frame\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}bias\PYGZus{}fig\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Master\PYGZbs{};bias\PYGZbs{};frame\PYGZcb{}\PYGZdl{} \PYGZdq{}}          \PYG{p}{,} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}bias\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}                    \PYG{p}{,} \PYG{n}{scaling} \PYG{o}{=} \PYG{l+m+mi}{70}\PYG{p}{)}
+\PYG{n}{master\PYGZus{}frame\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{master\PYGZus{}dark}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}dark\PYGZus{}fig\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Master\PYGZbs{};dark\PYGZbs{};current\PYGZbs{};frame\PYGZcb{}\PYGZdl{} \PYGZdq{}} \PYG{p}{,} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}dark\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,}    \PYG{n}{raisetitle}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+\PYG{n}{master\PYGZus{}frame\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{o}{.}\PYG{n}{master\PYGZus{}flat}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}flat\PYGZus{}fig\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Master\PYGZbs{};flat\PYGZbs{};field\PYGZbs{};frame\PYGZcb{}\PYGZdl{} \PYGZdq{}}   \PYG{p}{,} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}flat\PYGZdq{}} \PYG{o}{+} \PYG{n}{detector}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}                    \PYG{p}{)}
+
+\PYG{k}{if} \PYG{p}{(}\PYG{n}{dark\PYGZus{}current\PYGZus{}data} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{readout\PYGZus{}noise\PYGZus{}data} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{gain\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{gain\PYGZus{}data}\PYG{p}{)}
+\PYG{n}{noise\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{dark\PYGZus{}current\PYGZus{}data}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} if time\PYGZus{}calibration is not None:}
+\PYG{c+c1}{\PYGZsh{} time\PYGZus{}calibration\PYGZus{}plot(detector, time\PYGZus{}calibration, figure\PYGZus{}directory)}
+\PYG{k}{if} \PYG{n}{linearity\PYGZus{}data} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n}{linearity\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n}{lightsource\PYGZus{}stabillity}\PYG{p}{:}
+\PYG{n}{lightsource\PYGZus{}stability\PYGZus{}from\PYGZus{}datafile\PYGZus{}plot}\PYG{p}{(}\PYG{n}{detector}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory}\PYG{p}{,} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} ron\PYGZus{}dist\PYGZus{}plot(detector)}
+	
+	
+\end{Verbatim}

@@ -1,0 +1,1437 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}       By Marc Breiner Sørensen        \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Implemented:           August    2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Last edit:          8. April     2022 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k+kn}{import} \PYG{n+nn}{math}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{import} \PYG{n+nn}{utilities} \PYG{k+kn}{as} \PYG{n+nn}{util}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k+kn}{as} \PYG{n+nn}{plt}
+\PYG{k+kn}{import} \PYG{n+nn}{pubplot} \PYG{k+kn}{as} \PYG{n+nn}{pp}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{style}\PYG{o}{.}\PYG{n}{use}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}science\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}ieee\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}vibrant\PYGZsq{}}\PYG{p}{])}
+
+
+\PYG{k}{class} \PYG{n+nc}{DataSequence}\PYG{p}{:}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A general class to store informations about a data sequence.}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}datapoints:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different datapoints}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of each datapoint}
+\PYG{l+s+sd}{in the data series}
+\PYG{l+s+sd}{:parameter exposure\PYGZus{}time:}
+\PYG{l+s+sd}{\PYGZhy{} The exposure time in seconds of the data\PYGZus{}series}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{:} \PYG{n+nb}{int}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}
+\PYG{n}{exposure\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o+ow}{or} \PYG{n+nb}{list}
+\PYG{n}{cutoff}\PYG{p}{:} \PYG{n+nb}{float}
+\PYG{n}{exposure\PYGZus{}list}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}
+\PYG{n}{milliseconds}\PYG{p}{:} \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{False}
+
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}  \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{str}                  \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{int}           \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{int}               \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o+ow}{or} \PYG{n+nb}{list}      \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{cutoff\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{float}                     \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}list\PYGZus{}input}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}         \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{milliseconds\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{bool}                \PYG{o}{=} \PYG{n+nb+bp}{False} \PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Constructor member function}
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different datapoints}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of each datapoint}
+\PYG{l+s+sd}{in the data series}
+\PYG{l+s+sd}{:parameter exposure\PYGZus{}time\PYGZus{}input:}
+\PYG{l+s+sd}{\PYGZhy{} The exposure time in seconds of the data\PYGZus{}series}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}    \PYG{o}{=}   \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}input}
+
+\PYG{k}{if} \PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}     \PYG{o}{=}   \PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points\PYGZus{}input}
+\PYG{k}{if} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}         \PYG{o}{=}   \PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}
+\PYG{k}{if} \PYG{n}{exposure\PYGZus{}time\PYGZus{}input} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}time}          \PYG{o}{=}   \PYG{n}{exposure\PYGZus{}time\PYGZus{}input}
+\PYG{k}{if} \PYG{n}{cutoff\PYGZus{}input} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{cutoff}                 \PYG{o}{=}   \PYG{n}{cutoff\PYGZus{}input}
+\PYG{k}{if} \PYG{n}{exposure\PYGZus{}list\PYGZus{}input} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}list}          \PYG{o}{=}   \PYG{n}{exposure\PYGZus{}list\PYGZus{}input}
+\PYG{k}{if} \PYG{n}{milliseconds\PYGZus{}input}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{milliseconds}           \PYG{o}{=}   \PYG{n}{milliseconds\PYGZus{}input}
+
+
+\PYG{k}{class} \PYG{n+nc}{CCD}\PYG{p}{:}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A general CCD class, that will contain a number of useful functions to do}
+\PYG{l+s+sd}{data analysis of image data from a Charge Coupled Device (CCD). Will be}
+\PYG{l+s+sd}{used to characterize CCD\PYGZsq{}s.}
+
+\PYG{l+s+sd}{:parameter str name:}
+\PYG{l+s+sd}{\PYGZhy{} String representing the name of the CCD instance}
+\PYG{l+s+sd}{:parameter float gain\PYGZus{}factor:}
+\PYG{l+s+sd}{\PYGZhy{} The gain factor of the CCD, either from specs or found experimentally}
+\PYG{l+s+sd}{default value is 1.}
+\PYG{l+s+sd}{:parameter np.ndarray master\PYGZus{}bias:}
+\PYG{l+s+sd}{\PYGZhy{} Numpy array representing the master bias image}
+\PYG{l+s+sd}{for use in corrections}
+\PYG{l+s+sd}{:parameter np.ndarray master\PYGZus{}dark:}
+\PYG{l+s+sd}{\PYGZhy{} Numpy array representing the master dark current image}
+\PYG{l+s+sd}{for use in corrections}
+\PYG{l+s+sd}{:parameter np.ndarray master\PYGZus{}flat:}
+\PYG{l+s+sd}{\PYGZhy{} Numpy array representing the master flat field image}
+\PYG{l+s+sd}{for use in corrections}
+\PYG{l+s+sd}{:parameter np.ndarray hot\PYGZus{}pixel\PYGZus{}mask:}
+\PYG{l+s+sd}{\PYGZhy{} A mask array of indices of hot pixels in the camera}
+\PYG{l+s+sd}{:parameter np.ndarray linearity:}
+\PYG{l+s+sd}{\PYGZhy{} Numpy array of data from the CCD linearity test}
+\PYG{l+s+sd}{:parameter np.ndarray dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature:}
+\PYG{l+s+sd}{\PYGZhy{} Numpy array of data from the CCD dark current temperature test}
+\PYG{l+s+sd}{:parameter np.ndarray readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature:}
+\PYG{l+s+sd}{\PYGZhy{} Numpy array of data from the CCD readout noise levels temperature test}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{name}\PYG{p}{:} \PYG{n+nb}{str} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{gain\PYGZus{}factor}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{l+m+mi}{1}
+\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{l+m+mi}{0}  \PYG{c+c1}{\PYGZsh{} 1/15}
+
+\PYG{n}{master\PYGZus{}bias}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{master\PYGZus{}dark}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{master\PYGZus{}flat}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{linearity}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature}\PYG{p}{:}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}\PYG{p}{:}                     \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}level}\PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{:}  \PYG{n+nb}{str} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{:}  \PYG{n+nb}{str} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append}\PYG{p}{:}           \PYG{n+nb}{str} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{figure\PYGZus{}directory\PYGZus{}path}\PYG{p}{:}                 \PYG{n+nb}{str} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{construct\PYGZus{}master\PYGZus{}bias}\PYG{p}{:}   \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}dark}\PYG{p}{:}   \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}flat}\PYG{p}{:}   \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}\PYG{p}{:}     \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{do\PYGZus{}time\PYGZus{}calibration}\PYG{p}{:}     \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation}\PYG{p}{:} \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation}\PYG{p}{:} \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}
+
+\PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{gain\PYGZus{}factor}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{master\PYGZus{}frame\PYGZus{}path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{figure\PYGZus{}directory\PYGZus{}path}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Constructor member function}
+\PYG{l+s+sd}{:parameter str name:}
+\PYG{l+s+sd}{\PYGZhy{} String representing the name of the CCD instance}
+\PYG{l+s+sd}{:parameter float gain\PYGZus{}factor:}
+\PYG{l+s+sd}{\PYGZhy{} Float representing the gain factor of the CCD instance}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Initiallizing CCD with \PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Name:\PYGZdq{}}\PYG{p}{,} \PYG{n}{name}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Gain:\PYGZdq{}}\PYG{p}{,} \PYG{n}{gain\PYGZus{}factor}\PYG{p}{)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}           \PYG{o}{=}   \PYG{n}{name}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}    \PYG{o}{=}   \PYG{n}{gain\PYGZus{}factor}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{=} \PYG{n}{analysis\PYGZus{}data\PYGZus{}path}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{=} \PYG{n}{master\PYGZus{}frame\PYGZus{}path}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append}          \PYG{o}{=} \PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{figure\PYGZus{}directory\PYGZus{}path}                \PYG{o}{=} \PYG{n}{figure\PYGZus{}directory\PYGZus{}path}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{load\PYGZus{}ccd\PYGZus{}characterization\PYGZus{}data}\PYG{p}{(} \PYG{n+nb+bp}{self}                                     \PYG{p}{,}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}bias}\PYG{p}{:}      \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}dark}\PYG{p}{:}      \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{construct\PYGZus{}master\PYGZus{}flat}\PYG{p}{:}      \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}\PYG{p}{:}        \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{do\PYGZus{}time\PYGZus{}calibration}\PYG{p}{:}        \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation}\PYG{p}{:}    \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation}\PYG{p}{:}  \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{True}\PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}bias\PYGZus{}frame}\PYG{p}{:}   \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}dark\PYGZus{}frame}\PYG{p}{:}   \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}flat\PYGZus{}frame}\PYG{p}{:}   \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}linearity\PYGZus{}data}\PYG{p}{:}      \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}dark\PYGZus{}current\PYGZus{}data}\PYG{p}{:}   \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{:}  \PYG{n+nb}{str} \PYG{o}{=} \PYG{n+nb+bp}{None}   \PYG{p}{):}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{construct\PYGZus{}master\PYGZus{}bias}   \PYG{o}{=} \PYG{n}{construct\PYGZus{}master\PYGZus{}bias}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{construct\PYGZus{}master\PYGZus{}dark}   \PYG{o}{=} \PYG{n}{construct\PYGZus{}master\PYGZus{}dark}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{construct\PYGZus{}master\PYGZus{}flat}   \PYG{o}{=} \PYG{n}{construct\PYGZus{}master\PYGZus{}flat}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}     \PYG{o}{=} \PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}time\PYGZus{}calibration}     \PYG{o}{=} \PYG{n}{do\PYGZus{}time\PYGZus{}calibration}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation} \PYG{o}{=} \PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation} \PYG{o}{=} \PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation}
+
+\PYG{k}{if} \PYG{p}{(}\PYG{n}{construct\PYGZus{}master\PYGZus{}bias} \PYG{o+ow}{is} \PYG{n+nb+bp}{False}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}bias\PYGZus{}frame} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{fullpath\PYGZus{}master\PYGZus{}bias} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}bias\PYGZus{}frame}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Reading master bias frame from:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{fullpath\PYGZus{}master\PYGZus{}bias}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias}                        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n}{fullpath\PYGZus{}master\PYGZus{}bias}\PYG{p}{)}
+\PYG{k}{if} \PYG{p}{(}\PYG{n}{construct\PYGZus{}master\PYGZus{}dark} \PYG{o+ow}{is} \PYG{n+nb+bp}{False}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}dark\PYGZus{}frame} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{fullpath\PYGZus{}master\PYGZus{}dark} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}dark\PYGZus{}frame}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Reading master dark frame from:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{fullpath\PYGZus{}master\PYGZus{}dark}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}dark}                        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n}{fullpath\PYGZus{}master\PYGZus{}dark}\PYG{p}{)}
+\PYG{k}{if} \PYG{p}{(}\PYG{n}{construct\PYGZus{}master\PYGZus{}flat} \PYG{o+ow}{is} \PYG{n+nb+bp}{False}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}flat\PYGZus{}frame} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{fullpath\PYGZus{}master\PYGZus{}flat} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}master\PYGZus{}flat\PYGZus{}frame}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Reading master flat frame from:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{fullpath\PYGZus{}master\PYGZus{}flat}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}flat}                        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n}{fullpath\PYGZus{}master\PYGZus{}flat}\PYG{p}{)}
+\PYG{k}{if} \PYG{p}{(}\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation} \PYG{o+ow}{is} \PYG{n+nb+bp}{False}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}linearity\PYGZus{}data} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{fullpath\PYGZus{}linearity} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}linearity\PYGZus{}data}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Reading linearity data from:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{fullpath\PYGZus{}linearity}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}                          \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n}{fullpath\PYGZus{}linearity}\PYG{p}{)}
+\PYG{k}{if} \PYG{p}{(}\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation} \PYG{o+ow}{is} \PYG{n+nb+bp}{False}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}readout\PYGZus{}noise\PYGZus{}data} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{)} \PYG{o+ow}{and} \PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}readout\PYGZus{}noise\PYGZus{}data} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{n}{fullpath\PYGZus{}dark\PYGZus{}current} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}dark\PYGZus{}current\PYGZus{}data}
+\PYG{n}{fullpath\PYGZus{}readout\PYGZus{}noise} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}readout\PYGZus{}noise\PYGZus{}data}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Reading dark current temperature data from:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{fullpath\PYGZus{}dark\PYGZus{}current}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Reading readout noise temperature data from:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{fullpath\PYGZus{}readout\PYGZus{}noise}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature}    \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}dark\PYGZus{}current\PYGZus{}data}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature}   \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{loadtxt}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{n}{path\PYGZus{}of\PYGZus{}readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{characterize}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,}
+\PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}                \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{flat\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}                \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}        \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}       \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}           \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}           \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}          \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{time\PYGZus{}calibration\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}    \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{gain\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}                \PYG{n}{DataSequence}\PYG{p}{,}
+\PYG{n}{old\PYGZus{}timecal\PYGZus{}data\PYGZus{}sequence}\PYG{p}{:}         \PYG{n}{DataSequence} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{The main interface for the characterization procedure. Calling this}
+\PYG{l+s+sd}{method will fully characterize the ccd in question. The method will}
+\PYG{l+s+sd}{call all of the members below, to first construct master frames of}
+\PYG{l+s+sd}{the bias, flat field and dark current. A preliminary estimation of}
+\PYG{l+s+sd}{the readout noise levels is computed by readout\PYGZus{}noise\PYGZus{}estimation().}
+\PYG{l+s+sd}{A hot pixel mask is then constructed by hot\PYGZus{}pixel\PYGZus{}estimation().}
+\PYG{l+s+sd}{The noise of the CCD is then characterized by noise\PYGZus{}versus\PYGZus{}temperature()}
+\PYG{l+s+sd}{and the linearity data analyzed and characterized by the methods}
+\PYG{l+s+sd}{linearity\PYGZus{}estimation() and linearity\PYGZus{}precision(). Finally the light}
+\PYG{l+s+sd}{source stability and the CCD preliminary zero point estimation are}
+\PYG{l+s+sd}{both treated by, respectively, the lightsource\PYGZus{}stability() and}
+\PYG{l+s+sd}{zeropoint\PYGZus{}estimation() methods.}
+
+\PYG{l+s+sd}{:param DataSequence bias\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the bias data series}
+\PYG{l+s+sd}{:param DataSequence flat\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the flat field data series}
+\PYG{l+s+sd}{:param DataSequence dark\PYGZus{}current\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the dark current data series}
+\PYG{l+s+sd}{:param DataSequence readout\PYGZus{}noise\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the readout noise data series}
+\PYG{l+s+sd}{:param DataSequence linearity\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the linearity data series}
+\PYG{l+s+sd}{:param DataSequence hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the hot pixel data series}
+\PYG{l+s+sd}{:param DataSequence zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the zero point estimation data series}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Initializing characterization of CCD: \PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} ...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{construct\PYGZus{}master\PYGZus{}bias}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias\PYGZus{}image}\PYG{p}{(}         \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}       \PYG{p}{)}
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{construct\PYGZus{}master\PYGZus{}dark}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}dark\PYGZus{}current\PYGZus{}image}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}      \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time}       \PYG{o}{=}   \PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}time}             \PYG{p}{)}
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{construct\PYGZus{}master\PYGZus{}flat}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}flat\PYGZus{}field\PYGZus{}image}\PYG{p}{(}   \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{flat\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}       \PYG{p}{)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}estimation}\PYG{p}{(}  \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{bias\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}      \PYG{p}{,}
+\PYG{n}{temperature}         \PYG{o}{=}   \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{10}                                          \PYG{p}{)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor\PYGZus{}estimation}\PYG{p}{(}    \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{flat\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}estimation}\PYG{p}{(}      \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time}       \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}time}       \PYG{p}{,}
+\PYG{n}{hot\PYGZus{}pixel\PYGZus{}cutoff}    \PYG{o}{=}   \PYG{n}{hot\PYGZus{}pixel\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{cutoff}               \PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{test\PYGZus{}zero\PYGZus{}point}\PYG{p}{(}           \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}  \PYG{o}{=}   \PYG{n}{zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{o}{=}   \PYG{n}{zero\PYGZus{}point\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}gain\PYGZus{}factor\PYGZus{}estimation}\PYG{p}{:}
+\PYG{n}{gain\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{o}{=}\PYG{n}{gain\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{o}{=}\PYG{n}{gain\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{o}{=}\PYG{n}{gain\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+\PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{gain\PYGZus{}data} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}noise\PYGZus{}estimation}\PYG{p}{:}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{,} \PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{noise\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}\PYG{n}{dark\PYGZus{}current\PYGZus{}data\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data\PYGZus{}sequence}\PYG{p}{)}
+
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature}
+
+\PYG{c+c1}{\PYGZsh{} ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp = []}
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}time\PYGZus{}calibration} \PYG{o+ow}{and} \PYG{n}{old\PYGZus{}timecal\PYGZus{}data\PYGZus{}sequence} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n}{time\PYGZus{}calibration} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{old\PYGZus{}timecal\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}exposures}    \PYG{o}{=}   \PYG{n}{old\PYGZus{}timecal\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{o}{=}   \PYG{n}{old\PYGZus{}timecal\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{time\PYGZus{}calibration} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{new\PYGZus{}time\PYGZus{}calibration}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}   \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}        \PYG{p}{,}
+\PYG{n}{exposures}           \PYG{o}{=} \PYG{n}{time\PYGZus{}calibration\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}list}          \PYG{p}{)}
+
+\PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{do\PYGZus{}linearity\PYGZus{}estimation}\PYG{p}{:}
+\PYG{n}{linearity\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity\PYGZus{}estimation\PYGZus{}with\PYGZus{}reference}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}exposures}    \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}  \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}      \PYG{p}{,}
+\PYG{n}{reference\PYGZus{}exposure}  \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}time}       \PYG{p}{,}
+\PYG{n}{exposures}           \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}list}       \PYG{p}{,}
+\PYG{n}{milliseconds}        \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}data\PYGZus{}sequence}\PYG{o}{.}\PYG{n}{milliseconds}         \PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{linearity\PYGZus{}data}  \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}
+
+\PYG{c+c1}{\PYGZsh{} ideal\PYGZus{}linear\PYGZus{}relation, linearity\PYGZus{}deviations, linearity\PYGZus{}dev\PYGZus{}err = self.linearity\PYGZus{}precision()}
+
+\PYG{c+c1}{\PYGZsh{} stabillity\PYGZus{}data = self.test\PYGZus{}lightsource\PYGZus{}stability(path\PYGZus{}of\PYGZus{}data\PYGZus{}series  =   linearity\PYGZus{}data\PYGZus{}sequence.path\PYGZus{}of\PYGZus{}data\PYGZus{}series,}
+\PYG{c+c1}{\PYGZsh{}                                                   num\PYGZus{}of\PYGZus{}data\PYGZus{}points   =   linearity\PYGZus{}data\PYGZus{}sequence.num\PYGZus{}of\PYGZus{}data\PYGZus{}points,}
+\PYG{c+c1}{\PYGZsh{}                                                   num\PYGZus{}of\PYGZus{}repeats       =   linearity\PYGZus{}data\PYGZus{}sequence.num\PYGZus{}of\PYGZus{}repeats)}
+\PYG{c+c1}{\PYGZsh{} stabillity\PYGZus{}data = []}
+\PYG{k}{return} \PYG{p}{[}\PYG{n}{dark\PYGZus{}current\PYGZus{}data}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{,} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{,} \PYG{n}{gain\PYGZus{}data}\PYG{p}{]}
+\PYG{c+c1}{\PYGZsh{}, ideal\PYGZus{}linear\PYGZus{}relation, linearity\PYGZus{}deviations, linearity\PYGZus{}dev\PYGZus{}err, stabillity\PYGZus{}data, ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp]}
+
+\PYG{k}{def} \PYG{n+nf}{noise\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{dark\PYGZus{}current\PYGZus{}vars}\PYG{p}{:} \PYG{n}{DataSequence}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}vars}\PYG{p}{:} \PYG{n}{DataSequence} \PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Fully characterizes the noise of the CCD, both thermal (dark current) and}
+\PYG{l+s+sd}{readout noise (RON) as a function of temperature}
+
+\PYG{l+s+sd}{:param DataSequence dark\PYGZus{}current\PYGZus{}vars:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the dark current data series}
+\PYG{l+s+sd}{:param DataSequence readout\PYGZus{}noise\PYGZus{}vars:}
+\PYG{l+s+sd}{\PYGZhy{} A datasequence instance representing the readout noise data series}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Characterizing the noise levels of the CCD...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}dark\PYGZus{}current}    \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}vars}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}
+\PYG{n}{exposure\PYGZus{}time\PYGZus{}dark\PYGZus{}current}          \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}vars}\PYG{o}{.}\PYG{n}{exposure\PYGZus{}time}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}dark\PYGZus{}current}         \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}vars}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+\PYG{n}{num\PYGZus{}of\PYGZus{}temperatures\PYGZus{}dark\PYGZus{}current}    \PYG{o}{=}   \PYG{n}{dark\PYGZus{}current\PYGZus{}vars}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}
+
+\PYG{n}{dark\PYGZus{}current\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{dark\PYGZus{}current\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}   \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}   \PYG{o}{=}   \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}dark\PYGZus{}current}\PYG{p}{,}
+\PYG{n}{exposure\PYGZus{}time}         \PYG{o}{=}   \PYG{n}{exposure\PYGZus{}time\PYGZus{}dark\PYGZus{}current}      \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}        \PYG{o}{=}   \PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}dark\PYGZus{}current}     \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}temperatures}   \PYG{o}{=}   \PYG{n}{num\PYGZus{}of\PYGZus{}temperatures\PYGZus{}dark\PYGZus{}current}  \PYG{p}{)}
+
+\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}readout\PYGZus{}noise}   \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}vars}\PYG{o}{.}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}readout\PYGZus{}noise}        \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}vars}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+\PYG{n}{num\PYGZus{}of\PYGZus{}temperatures\PYGZus{}readout\PYGZus{}noise}   \PYG{o}{=}   \PYG{n}{readout\PYGZus{}noise\PYGZus{}vars}\PYG{o}{.}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}
+
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{,} \PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}  \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}  \PYG{o}{=}   \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series\PYGZus{}readout\PYGZus{}noise}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}       \PYG{o}{=}   \PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}readout\PYGZus{}noise}     \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}temperatures}  \PYG{o}{=}   \PYG{n}{num\PYGZus{}of\PYGZus{}temperatures\PYGZus{}readout\PYGZus{}noise}  \PYG{p}{)}
+\PYG{k}{return} \PYG{n}{dark\PYGZus{}current\PYGZus{}data}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}data}\PYG{p}{,} \PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp}
+
+\PYG{k}{def} \PYG{n+nf}{master\PYGZus{}bias\PYGZus{}image}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will set the class member np.ndarray master\PYGZus{}bias}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the}
+\PYG{l+s+sd}{master bias image}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Constructing the master bias correction image...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{mean\PYGZus{}image\PYGZus{}return}   \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}bias\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{mean\PYGZus{}image\PYGZus{}return}\PYG{p}{,} \PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias} \PYG{o}{=} \PYG{n}{mean\PYGZus{}image\PYGZus{}return}  \PYG{c+c1}{\PYGZsh{} np.flip( , axis = 1)  \PYGZsh{} np.flip( , axis = 0)}
+
+\PYG{k}{def} \PYG{n+nf}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will apply the bias correction to an image}
+\PYG{l+s+sd}{by subtracting the master bias image}
+
+\PYG{l+s+sd}{:parameter np.ndarray image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array which is the image data to be corrected}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{corrected\PYGZus{}image} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} np.flip(np.subtract(image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected, self.master\PYGZus{}bias), axis=0)}
+\PYG{k}{return} \PYG{n}{corrected\PYGZus{}image}
+
+\PYG{k}{def} \PYG{n+nf}{master\PYGZus{}dark\PYGZus{}current\PYGZus{}image}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will set the class member np.ndarray master\PYGZus{}dark}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the}
+\PYG{l+s+sd}{master dark current image}
+\PYG{l+s+sd}{:parameter exposure\PYGZus{}time:}
+\PYG{l+s+sd}{\PYGZhy{} The exposure time in seconds of the data\PYGZus{}series}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Constructing the master dark current correction image...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{dim\PYGZus{}path}            \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{image\PYGZus{}shape}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}dims}\PYG{p}{(}\PYG{n}{dim\PYGZus{}path}\PYG{p}{)}     \PYG{c+c1}{\PYGZsh{} Need the shape to prepare dummy array}
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array}    \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{image\PYGZus{}shape}\PYG{p}{)}       \PYG{c+c1}{\PYGZsh{} Prepare dummy array}
+\PYG{n}{number\PYGZus{}of\PYGZus{}images}    \PYG{o}{=}   \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series}\PYG{p}{:}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{imagedata}                   \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Check for consistency}
+\PYG{c+c1}{\PYGZsh{}if header[\PYGZsq{}EXPTIME\PYGZsq{}] == exposure\PYGZus{}time:}
+\PYG{n}{imagedata}   \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{}else:}
+\PYG{c+c1}{\PYGZsh{}   print(\PYGZdq{}  master\PYGZus{}dark\PYGZus{}current\PYGZus{}image(): Error, exposure time does not match up\PYGZdq{})}
+\PYG{c+c1}{\PYGZsh{}  print(\PYGZdq{}  master\PYGZus{}dark\PYGZus{}current\PYGZus{}image(): Exposure time was: \PYGZdq{}, header[\PYGZsq{}EXPTIME\PYGZsq{}])}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{+=} \PYG{n}{imagedata}
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array}   \PYG{o}{/=}   \PYG{n}{number\PYGZus{}of\PYGZus{}images}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}dark\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{mean\PYGZus{}image\PYGZus{}array}\PYG{p}{,} \PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}dark}    \PYG{o}{=}   \PYG{n}{mean\PYGZus{}image\PYGZus{}array}
+
+\PYG{k}{def} \PYG{n+nf}{dark\PYGZus{}current\PYGZus{}correction}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will apply the dark current correction to an image}
+\PYG{l+s+sd}{by subtracting the master dark current image}
+
+\PYG{l+s+sd}{:parameter np.ndarray image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array which is the image data to be corrected}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{corrected\PYGZus{}image} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}dark}\PYG{p}{)}
+\PYG{k}{return} \PYG{n}{corrected\PYGZus{}image}
+
+\PYG{k}{def} \PYG{n+nf}{dark\PYGZus{}current\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}temperatures}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method which will compute the dark current levels as a function}
+\PYG{l+s+sd}{of temperature, which it returns as a list, and fills the member}
+\PYG{l+s+sd}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature with as well. Implies a certain}
+\PYG{l+s+sd}{file naming convention of the type}
+
+\PYG{l+s+sd}{noise\PYGZus{}rrr\PYGZus{}dc\PYGZus{}s\PYGZus{}tt\PYGZus{}d.fit}
+
+\PYG{l+s+sd}{\PYGZhy{} where nnn is an arbitrary descriptive string, s is}
+\PYG{l+s+sd}{a character representing the sign of the temperature}
+\PYG{l+s+sd}{either m or p, representing plus or minus (degrees),}
+\PYG{l+s+sd}{tt is the temperature in degrees, while d is the decimal.}
+\PYG{l+s+sd}{rrr represents the repeat number of the given data file.}
+
+\PYG{l+s+sd}{An example of this:}
+
+\PYG{l+s+sd}{noise\PYGZus{}000\PYGZus{}dc\PYGZus{}m\PYGZus{}04\PYGZus{}9.fit}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter exposure\PYGZus{}time:}
+\PYG{l+s+sd}{\PYGZhy{} The exposure time in seconds of the data\PYGZus{}series}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}temperatures:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different temperatures}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:returns np.ndarray dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array of data points of the form (temperature, value)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Computing dark current as a function of temperature...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{tmplist}         \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{data\PYGZus{}series}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}  \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}  \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}temperatures}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{9}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{tempid} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence} \PYG{o+ow}{in} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{:}
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}      \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{util}\PYG{o}{.}\PYG{n}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{))}
+
+\PYG{c+c1}{\PYGZsh{} Get temperatures from the filename}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{temperature}                 \PYG{o}{=}   \PYG{n+nb}{float}\PYG{p}{(}\PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{15}\PYG{p}{:}\PYG{l+m+mi}{17}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{18}\PYG{p}{]))}  \PYG{c+c1}{\PYGZsh{} time in s}
+\PYG{k}{if} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{13}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}m\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{temperature} \PYG{o}{*=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+
+\PYG{c+c1}{\PYGZsh{} Error bars}
+\PYG{n}{errorbar} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{compute\PYGZus{}errorbar}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Check for consistency}
+\PYG{k}{if} \PYG{n}{header}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}EXPTIME\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:}
+\PYG{n}{dark\PYGZus{}per\PYGZus{}time\PYGZus{}per\PYGZus{}pixel} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{,}  \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}\PYG{p}{[}\PYG{n}{tempid}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]),} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{))}
+\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{temperature}\PYG{p}{,} \PYG{n}{dark\PYGZus{}per\PYGZus{}time\PYGZus{}per\PYGZus{}pixel}\PYG{p}{,} \PYG{n}{errorbar}\PYG{p}{])}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}   dark\PYGZus{}current\PYGZus{}vs\PYGZus{}temperature(): Error, exposure times do not match up\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}   dark\PYGZus{}current\PYGZus{}vs\PYGZus{}temperature(): Exposure time was: \PYGZdq{}}\PYG{p}{,} \PYG{n}{header}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}EXPTIME\PYGZsq{}}\PYG{p}{])}
+
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\PYG{n}{tempid} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{c+c1}{\PYGZsh{}tmparray = np.sort(}
+\PYG{n}{tmplist} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{tmplist}\PYG{p}{)}
+\PYG{n}{tmplist2D} \PYG{o}{=} \PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{tmparray} \PYG{o}{=} \PYG{p}{(}\PYG{n}{tmplist2D}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{lexsort}\PYG{p}{(}\PYG{n}{tmplist2D}\PYG{o}{.}\PYG{n}{T}\PYG{p}{[::}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])])}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{}       , axis=0)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature}    \PYG{o}{=} \PYG{n}{tmparray}
+\PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return}  \PYG{o}{=} \PYG{n}{tmparray}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return}\PYG{p}{,} \PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return}
+
+\PYG{k}{def} \PYG{n+nf}{master\PYGZus{}flat\PYGZus{}field\PYGZus{}image}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will set the class member np.ndarray master\PYGZus{}flat}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the}
+\PYG{l+s+sd}{master flat field image}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Constructing the master flat field correction image...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{dim\PYGZus{}path}            \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{image\PYGZus{}shape}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}dims}\PYG{p}{(}\PYG{n}{dim\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{number\PYGZus{}of\PYGZus{}images}    \PYG{o}{=}   \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{meaned\PYGZus{}flat}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{image\PYGZus{}shape}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series}\PYG{p}{:}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{imagedata}                   \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)}
+
+\PYG{n}{corrected\PYGZus{}image}             \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{dark\PYGZus{}current\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)}
+\PYG{n}{meaned\PYGZus{}flat}                \PYG{o}{+=}   \PYG{n}{corrected\PYGZus{}image}
+
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+\PYG{n}{meaned\PYGZus{}flat} \PYG{o}{/=} \PYG{n}{number\PYGZus{}of\PYGZus{}images}
+\PYG{n}{meaned\PYGZus{}flat} \PYG{o}{/=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{meaned\PYGZus{}flat}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Normalize}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}master\PYGZus{}flat\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{meaned\PYGZus{}flat}\PYG{p}{,} \PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}frames\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}flat} \PYG{o}{=} \PYG{n}{meaned\PYGZus{}flat}
+
+\PYG{k}{def} \PYG{n+nf}{flat\PYGZus{}field\PYGZus{}correction}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will apply the flat field correction to an image}
+\PYG{l+s+sd}{by subtracting the master flat field image}
+
+\PYG{l+s+sd}{:parameter np.ndarray image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array which is the image data to be corrected}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{corrected\PYGZus{}image} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}flat}\PYG{p}{)}
+\PYG{k}{return} \PYG{n}{corrected\PYGZus{}image}
+
+\PYG{k}{def} \PYG{n+nf}{hot\PYGZus{}pixel\PYGZus{}estimation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{hot\PYGZus{}pixel\PYGZus{}cutoff}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method to find hot pixels qualitatively, and then construct a mask used to remove them}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the}
+\PYG{l+s+sd}{master flat field image}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:parameter list exposure\PYGZus{}time:}
+\PYG{l+s+sd}{\PYGZhy{} list of shape [exposure time of short exposure image, exposure time of long exposure image]}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Looking for hot pixels...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{data\PYGZus{}series}                         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}                      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}  \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{7}\PYG{p}{,} \PYG{l+m+mi}{8}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}          \PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Construct the two images from the data files in the path}
+\PYG{n}{short\PYGZus{}exposure\PYGZus{}image}                \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tolist}\PYG{p}{(),} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{long\PYGZus{}exposure\PYGZus{}image}                 \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{tolist}\PYG{p}{(),} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Apply bias correction}
+\PYG{n}{short\PYGZus{}exposure\PYGZus{}image}                \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{short\PYGZus{}exposure\PYGZus{}image}\PYG{p}{)}
+\PYG{n}{long\PYGZus{}exposure\PYGZus{}image}                 \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{long\PYGZus{}exposure\PYGZus{}image}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Convert ADU to dark current}
+\PYG{n}{short\PYGZus{}exposure\PYGZus{}image}                \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{short\PYGZus{}exposure\PYGZus{}image}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{),} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{long\PYGZus{}exposure\PYGZus{}image}                 \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{long\PYGZus{}exposure\PYGZus{}image} \PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{),} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+
+\PYG{c+c1}{\PYGZsh{} Find potential hot pixels}
+\PYG{n}{smallest\PYGZus{}measurable\PYGZus{}dark\PYGZus{}current}    \PYG{o}{=}   \PYG{l+m+mi}{2} \PYG{o}{*} \PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}level} \PYG{o}{/} \PYG{n}{math}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{))} \PYG{o}{/} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{potential\PYGZus{}hot\PYGZus{}pixels}                \PYG{o}{=}   \PYG{n}{long\PYGZus{}exposure\PYGZus{}image} \PYG{o}{\PYGZgt{}} \PYG{n}{smallest\PYGZus{}measurable\PYGZus{}dark\PYGZus{}current}
+
+\PYG{c+c1}{\PYGZsh{} Plot to qualitatively decide upon cutoff}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}data} \PYG{o}{=} \PYG{p}{[}\PYG{n}{short\PYGZus{}exposure\PYGZus{}image}\PYG{p}{[}\PYG{n}{potential\PYGZus{}hot\PYGZus{}pixels}\PYG{p}{]}\PYG{o}{.}\PYG{n}{flatten}\PYG{p}{(),} \PYG{n}{long\PYGZus{}exposure\PYGZus{}image}\PYG{p}{[}\PYG{n}{potential\PYGZus{}hot\PYGZus{}pixels}\PYG{p}{]}\PYG{o}{.}\PYG{n}{flatten}\PYG{p}{()]}
+
+\PYG{n}{hot\PYGZus{}pixels} \PYG{o}{=} \PYG{p}{(}\PYG{n}{short\PYGZus{}exposure\PYGZus{}image} \PYG{o}{\PYGZgt{}} \PYG{n}{hot\PYGZus{}pixel\PYGZus{}cutoff}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  No. of hot pixels:\PYGZdq{}}\PYG{p}{,} \PYG{n}{hot\PYGZus{}pixels}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{())}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask} \PYG{o}{=} \PYG{n}{hot\PYGZus{}pixels}
+
+\PYG{k}{def} \PYG{n+nf}{hot\PYGZus{}pixel\PYGZus{}correction}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will apply the hot pixel correction to an image.}
+
+\PYG{l+s+sd}{:parameter np.ndarray image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array which is the image data to be corrected}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{logical\PYGZus{}not}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{))])}
+\PYG{k}{return} \PYG{n}{image\PYGZus{}to\PYGZus{}be\PYGZus{}corrected}
+
+\PYG{k}{def} \PYG{n+nf}{readout\PYGZus{}noise\PYGZus{}estimation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{temperature}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method to compute the readout noise level at a given temperature}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the}
+\PYG{l+s+sd}{master flat field image}
+\PYG{l+s+sd}{:parameter float temperature:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the temperature at which the data series}
+\PYG{l+s+sd}{was acquired}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Computing readout noise level...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{number\PYGZus{}of\PYGZus{}images}    \PYG{o}{=}   \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{tmp\PYGZus{}std}             \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{number\PYGZus{}of\PYGZus{}images}\PYG{p}{)}
+\PYG{n}{tmp\PYGZus{}mean}            \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{number\PYGZus{}of\PYGZus{}images}\PYG{p}{)}
+
+\PYG{n}{it} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series}\PYG{p}{:}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Check for consistency}
+\PYG{c+c1}{\PYGZsh{} check\PYGZus{}temperature = (temperature*1.1 \PYGZlt{}= header[\PYGZsq{}CCD\PYGZhy{}TEMP\PYGZsq{}] \PYGZlt{}= temperature*0.9) or (temperature*1.1 \PYGZgt{}= header[\PYGZsq{}CCD\PYGZhy{}TEMP\PYGZsq{}] \PYGZgt{}= temperature*0.9)}
+\PYG{c+c1}{\PYGZsh{} if check\PYGZus{}temperature:}
+\PYG{c+c1}{\PYGZsh{} noise\PYGZus{}deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain\PYGZus{}factor \PYGZsh{} self.master\PYGZus{}bias}
+\PYG{n}{noise\PYGZus{}deviation}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{master\PYGZus{}bias}\PYG{p}{,} \PYG{n}{imagedata}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} * self.gain\PYGZus{}factor}
+\PYG{n}{tmp\PYGZus{}std}\PYG{p}{[}\PYG{n}{it}\PYG{p}{]}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{noise\PYGZus{}deviation}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{} * self.gain\PYGZus{}factor * np.sqrt(8 * np.log(2))}
+\PYG{n}{tmp\PYGZus{}mean}\PYG{p}{[}\PYG{n}{it}\PYG{p}{]}        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{noise\PYGZus{}deviation}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{}else:}
+\PYG{c+c1}{\PYGZsh{}    print(header[\PYGZsq{}CCD\PYGZhy{}TEMP\PYGZsq{}])}
+
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\PYG{n}{it} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{n}{readout\PYGZus{}noise}                   \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}std}\PYG{p}{)))}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}electrons}         \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}std}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{))))}
+\PYG{n}{num\PYGZus{}of\PYGZus{}rons}                     \PYG{o}{=}  \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}std}\PYG{p}{)}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}error}             \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}std}\PYG{p}{)}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}electrons\PYGZus{}error}   \PYG{o}{=}  \PYG{n}{readout\PYGZus{}noise\PYGZus{}error} \PYG{o}{*} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}
+\PYG{n}{ron\PYGZus{}mean}                        \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}mean}\PYG{p}{)}
+
+
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{),} \PYG{n}{tmp\PYGZus{}std}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}k.\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{)} \PYG{o}{*} \PYG{n}{readout\PYGZus{}noise}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Mean value\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{)} \PYG{o}{*} \PYG{p}{((}\PYG{n}{readout\PYGZus{}noise\PYGZus{}error} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)))} \PYG{o}{+}  \PYG{n}{readout\PYGZus{}noise} \PYG{p}{)} \PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}sigma / \PYGZbs{}sqrt\PYGZob{}N\PYGZcb{}\PYGZdl{}\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}rons}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{p}{(}\PYG{n}{readout\PYGZus{}noise\PYGZus{}error} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)))} \PYG{o}{+} \PYG{n}{readout\PYGZus{}noise} \PYG{p}{)} \PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Readout\PYGZbs{};Noise\PYGZcb{}\PYGZdl{}\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Measurement no.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Readout Noise [RMS \PYGZdl{}\PYGZbs{}mathbf\PYGZob{}e\PYGZcb{}\PYGZca{}\PYGZhy{}\PYGZdl{}/pixel]\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{figure\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}readout\PYGZus{}noise\PYGZus{}measurement\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper right\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{f}\PYG{l+s+s2}{\PYGZdq{}  The readout noise level is \PYGZob{}readout\PYGZus{}noise:.3f\PYGZcb{} ± \PYGZdq{}}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}error} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)),} \PYG{l+s+s2}{\PYGZdq{} RMS ADU per pixel\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{f}\PYG{l+s+s2}{\PYGZdq{}  The readout noise level is \PYGZob{}readout\PYGZus{}noise\PYGZus{}electrons:.3f\PYGZcb{} ± \PYGZdq{}}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}electrons\PYGZus{}error} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{)),} \PYG{l+s+s2}{\PYGZdq{} RMS electrons per pixel\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{f}\PYG{l+s+s2}{\PYGZdq{}  The mean of the distribution is \PYGZob{}ron\PYGZus{}mean:.3f\PYGZcb{}, and should be equal to 0\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}level} \PYG{o}{=} \PYG{n}{readout\PYGZus{}noise}
+\PYG{k}{return} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}std}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{readout\PYGZus{}noise\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}temperatures}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method which will compute the readout noise levels as a function}
+\PYG{l+s+sd}{of temperature, which it returns as a list, and fills the member}
+\PYG{l+s+sd}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature with as well. Implies a certain}
+\PYG{l+s+sd}{file naming convention of the type}
+
+\PYG{l+s+sd}{noise\PYGZus{}rrr\PYGZus{}ron\PYGZus{}s\PYGZus{}tt\PYGZus{}d.fit}
+
+\PYG{l+s+sd}{\PYGZhy{} where nnn is an arbitrary descriptive string, s is}
+\PYG{l+s+sd}{a character representing the sign of the temperature}
+\PYG{l+s+sd}{either m or p, representing plus or minus (degrees),}
+\PYG{l+s+sd}{tt is the temperature in degrees, while d is the decimal.}
+\PYG{l+s+sd}{rrr represents the repeat number of the given data file.}
+
+\PYG{l+s+sd}{An example of this:}
+
+\PYG{l+s+sd}{noise\PYGZus{}000\PYGZus{}ron\PYGZus{}m\PYGZus{}04\PYGZus{}9.fit}
+
+\PYG{l+s+sd}{:parameter str path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}temperatures:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different temperatures}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:returns np.ndarray dark\PYGZus{}current\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array of data points of the form (temperature, value)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Computing readout noise as a function of temperature...\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{tmp\PYGZus{}std}             \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{)}
+\PYG{n}{tmp\PYGZus{}mean}            \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}  \PYG{n}{num\PYGZus{}of\PYGZus{}temperatures}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mi}{9}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}            \PYG{p}{)}
+
+\PYG{n}{readout\PYGZus{}noise} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{tempid} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence} \PYG{o+ow}{in} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{:}
+\PYG{c+c1}{\PYGZsh{} Get temperatures from the filename}
+\PYG{n}{temperature} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{16}\PYG{p}{:}\PYG{l+m+mi}{18}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{19}\PYG{p}{])}  \PYG{c+c1}{\PYGZsh{} time in s}
+\PYG{k}{if} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{14}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}m\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{temperature} \PYG{o}{*=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+
+\PYG{n}{dist\PYGZus{}at\PYGZus{}this\PYGZus{}temperature} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{dist\PYGZus{}at\PYGZus{}this\PYGZus{}temperature}\PYG{o}{.}\PYG{n}{flatten}\PYG{p}{())}
+
+\PYG{n}{it} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{:}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{For each image in each repeat sequence, find noise in electrons}
+\PYG{l+s+sd}{by subtracting the mean of the image from the image itself, and}
+\PYG{l+s+sd}{multiplying with the gain. This yields a noise image, that is a}
+\PYG{l+s+sd}{gaussian distribution. The noise is found as the  width of said}
+\PYG{l+s+sd}{distribution. In addition we check that the mean is equal to 0.}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{n}{filepath} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+
+\PYG{n}{noise\PYGZus{}deviation}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{),} \PYG{n}{imagedata}\PYG{p}{)} \PYG{o}{*} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}\PYG{p}{[}\PYG{n}{tempid}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}  \PYG{c+c1}{\PYGZsh{} self.master\PYGZus{}bias}
+\PYG{n}{tmp\PYGZus{}std}\PYG{p}{[}\PYG{n}{it}\PYG{p}{]}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{noise\PYGZus{}deviation}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} / np.sqrt(2)}
+\PYG{n}{tmp\PYGZus{}mean}\PYG{p}{[}\PYG{n}{it}\PYG{p}{]}        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{noise\PYGZus{}deviation}\PYG{p}{)}
+
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\PYG{n}{it} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{k}{if} \PYG{n}{it} \PYG{o}{==} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:}
+\PYG{n}{it} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZsh{} Errorbars}
+\PYG{n}{errorbar} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{compute\PYGZus{}errorbar}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{n}{readout\PYGZus{}noise}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{temperature}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}std}\PYG{p}{))),} \PYG{n}{errorbar}\PYG{p}{])}
+\PYG{n}{tempid} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{c+c1}{\PYGZsh{}tmparray = np.sort(}
+
+\PYG{n}{tmplist} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{readout\PYGZus{}noise}\PYG{p}{)}
+\PYG{n}{tmplist2D} \PYG{o}{=} \PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{tmparray} \PYG{o}{=} \PYG{p}{(}\PYG{n}{tmplist2D}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{lexsort}\PYG{p}{(}\PYG{n}{tmplist2D}\PYG{o}{.}\PYG{n}{T}\PYG{p}{[::}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])])}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} tmparray=np.asarray(readout\PYGZus{}noise)}
+\PYG{c+c1}{\PYGZsh{}, axis=0)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature} \PYG{o}{=} \PYG{n}{tmparray}
+\PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return} \PYG{o}{=} \PYG{n}{tmparray}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}readout\PYGZus{}noise\PYGZus{}distribution\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{readout\PYGZus{}noise\PYGZus{}versus\PYGZus{}temperature\PYGZus{}return}\PYG{p}{,} \PYG{n}{ron\PYGZus{}dists\PYGZus{}vs\PYGZus{}temp}
+
+\PYG{k}{def} \PYG{n+nf}{gain\PYGZus{}factor\PYGZus{}estimation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{):}
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{n}{gain\PYGZus{}factors} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n+nb}{id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{),} \PYG{l+m+mi}{2}\PYG{p}{):}
+\PYG{n}{filepath\PYGZus{}first} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{n+nb}{id}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}second} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{n+nb}{id} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}first} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}first}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}second} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}second}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}first} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}second} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}second}\PYG{p}{)}
+
+\PYG{n}{image\PYGZus{}flux\PYGZus{}ratios} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}second}\PYG{p}{))}
+\PYG{n}{numerator} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}second}\PYG{p}{))}
+\PYG{n}{denominator} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}second}\PYG{p}{,} \PYG{n}{image\PYGZus{}flux\PYGZus{}ratios}\PYG{p}{)))}\PYG{o}{**}\PYG{l+m+mi}{2} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{2} \PYG{o}{*} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}level}\PYG{o}{**}\PYG{l+m+mi}{2}\PYG{p}{)}
+
+\PYG{n}{gain\PYGZus{}factors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{numerator}\PYG{p}{,} \PYG{n}{denominator}\PYG{p}{))}
+
+\PYG{n}{gain\PYGZus{}factor}         \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{gain\PYGZus{}factors}\PYG{p}{))}
+\PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{gain\PYGZus{}factors}\PYG{p}{)}
+\PYG{n}{gain\PYGZus{}factor\PYGZus{}error}   \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{gain\PYGZus{}factors}\PYG{p}{))}
+\PYG{n}{gain\PYGZus{}factor\PYGZus{}relative\PYGZus{}error} \PYG{o}{=} \PYG{n}{gain\PYGZus{}factor\PYGZus{}error} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{data\PYGZus{}series}\PYG{p}{))}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{),} \PYG{n}{gain\PYGZus{}factors}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}k.\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Measured value\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{)} \PYG{o}{*} \PYG{n}{gain\PYGZus{}factor}\PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Mean value\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}  \PYG{n}{gain\PYGZus{}factor\PYGZus{}relative\PYGZus{}error} \PYG{o}{+}  \PYG{n}{gain\PYGZus{}factor} \PYG{p}{)} \PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}sigma / \PYGZbs{}sqrt\PYGZob{}N\PYGZcb{}\PYGZdl{}\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}gain\PYGZus{}factors}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{o}{\PYGZhy{}} \PYG{n}{gain\PYGZus{}factor\PYGZus{}relative\PYGZus{}error} \PYG{o}{+} \PYG{n}{gain\PYGZus{}factor} \PYG{p}{)} \PYG{p}{,} \PYG{n}{ls}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{c}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{,} \PYG{n}{lw}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}\PYGZbs{}mathbf\PYGZob{}Gain\PYGZbs{};factor\PYGZcb{}\PYGZhy{}10.0\PYGZca{}\PYGZbs{}circ\PYGZdl{}C \PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Measurement no.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Gain factor, \PYGZdl{}g\PYGZdl{}\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{figure\PYGZus{}directory\PYGZus{}path} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}gain\PYGZus{}factor\PYGZus{}measurement\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{legendlocation}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper right\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  The estimated gain factor is \PYGZdq{}}\PYG{p}{,} \PYG{n}{gain\PYGZus{}factor}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} ± \PYGZdq{}}\PYG{p}{,} \PYG{n}{gain\PYGZus{}factor\PYGZus{}relative\PYGZus{}error}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} electrons/ADU, while the tabulated (input) value was \PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} electrons/ADU\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{float}\PYG{p}{(}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{)}
+
+\PYG{k}{def} \PYG{n+nf}{gain\PYGZus{}vs\PYGZus{}temperature}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{):}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Computing gain factor as a function of temperature...\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{data\PYGZus{}series}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}  \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}  \PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{8}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}            \PYG{p}{)}
+
+\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence} \PYG{o+ow}{in} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{:}
+\PYG{c+c1}{\PYGZsh{} Get temperatures from the filename}
+\PYG{n}{temperature} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{11}\PYG{p}{:}\PYG{l+m+mi}{13}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{14}\PYG{p}{])}  \PYG{c+c1}{\PYGZsh{} time in s}
+\PYG{k}{if} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{9}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}m\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{temperature} \PYG{o}{*=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+
+\PYG{n}{gain\PYGZus{}factors} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n+nb}{id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{),} \PYG{l+m+mi}{2}\PYG{p}{):}
+\PYG{n}{filepath\PYGZus{}first} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{n+nb}{id}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}second} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{n+nb}{id} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}first} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}first}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}second} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}second}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}first} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}second} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}second}\PYG{p}{)}
+
+\PYG{n}{image\PYGZus{}flux\PYGZus{}ratios} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}second}\PYG{p}{))}
+\PYG{n}{numerator} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}second}\PYG{p}{))}
+\PYG{n}{denominator} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}second}\PYG{p}{,} \PYG{n}{image\PYGZus{}flux\PYGZus{}ratios}\PYG{p}{)))} \PYG{o}{**} \PYG{l+m+mi}{2} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{2} \PYG{o}{*} \PYG{p}{(}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}level} \PYG{o}{**} \PYG{l+m+mi}{2}\PYG{p}{)}
+
+\PYG{n}{gain\PYGZus{}factors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{numerator}\PYG{p}{,} \PYG{n}{denominator}\PYG{p}{))}
+
+\PYG{n}{gain\PYGZus{}factor} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{gain\PYGZus{}factors}\PYG{p}{))}
+\PYG{n}{gain\PYGZus{}factor\PYGZus{}error} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{gain\PYGZus{}factors}\PYG{p}{))}
+
+\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{temperature}\PYG{p}{,} \PYG{n}{gain\PYGZus{}factor}\PYG{p}{,} \PYG{n}{gain\PYGZus{}factor\PYGZus{}error}\PYG{p}{])}
+
+\PYG{c+c1}{\PYGZsh{}gain\PYGZus{}vs\PYGZus{}temp = np.sort(gain\PYGZus{}vs\PYGZus{}temp, axis=0)}
+
+\PYG{n}{tmplist} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}\PYG{p}{)}
+\PYG{n}{tmplist2D} \PYG{o}{=} \PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp} \PYG{o}{=} \PYG{p}{(}\PYG{n}{tmplist2D}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{lexsort}\PYG{p}{(}\PYG{n}{tmplist2D}\PYG{o}{.}\PYG{n}{T}\PYG{p}{[::}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{])])}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} gain\PYGZus{}vs\PYGZus{}temp = np.asarray(gain\PYGZus{}vs\PYGZus{}temp)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp} \PYG{o}{=} \PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}gain\PYGZus{}factor\PYGZus{}versus\PYGZus{}temperature\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,}
+\PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{gain\PYGZus{}vs\PYGZus{}temp}
+
+\PYG{k}{def} \PYG{n+nf}{linearity\PYGZus{}estimation}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method which will test the linearity, by plotting mean ADU in an image}
+\PYG{l+s+sd}{as a function of exposure time, which it returns as a list,}
+\PYG{l+s+sd}{and fills the member linearity with as well. Implies a certain}
+\PYG{l+s+sd}{file naming convention of the type}
+
+\PYG{l+s+sd}{nnn\PYGZus{}rrr\PYGZus{}eee.fit}
+
+\PYG{l+s+sd}{\PYGZhy{} where nnn is an arbitrary descriptive string, rrr}
+\PYG{l+s+sd}{is the number of repeats, and eee is the exposure}
+\PYG{l+s+sd}{time in seconds}
+
+\PYG{l+s+sd}{An example of this:}
+
+\PYG{l+s+sd}{linearity\PYGZus{}001\PYGZus{}008.fit}
+
+\PYG{l+s+sd}{:parameter path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}exposures:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different exposure times}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:returns np.ndarray linearity\PYGZus{}array:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array of data points of the form (exposure time, mean ADU)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Testing linearity...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{tmplist} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}  \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{13}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} stability\PYGZus{}data     =   self.test\PYGZus{}lightsource\PYGZus{}stability(path\PYGZus{}of\PYGZus{}data\PYGZus{}series, num\PYGZus{}of\PYGZus{}exposures, num\PYGZus{}of\PYGZus{}repeats)}
+
+\PYG{n}{first\PYGZus{}it} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{n}{second\PYGZus{}it} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence} \PYG{o+ow}{in} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{:}
+\PYG{c+c1}{\PYGZsh{} repeat\PYGZus{}sequence\PYGZus{}meaned      =   util.mean\PYGZus{}image(repeat\PYGZus{}sequence, path\PYGZus{}of\PYGZus{}data\PYGZus{}series)}
+\PYG{n}{dim\PYGZus{}path}            \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{image\PYGZus{}shape}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}dims}\PYG{p}{(}\PYG{n}{dim\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{number\PYGZus{}of\PYGZus{}images}    \PYG{o}{=}   \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{)}
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array}    \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{image\PYGZus{}shape}\PYG{p}{)}
+
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{:}
+\PYG{n}{filepath}                        \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}meaned}                \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}and\PYGZus{}corrected}  \PYG{o}{=}   \PYG{n}{imagedata\PYGZus{}meaned}  \PYG{c+c1}{\PYGZsh{} np.divide(imagedata\PYGZus{}meaned, (stability\PYGZus{}data[first\PYGZus{}it, second\PYGZus{}it] / 100 + 1))}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{+=} \PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}and\PYGZus{}corrected}
+
+\PYG{n}{hdul}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\PYG{n}{second\PYGZus{}it} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{k}{if} \PYG{n}{second\PYGZus{}it} \PYG{o}{==} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:}
+\PYG{n}{second\PYGZus{}it} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{n}{first\PYGZus{}it} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{/=} \PYG{n}{number\PYGZus{}of\PYGZus{}images}
+
+\PYG{c+c1}{\PYGZsh{} repeat\PYGZus{}sequence\PYGZus{}meaned      =   self.bias\PYGZus{}correction(repeat\PYGZus{}sequence\PYGZus{}meaned)  \PYGZsh{} self.flat\PYGZus{}field\PYGZus{}correction(  ,   util.mean\PYGZus{}image(repeat\PYGZus{}sequence, path\PYGZus{}of\PYGZus{}data\PYGZus{}series)}
+
+\PYG{c+c1}{\PYGZsh{} Get exposure time from filename within a given repeat sequence}
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}      \PYG{o}{=}   \PYG{n}{mean\PYGZus{}image\PYGZus{}array}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{exposure\PYGZus{}time}               \PYG{o}{=}   \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{7}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{4}\PYG{p}{])}  \PYG{c+c1}{\PYGZsh{} time in s}
+
+\PYG{c+c1}{\PYGZsh{} Treat hot pixels}
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{logical\PYGZus{}not}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{))])}
+
+\PYG{c+c1}{\PYGZsh{} Compute errorbars}
+\PYG{n}{errorbar} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{compute\PYGZus{}errorbar}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Check for consistency}
+\PYG{k}{if} \PYG{n}{header}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}EXPTIME\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:}
+\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{exposure\PYGZus{}time}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{),} \PYG{n}{errorbar}\PYG{p}{])}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  linearity\PYGZus{}estimation(): Error, exposure times do not match up\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  linearity\PYGZus{}estimation(): Exposure time was: \PYGZdq{}}\PYG{p}{,} \PYG{n}{header}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}EXPTIME\PYGZsq{}}\PYG{p}{],} \PYG{l+s+s2}{\PYGZdq{}should have been: \PYGZdq{}}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{)}
+
+\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{exposure\PYGZus{}time}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{),} \PYG{n}{errorbar}\PYG{p}{])}
+
+\PYG{n}{linearity\PYGZus{}array}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{tmplist}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} print(\PYGZdq{}  Done! Data constructed from linearity measurements:\PYGZdq{})}
+\PYG{c+c1}{\PYGZsh{} print(linearity\PYGZus{}array)}
+
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}      \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}array}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}array}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{linearity\PYGZus{}array}
+
+\PYG{k}{def} \PYG{n+nf}{linearity\PYGZus{}estimation\PYGZus{}with\PYGZus{}reference}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{reference\PYGZus{}exposure}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{exposures}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,} \PYG{n}{milliseconds}\PYG{p}{:} \PYG{n+nb}{bool} \PYG{o}{=} \PYG{n+nb+bp}{False}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method which will test the linearity, by plotting mean ADU in an image}
+\PYG{l+s+sd}{as a function of exposure time, which it returns as a list,}
+\PYG{l+s+sd}{and fills the member linearity with as well. Implies a certain}
+\PYG{l+s+sd}{file naming convention of the type}
+
+\PYG{l+s+sd}{nnn\PYGZus{}rrr\PYGZus{}eee.fit}
+
+\PYG{l+s+sd}{\PYGZhy{} where nnn is an arbitrary descriptive string, rrr}
+\PYG{l+s+sd}{is the number of repeats, and eee is the exposure}
+\PYG{l+s+sd}{time in seconds}
+
+\PYG{l+s+sd}{An example of this:}
+
+\PYG{l+s+sd}{linearity\PYGZus{}001\PYGZus{}008.fit}
+
+\PYG{l+s+sd}{:parameter path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}exposures:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different exposure times}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:parameter float reference\PYGZus{}exposure:}
+\PYG{l+s+sd}{\PYGZhy{} The reference measurement exposure time}
+\PYG{l+s+sd}{:returns np.ndarray linearity\PYGZus{}array:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array of data points of the form (exposure time, mean ADU)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Testing linearity...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{tmplist} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{13}\PYG{p}{]}
+
+\PYG{n}{reordered\PYGZus{}data}      \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{empty}\PYG{p}{((}\PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{),} \PYG{n}{dtype}\PYG{o}{=}\PYG{n+nb}{object}\PYG{p}{)}
+\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str}      \PYG{o}{=}   \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}        \PYG{o}{=}   \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+
+\PYG{n}{index} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series}\PYG{p}{:}
+\PYG{k}{if} \PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{7}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}(2)\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time} \PYG{o}{=} \PYG{l+m+mf}{10.0}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{c+c1}{\PYGZsh{} this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time = float(imageid[\PYGZhy{}9:\PYGZhy{}7] + \PYGZdq{}.\PYGZdq{} + imageid[\PYGZhy{}7:\PYGZhy{}6])}
+\PYG{c+c1}{\PYGZsh{} print(this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time)}
+\PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{9}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{6}\PYG{p}{])}  \PYG{c+c1}{\PYGZsh{} \PYGZhy{}7:\PYGZhy{}4}
+\PYG{k}{if} \PYG{n}{milliseconds}\PYG{p}{:}
+\PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time} \PYG{o}{/=} \PYG{l+m+mi}{10}
+\PYG{n}{exposure\PYGZus{}index}      \PYG{o}{=}   \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{exposures} \PYG{o}{==} \PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time}\PYG{p}{))[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{repeat\PYGZus{}num}          \PYG{o}{=}   \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{:}\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{])}
+\PYG{n}{reference\PYGZus{}index}     \PYG{o}{=}   \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5}\PYG{p}{])}
+
+\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure\PYGZus{}index}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}num}\PYG{p}{][}\PYG{n}{reference\PYGZus{}index}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{)}
+
+\PYG{n}{index} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{k}{if} \PYG{n}{index} \PYG{o}{==} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{:}
+\PYG{n}{index} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{):}
+\PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time}   \PYG{o}{=}   \PYG{n}{exposures}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{]}
+\PYG{n}{tmp\PYGZus{}mean}    \PYG{o}{=}  \PYG{l+m+mi}{0}
+\PYG{n}{mean\PYGZus{}ADU}    \PYG{o}{=}  \PYG{l+m+mi}{0}
+\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{):}
+\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}                           \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}                        \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}                            \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{])}
+
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header\PYGZus{}actual}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}image}  \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header\PYGZus{}first}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}first\PYGZus{}ref}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header\PYGZus{}next}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}ref}        \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}\PYG{p}{)}
+
+\PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}   \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}actual\PYGZus{}image}\PYG{p}{)))}  \PYG{c+c1}{\PYGZsh{} [350:400, 350:400])}
+\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}    \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}ref}\PYG{p}{)))}  \PYG{c+c1}{\PYGZsh{} [350:400, 350:400])}
+\PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}next\PYGZus{}ref}\PYG{p}{)))}  \PYG{c+c1}{\PYGZsh{} [350:400, 350:400])}
+
+\PYG{n}{mean\PYGZus{}lightsource\PYGZus{}change}                      \PYG{o}{=}   \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned} \PYG{o}{+} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)}
+\PYG{n}{time\PYGZus{}calibration}                             \PYG{o}{=}   \PYG{p}{(}\PYG{n}{reference\PYGZus{}exposure} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{)}
+
+\PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}normed\PYGZus{}and\PYGZus{}corrected}        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{,} \PYG{n}{time\PYGZus{}calibration}\PYG{p}{),} \PYG{n}{mean\PYGZus{}lightsource\PYGZus{}change}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}converted\PYGZus{}to\PYGZus{}deviation}             \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}normed\PYGZus{}and\PYGZus{}corrected}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mi}{100}
+
+\PYG{n}{tmp\PYGZus{}mean} \PYG{o}{+=} \PYG{n}{imagedata\PYGZus{}converted\PYGZus{}to\PYGZus{}deviation}
+\PYG{n}{mean\PYGZus{}ADU} \PYG{o}{+=} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}
+
+\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}\PYG{o}{.}\PYG{n}{append}\PYG{p}{((}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}normed\PYGZus{}and\PYGZus{}corrected}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mi}{100}\PYG{p}{)} \PYG{o}{/} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{)))}
+
+\PYG{n}{tmp\PYGZus{}mean} \PYG{o}{/=} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+\PYG{n}{mean\PYGZus{}ADU} \PYG{o}{/=} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+
+\PYG{c+c1}{\PYGZsh{} Compute errorbars}
+\PYG{n}{errorbar} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}\PYG{p}{))}
+
+\PYG{c+c1}{\PYGZsh{} Check for consistency}
+\PYG{c+c1}{\PYGZsh{}if header\PYGZus{}actual[\PYGZsq{}EXPTIME\PYGZsq{}] == this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time:}
+\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time}\PYG{p}{,} \PYG{n}{tmp\PYGZus{}mean}\PYG{p}{,} \PYG{n}{errorbar}\PYG{p}{,} \PYG{n}{mean\PYGZus{}ADU}\PYG{p}{])}
+\PYG{c+c1}{\PYGZsh{}else:}
+\PYG{c+c1}{\PYGZsh{}    print(\PYGZdq{}  linearity\PYGZus{}estimation(): Error, exposure times do not match up\PYGZdq{})}
+\PYG{c+c1}{\PYGZsh{}    print(\PYGZdq{}  linearity\PYGZus{}estimation(): Exposure time was: \PYGZdq{}, header\PYGZus{}actual[\PYGZsq{}EXPTIME\PYGZsq{}], \PYGZdq{}should have been: \PYGZdq{}, this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time)}
+
+\PYG{c+c1}{\PYGZsh{}    tmplist.append([this\PYGZus{}actual\PYGZus{}exposure\PYGZus{}time, tmp\PYGZus{}mean, errorbar, mean\PYGZus{}ADU])}
+
+\PYG{n}{linearity\PYGZus{}array}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{tmplist}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}      \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}array}
+
+\PYG{n}{query\PYGZus{}points} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{3}\PYG{p}{]}
+\PYG{n}{linearity\PYGZus{}data} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{fitted\PYGZus{}linear\PYGZus{}model} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{polyfit}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{:}\PYG{l+m+mi}{19}\PYG{p}{],} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{:}\PYG{l+m+mi}{19}\PYG{p}{],} \PYG{n}{deg}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{fitted\PYGZus{}slope} \PYG{o}{=} \PYG{n}{fitted\PYGZus{}linear\PYGZus{}model}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{fitted\PYGZus{}offset} \PYG{o}{=} \PYG{n}{fitted\PYGZus{}linear\PYGZus{}model}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{fitted\PYGZus{}linearity} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{,} \PYG{n}{fitted\PYGZus{}slope}\PYG{p}{),} \PYG{n}{fitted\PYGZus{}offset}\PYG{p}{)}
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}fitted\PYGZus{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{fitted\PYGZus{}linearity}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}array}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{linearity\PYGZus{}array}
+
+\PYG{k}{def} \PYG{n+nf}{time\PYGZus{}calibration}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{l+s+sd}{:parameter path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}exposures:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different exposure times}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:returns np.ndarray linearity\PYGZus{}array:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array of data points of the form (exposure time, mean ADU)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Performing time calibration...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{tmplist} \PYG{o}{=} \PYG{p}{[]}
+
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+
+
+\PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input} \PYG{o}{=} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input} \PYG{o}{=} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list} \PYG{o}{=} \PYG{n}{data\PYGZus{}series}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{11}\PYG{p}{]}
+
+\PYG{n}{reordered\PYGZus{}data}      \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{empty}\PYG{p}{((}\PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{),} \PYG{n}{dtype}\PYG{o}{=}\PYG{n+nb}{object}\PYG{p}{)}
+\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str}      \PYG{o}{=}   \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}        \PYG{o}{=}   \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+
+\PYG{n}{exposures} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mf}{1.5}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+m+mf}{2.5}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{,} \PYG{l+m+mf}{3.5}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{,} \PYG{l+m+mf}{4.5}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mf}{5.5}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{,} \PYG{l+m+mf}{6.5}\PYG{p}{,} \PYG{l+m+mi}{7}\PYG{p}{,} \PYG{l+m+mf}{7.5}\PYG{p}{,} \PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mf}{8.5}\PYG{p}{,} \PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mf}{9.5}\PYG{p}{,} \PYG{l+m+mi}{10}\PYG{p}{])}
+\PYG{n}{index} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{p}{:}
+\PYG{k}{if} \PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{7}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}(2)\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{exposure\PYGZus{}time} \PYG{o}{=} \PYG{l+m+mf}{10.0}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{exposure\PYGZus{}time} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{8}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.\PYGZdq{}} \PYG{o}{+} \PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5}\PYG{p}{])}
+
+\PYG{n}{exposure\PYGZus{}index}  \PYG{o}{=}   \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{exposures} \PYG{o}{==} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{))[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{repeat\PYGZus{}num}      \PYG{o}{=}   \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{:}\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{])}
+
+\PYG{n}{reference\PYGZus{}string} \PYG{o}{=} \PYG{n}{imageid}\PYG{p}{[}\PYG{l+m+mi}{12}\PYG{p}{:}\PYG{l+m+mi}{16}\PYG{p}{]}
+\PYG{n}{is\PYGZus{}reference} \PYG{o}{=} \PYG{p}{(}\PYG{n}{reference\PYGZus{}string} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}0100\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{if} \PYG{n}{is\PYGZus{}reference}\PYG{p}{:}
+\PYG{k}{if} \PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{7}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}(2)\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure\PYGZus{}index}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}num}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure\PYGZus{}index}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}num}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{exposure\PYGZus{}index}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}num}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{)}
+
+\PYG{n}{index} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{k}{if} \PYG{n}{index} \PYG{o}{==} \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{p}{:}
+\PYG{n}{index} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{n}{dim\PYGZus{}path}            \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{image\PYGZus{}shape}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}dims}\PYG{p}{(}\PYG{n}{dim\PYGZus{}path}\PYG{p}{)}
+
+\PYG{n}{scaling} \PYG{o}{=} \PYG{l+m+mi}{1}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures}\PYG{p}{):}
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array}    \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{n}{image\PYGZus{}shape}\PYG{p}{)}
+
+\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{):}
+\PYG{k}{if} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id} \PYG{o}{==} \PYG{n}{num\PYGZus{}of\PYGZus{}exposures} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{:}
+\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}   \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}       \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}   \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}    \PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}    \PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}       \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}image}    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}first\PYGZus{}ref}       \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}ref}        \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}\PYG{p}{)}
+
+\PYG{n}{imagedata\PYGZus{}actual}                 \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}actual\PYGZus{}image}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}first}                  \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}ref}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}next}                   \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}next\PYGZus{}ref}\PYG{p}{)}
+
+\PYG{n}{scaling}                          \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}next}\PYG{p}{)} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first}\PYG{p}{)}
+
+\PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}and\PYGZus{}corrected}   \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}actual}\PYG{p}{,} \PYG{n}{scaling}\PYG{p}{)}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{+=} \PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}and\PYGZus{}corrected}
+
+\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}meaned\PYGZus{}and\PYGZus{}corrected}\PYG{p}{))}
+
+\PYG{n}{mean\PYGZus{}image\PYGZus{}array} \PYG{o}{/=} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+
+\PYG{c+c1}{\PYGZsh{} Get exposure time from filename within a given repeat sequence}
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}      \PYG{o}{=}   \PYG{n}{mean\PYGZus{}image\PYGZus{}array}
+\PYG{n}{filepath}                    \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{k}{if} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{7}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{4}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}(2)\PYGZdq{}}\PYG{p}{:}
+\PYG{n}{exposure\PYGZus{}time}   \PYG{o}{=}     \PYG{l+m+mf}{10.0}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{exposure\PYGZus{}time}   \PYG{o}{=}     \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{8}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5}\PYG{p}{]} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.\PYGZdq{}} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5}\PYG{p}{])} \PYG{c+c1}{\PYGZsh{} time in s}
+
+\PYG{c+c1}{\PYGZsh{} Treat hot pixels}
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{n}{np}\PYG{o}{.}\PYG{n}{where}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{logical\PYGZus{}not}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}mask}\PYG{p}{))])}
+
+\PYG{c+c1}{\PYGZsh{} Compute errorbars}
+\PYG{n}{errorbar} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{distribution\PYGZus{}of\PYGZus{}image\PYGZus{}means}\PYG{p}{))}
+
+\PYG{c+c1}{\PYGZsh{} Check for consistency}
+\PYG{k}{if} \PYG{n}{header}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}EXPTIME\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:}
+\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{exposure\PYGZus{}time}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{),} \PYG{n}{errorbar}\PYG{p}{])}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  linearity\PYGZus{}estimation(): Error, exposure times do not match up\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  linearity\PYGZus{}estimation(): Exposure time was: \PYGZdq{}}\PYG{p}{,} \PYG{n}{header}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}EXPTIME\PYGZsq{}}\PYG{p}{],} \PYG{l+s+s2}{\PYGZdq{}should have been: \PYGZdq{}}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{)}
+
+\PYG{n}{tmplist}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{exposure\PYGZus{}time}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{),} \PYG{n}{errorbar}\PYG{p}{])}
+
+\PYG{n}{linearity\PYGZus{}array}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{tmplist}\PYG{p}{)}
+
+\PYG{n}{query\PYGZus{}points}        \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{linearity\PYGZus{}data}      \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{error\PYGZus{}data}          \PYG{o}{=}   \PYG{n}{linearity\PYGZus{}array}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{]}
+
+\PYG{n}{linear\PYGZus{}model}        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{polyfit}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{,} \PYG{n}{deg}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}func}   \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{poly1d}\PYG{p}{(}\PYG{n}{linear\PYGZus{}model}\PYG{p}{)}
+\PYG{n}{time\PYGZus{}offset}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{roots}\PYG{p}{(}\PYG{n}{linear\PYGZus{}model}\PYG{p}{)}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}data}   \PYG{o}{=}   \PYG{n}{linear\PYGZus{}model\PYGZus{}func}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Apply time calibration to the exposure times}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor} \PYG{o}{=} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{time\PYGZus{}offset}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{time\PYGZus{}offset}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  The time offset (time calibration factor) has been estimated to \PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{} s ...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{corrected\PYGZus{}data}          \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{)}
+\PYG{n}{new\PYGZus{}linear\PYGZus{}model}        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{polyfit}\PYG{p}{(}\PYG{n}{corrected\PYGZus{}data}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{,} \PYG{n}{deg}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{new\PYGZus{}linear\PYGZus{}model\PYGZus{}func}   \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{poly1d}\PYG{p}{(}\PYG{n}{new\PYGZus{}linear\PYGZus{}model}\PYG{p}{)}
+\PYG{n}{new\PYGZus{}linear\PYGZus{}data}         \PYG{o}{=}   \PYG{n}{new\PYGZus{}linear\PYGZus{}model\PYGZus{}func}\PYG{p}{(}\PYG{n}{corrected\PYGZus{}data}\PYG{p}{)}
+
+\PYG{n}{deviations}              \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}data}\PYG{p}{),} \PYG{n}{linear\PYGZus{}model\PYGZus{}data}\PYG{p}{),} \PYG{l+m+mi}{100}\PYG{p}{)}
+\PYG{n}{errors}                  \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{error\PYGZus{}data}\PYG{p}{,} \PYG{n}{linearity\PYGZus{}data}\PYG{p}{),} \PYG{l+m+mi}{100}\PYG{p}{)}
+\PYG{n}{new\PYGZus{}deviations}          \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{,} \PYG{n}{new\PYGZus{}linear\PYGZus{}data}\PYG{p}{),} \PYG{n}{new\PYGZus{}linear\PYGZus{}data}\PYG{p}{),} \PYG{l+m+mi}{100}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{p}{[}\PYG{n}{linearity\PYGZus{}array}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}data}\PYG{p}{,} \PYG{n}{corrected\PYGZus{}data}\PYG{p}{,} \PYG{n}{new\PYGZus{}linear\PYGZus{}data}\PYG{p}{,} \PYG{n}{deviations}\PYG{p}{,} \PYG{n}{errors}\PYG{p}{,} \PYG{n}{new\PYGZus{}deviations}\PYG{p}{]}
+
+\PYG{k}{def} \PYG{n+nf}{new\PYGZus{}time\PYGZus{}calibration}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{exposures}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{):}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Computing time calibration factor...\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{data\PYGZus{}series} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{8}\PYG{p}{,} \PYG{l+m+mi}{11}\PYG{p}{]}
+
+\PYG{n}{reordered\PYGZus{}data} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{empty}\PYG{p}{((}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{),} \PYG{n}{dtype}\PYG{o}{=}\PYG{n+nb}{object}\PYG{p}{)}
+\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str} \PYG{o}{=} \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str} \PYG{o}{=} \PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n}{data\PYGZus{}series}\PYG{p}{:}
+\PYG{n}{repeat\PYGZus{}num} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{n}{from\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{:}\PYG{n}{to\PYGZus{}id\PYGZus{}in\PYGZus{}str}\PYG{p}{])}
+\PYG{n}{reference\PYGZus{}index} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{7}\PYG{p}{])}
+\PYG{n}{intensity\PYGZus{}index} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{5}\PYG{p}{])}
+
+\PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{intensity\PYGZus{}index}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}num}\PYG{p}{][}\PYG{n}{reference\PYGZus{}index}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{imageid}\PYG{p}{)}
+
+
+\PYG{n}{offsets} \PYG{o}{=} \PYG{p}{[]}
+\PYG{n}{one\PYGZus{}second\PYGZus{}correction} \PYG{o}{=} \PYG{l+m+mi}{1}  \PYG{c+c1}{\PYGZsh{}  (1 \PYGZhy{} 2.826937348128014116e\PYGZhy{}01)  \PYGZsh{} 3.269314122356812846e\PYGZhy{}01)  \PYGZsh{} 2.335026485015368747e\PYGZhy{}01)  \PYGZsh{} 4.061413920020190416e\PYGZhy{}01)}
+\PYG{n}{two\PYGZus{}second\PYGZus{}correction} \PYG{o}{=} \PYG{l+m+mi}{1}  \PYG{c+c1}{\PYGZsh{}  (1 \PYGZhy{} 2.470296021393934560e\PYGZhy{}01)  \PYGZsh{} 2.862068501265830345e\PYGZhy{}01)  \PYGZsh{} 2.034781685231622506e\PYGZhy{}01)  \PYGZsh{} 3.563827129498361446e\PYGZhy{}01)}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{3}\PYG{p}{):}
+\PYG{n}{time\PYGZus{}offset} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{):}
+\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}                           \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}                        \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}                            \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{[}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}id}\PYG{p}{][}\PYG{n}{repeat\PYGZus{}id}\PYG{p}{][}\PYG{l+m+mi}{2}\PYG{p}{])}
+
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header\PYGZus{}actual}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}image}  \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}actual\PYGZus{}image}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header\PYGZus{}first}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}first\PYGZus{}ref}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}first\PYGZus{}ref}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header\PYGZus{}next}\PYG{p}{,} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}ref}        \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath\PYGZus{}next\PYGZus{}ref}\PYG{p}{)}
+
+\PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}   \PYG{o}{=}   \PYG{n}{one\PYGZus{}second\PYGZus{}correction} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}actual\PYGZus{}image}\PYG{p}{)))}
+\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}    \PYG{o}{=}   \PYG{n}{two\PYGZus{}second\PYGZus{}correction} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}ref}\PYG{p}{)))}
+\PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}     \PYG{o}{=}   \PYG{n}{one\PYGZus{}second\PYGZus{}correction} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{((}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}next\PYGZus{}ref}\PYG{p}{)))}
+
+\PYG{n}{numerator} \PYG{o}{=} \PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{p}{((}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned} \PYG{o}{+} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)} \PYG{o}{/} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)}
+\PYG{n}{denominator} \PYG{o}{=} \PYG{p}{((}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned} \PYG{o}{+} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}
+
+\PYG{c+c1}{\PYGZsh{} numerator   = ((imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned + imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned) / imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned) \PYGZhy{} 1}
+\PYG{c+c1}{\PYGZsh{} denominator = 1 \PYGZhy{} ((imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned + imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned) / (2 * imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned))}
+
+\PYG{c+c1}{\PYGZsh{}time\PYGZus{}offset += (numerator)    / denominator}
+
+\PYG{n}{numerator}    \PYG{o}{=} \PYG{p}{(((}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned} \PYG{o}{+} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)} \PYG{o}{/} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)} \PYG{o}{*} \PYG{p}{(}\PYG{n}{exposures}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{n}{exposures}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{denominator}  \PYG{o}{=} \PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{p}{((}\PYG{n}{imagedata\PYGZus{}first\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned} \PYG{o}{+} \PYG{n}{imagedata\PYGZus{}next\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{imagedata\PYGZus{}actual\PYGZus{}bias\PYGZus{}corrected\PYGZus{}and\PYGZus{}meaned}\PYG{p}{))}
+
+\PYG{n}{time\PYGZus{}offset} \PYG{o}{+=} \PYG{n}{numerator} \PYG{o}{/} \PYG{n}{denominator}
+
+\PYG{n}{time\PYGZus{}offset} \PYG{o}{/=} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}
+\PYG{n}{offsets}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{time\PYGZus{}offset}\PYG{p}{)}
+
+
+\PYG{n}{final\PYGZus{}offset} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{offsets}\PYG{p}{)))}
+\PYG{n}{final\PYGZus{}offset\PYGZus{}error} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{float}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{offsets}\PYG{p}{)))}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor} \PYG{o}{=} \PYG{n}{final\PYGZus{}offset}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Result: \PYGZdq{}} \PYG{o}{+} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{),} \PYG{l+s+s2}{\PYGZdq{}±\PYGZdq{}}\PYG{p}{,} \PYG{n}{final\PYGZus{}offset\PYGZus{}error} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{offsets}\PYG{p}{)),} \PYG{l+s+s2}{\PYGZdq{} s\PYGZdq{}}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{test\PYGZus{}lightsource\PYGZus{}stability}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method to analyze the stabillity of the lightsource used to acquire the}
+\PYG{l+s+sd}{linearity data sequences. All of the images are analyzed. For a given}
+\PYG{l+s+sd}{exposure sequence, a mean ADU value is computed from the entire sequence}
+\PYG{l+s+sd}{and this value is the same as what is ultimately used for the linearity}
+\PYG{l+s+sd}{analysis above. For each image in a sequence the mean ADU value is computed}
+\PYG{l+s+sd}{and it\PYGZsq{}s deviation from the sequence mean is computed as a percentage.}
+\PYG{l+s+sd}{This is hence interpreted as the temporal lightsource (in)stabillity.}
+
+\PYG{l+s+sd}{Returns an array of datapoints. A temporal series for each exposure sequence}
+\PYG{l+s+sd}{of size (num\PYGZus{}of\PYGZus{}data\PYGZus{}points, num\PYGZus{}of\PYGZus{}repeats)}
+
+\PYG{l+s+sd}{:parameter path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}data\PYGZus{}points:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different exposure times}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+\PYG{l+s+sd}{:returns np.ndarray stability\PYGZus{}array:}
+\PYG{l+s+sd}{\PYGZhy{} A numpy array of data points of size (num\PYGZus{}of\PYGZus{}data\PYGZus{}points, num\PYGZus{}of\PYGZus{}repeats)}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Testing light source stabillity...\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{data\PYGZus{}series}         \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data}      \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}  \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{13}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}                \PYG{p}{)}
+
+\PYG{n}{stability\PYGZus{}array}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{empty}\PYG{p}{([}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{])}
+
+\PYG{n}{data\PYGZus{}point}          \PYG{o}{=}   \PYG{l+m+mi}{0}
+\PYG{n}{repeat}              \PYG{o}{=}   \PYG{l+m+mi}{0}
+
+\PYG{k}{for} \PYG{n}{sequence} \PYG{o+ow}{in} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{:}
+\PYG{k}{for} \PYG{n}{image} \PYG{o+ow}{in} \PYG{n}{sequence}\PYG{p}{:}
+\PYG{n}{filepath} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{image}\PYG{p}{)}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n}{data\PYGZus{}point} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{:}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)}
+
+\PYG{n}{mean\PYGZus{}adu} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)}
+
+\PYG{n}{stability\PYGZus{}array}\PYG{p}{[}\PYG{n}{data\PYGZus{}point}\PYG{p}{,} \PYG{n}{repeat}\PYG{p}{]} \PYG{o}{=} \PYG{n}{mean\PYGZus{}adu}
+\PYG{n}{repeat} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\PYG{k}{if} \PYG{n}{repeat} \PYG{o}{==} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:}
+\PYG{n}{repeat} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{n}{data\PYGZus{}point} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{n}{sequence\PYGZus{}mean}       \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{stability\PYGZus{}array}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{keepdims}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+\PYG{n}{stability\PYGZus{}array}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{stability\PYGZus{}array}\PYG{p}{,} \PYG{n}{sequence\PYGZus{}mean}\PYG{p}{),} \PYG{n}{sequence\PYGZus{}mean}\PYG{p}{),} \PYG{l+m+mi}{100}\PYG{p}{)}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}lightsource\PYGZus{}stability\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{stability\PYGZus{}array}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{stability\PYGZus{}array}
+
+\PYG{k}{def} \PYG{n+nf}{linearity\PYGZus{}precision}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A method to complete the linearity analysis by computing the deviations}
+\PYG{l+s+sd}{of the measured mean ADU (linearity datapoints acquired from the method}
+\PYG{l+s+sd}{linearity\PYGZus{}estimation()), from an ideal linear relation found from linear}
+\PYG{l+s+sd}{regression.}
+
+\PYG{l+s+sd}{Does not take any parameters, but uses filled members from other methods}
+\PYG{l+s+sd}{in the class definition. Assumes that the method linearity\PYGZus{}estimation()}
+\PYG{l+s+sd}{has been completed successfully.}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Testing the precision of the linearity measurement...\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{query\PYGZus{}points}            \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{linearity\PYGZus{}data}          \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{error\PYGZus{}data}              \PYG{o}{=}   \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Apply time calibration to the exposure times}
+\PYG{n}{query\PYGZus{}points}            \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{time\PYGZus{}calibration\PYGZus{}factor}\PYG{p}{)}
+\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{]}    \PYG{o}{=}   \PYG{n}{query\PYGZus{}points}
+
+\PYG{c+c1}{\PYGZsh{} Preliminary estimation of ideal linearity curve}
+\PYG{n}{ideal\PYGZus{}slope} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{linearity}\PYG{p}{[}\PYG{l+m+mi}{9}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{/} \PYG{n}{query\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{9}\PYG{p}{]} \PYG{c+c1}{\PYGZsh{} \PYGZhy{} self.linearity[6, 1]) / (query\PYGZus{}points[7] \PYGZhy{} query\PYGZus{}points[6])}
+\PYG{n}{ideal\PYGZus{}offset} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZsh{} ideal\PYGZus{}linear\PYGZus{}model            =   np.polyfit(query\PYGZus{}points[:14], linearity\PYGZus{}data[:14], deg=1)}
+
+\PYG{n}{ideal\PYGZus{}linear\PYGZus{}model}        \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{polyfit}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{concatenate}\PYG{p}{([}\PYG{n}{query\PYGZus{}points}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{14}\PYG{p}{]]),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{concatenate}\PYG{p}{([}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{:}\PYG{l+m+mi}{14}\PYG{p}{]]),} \PYG{n}{deg}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} linear\PYGZus{}model\PYGZus{}func       =   np.poly1d(ideal\PYGZus{}linear\PYGZus{}model)}
+\PYG{c+c1}{\PYGZsh{} time\PYGZus{}offset             =   np.roots(ideal\PYGZus{}linear\PYGZus{}model)}
+\PYG{c+c1}{\PYGZsh{} query\PYGZus{}points            =   np.subtract(query\PYGZus{}points, time\PYGZus{}offset)}
+\PYG{c+c1}{\PYGZsh{} self.linearity[:, 0]    =   query\PYGZus{}points}
+\PYG{n}{ideal\PYGZus{}slope} \PYG{o}{=} \PYG{n}{ideal\PYGZus{}linear\PYGZus{}model}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{ideal\PYGZus{}offset} \PYG{o}{=} \PYG{n}{ideal\PYGZus{}linear\PYGZus{}model}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{c+c1}{\PYGZsh{} ideal\PYGZus{}offset = 0}
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{ideal\PYGZus{}slope}\PYG{p}{,} \PYG{n}{ideal\PYGZus{}offset}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Construct the ideal linear relation and compute deviations from that}
+\PYG{n}{ideal\PYGZus{}linearity}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{query\PYGZus{}points}\PYG{p}{,} \PYG{n}{ideal\PYGZus{}slope}\PYG{p}{),} \PYG{n}{ideal\PYGZus{}offset}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} linear\PYGZus{}model\PYGZus{}func(query\PYGZus{}points)  \PYGZsh{}}
+\PYG{n}{deviations}              \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{linearity\PYGZus{}data}\PYG{p}{,} \PYG{n}{ideal\PYGZus{}linearity}\PYG{p}{),} \PYG{n}{ideal\PYGZus{}linearity}\PYG{p}{),} \PYG{l+m+mi}{100}\PYG{p}{)}
+\PYG{n}{errors}                  \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{error\PYGZus{}data}\PYG{p}{,} \PYG{n}{ideal\PYGZus{}linearity}\PYG{p}{),} \PYG{l+m+mi}{100}\PYG{p}{)}
+
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}ideal\PYGZus{}linearity\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{ideal\PYGZus{}linearity}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}linearity\PYGZus{}deviations\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{deviations}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+\PYG{n}{util}\PYG{o}{.}\PYG{n}{print\PYGZus{}txt\PYGZus{}file}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}linearity\PYGZus{}deviation\PYGZus{}errors\PYGZdq{}} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.txt\PYGZdq{}}\PYG{p}{,} \PYG{n}{errors}\PYG{p}{,}
+\PYG{n}{which\PYGZus{}directory}\PYG{o}{=}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{analysis\PYGZus{}data\PYGZus{}storage\PYGZus{}directory\PYGZus{}path}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{ideal\PYGZus{}linearity}\PYG{p}{,} \PYG{n}{deviations}\PYG{p}{,} \PYG{n}{errors}
+
+\PYG{n+nd}{@staticmethod}
+\PYG{k}{def} \PYG{n+nf}{test\PYGZus{}zero\PYGZus{}point}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{Method that will test the ground assumption that the zero exposure time, is actually}
+\PYG{l+s+sd}{an exposure time of zero seconds. This will be used in the time calibration. The working}
+\PYG{l+s+sd}{idea is to test whether the following is true:}
+
+\PYG{l+s+sd}{[ IM(11s) \PYGZhy{} IM(1s) ]         [ IM(10s) \PYGZhy{} Bias ]}
+\PYG{l+s+sd}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}    =    \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{l+s+sd}{[ IM(21s) \PYGZhy{} IM(1s) ]         [ Im(20s) \PYGZhy{} Bias ]}
+
+\PYG{l+s+sd}{Which geometrically means that the slope is such that the ideal linear relation of ADU}
+\PYG{l+s+sd}{from exposures passes through zero. The method assumes that data acquired, is then}
+\PYG{l+s+sd}{reordered/restructured in the following order (basically sorting of the data seq.):}
+
+\PYG{l+s+sd}{Bias, Bias, 1s, 1s, 10s, 11s, 20s, 21s}
+
+\PYG{l+s+sd}{:parameter path\PYGZus{}of\PYGZus{}data\PYGZus{}series:}
+\PYG{l+s+sd}{\PYGZhy{} A string representing the path to the directory}
+\PYG{l+s+sd}{containing the data series used to construct the data points}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}data\PYGZus{}points:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the number of different exposure times}
+\PYG{l+s+sd}{in the data sequence}
+\PYG{l+s+sd}{:parameter int num\PYGZus{}of\PYGZus{}repeats:}
+\PYG{l+s+sd}{\PYGZhy{} Integer representing the total number of repeats of the data sequence}
+
+\PYG{l+s+sd}{Returns nothing, but prints the result of the test below.}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Testing zero point assumption...\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{data\PYGZus{}series} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{n}{reordered\PYGZus{}data} \PYG{o}{=} \PYG{n}{util}\PYG{o}{.}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}ordered\PYGZus{}data}\PYG{p}{(}\PYG{n}{num\PYGZus{}of\PYGZus{}datapoints\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}data\PYGZus{}points}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}repeats\PYGZus{}input}\PYG{o}{=}\PYG{n}{num\PYGZus{}of\PYGZus{}repeats}\PYG{p}{,}
+\PYG{n}{where\PYGZus{}is\PYGZus{}repeat\PYGZus{}num\PYGZus{}in\PYGZus{}string}\PYG{o}{=}\PYG{p}{[}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{13}\PYG{p}{],}
+\PYG{n}{data\PYGZus{}series\PYGZus{}list}\PYG{o}{=}\PYG{n}{data\PYGZus{}series}\PYG{p}{)}
+
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}  \PYG{o}{=}   \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{repeat\PYGZus{}sequence} \PYG{o+ow}{in} \PYG{n}{reordered\PYGZus{}data}\PYG{p}{:}
+\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{util}\PYG{o}{.}\PYG{n}{mean\PYGZus{}image}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{))}
+
+\PYG{c+c1}{\PYGZsh{} The following assumes the reordered data on the form as specified in the docstring above}
+\PYG{c+c1}{\PYGZsh{} Construct numerators and denominators on both sides}
+\PYG{n}{lhs\PYGZus{}numerator}       \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{5}\PYG{p}{],} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]))}
+\PYG{n}{lhs\PYGZus{}denominator}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{7}\PYG{p}{],} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+\PYG{n}{rhs\PYGZus{}numerator}       \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{],} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]))}
+\PYG{n}{rhs\PYGZus{}denominator}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{],} \PYG{n}{repeat\PYGZus{}sequence\PYGZus{}meaned}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]))}
+
+\PYG{c+c1}{\PYGZsh{} Construct fractions on both sides}
+\PYG{n}{lhs\PYGZus{}final}           \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{lhs\PYGZus{}numerator}\PYG{p}{,} \PYG{n}{lhs\PYGZus{}denominator}\PYG{p}{)}
+\PYG{n}{rhs\PYGZus{}final}           \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{rhs\PYGZus{}numerator}\PYG{p}{,} \PYG{n}{rhs\PYGZus{}denominator}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Subtract both sides from each other, to check if result is zero}
+\PYG{n}{result}              \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{lhs\PYGZus{}final}\PYG{p}{,} \PYG{n}{rhs\PYGZus{}final}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  The result of the test is that the zeropoint assumption is valid to a precision of\PYGZdq{}}\PYG{p}{,} \PYG{n}{result}\PYG{p}{)}
+\end{Verbatim}

@@ -4,7 +4,7 @@
 # -----       By Marc Breiner Sørensen        ----- #
 # ------------------------------------------------- #
 # ----- Implemented:           August    2021 ----- #
-# ----- Last edit:         29. October   2021 ----- #
+# ----- Last edit:          8. April     2022 ----- #
 # ------------------------------------------------- #
 #####################################################
 """
@@ -13,6 +13,8 @@ import numpy as np
 import utilities as util
 import matplotlib.pyplot as plt
 import pubplot as pp
+
+plt.style.use(['science', 'ieee', 'vibrant'])
 
 
 class DataSequence:
@@ -35,11 +37,17 @@ class DataSequence:
     num_of_data_points: int
     num_of_repeats: int
     exposure_time: float or list
+    cutoff: float
+    exposure_list: np.ndarray
+    milliseconds: bool = False
 
     def __init__(self,  path_of_data_series_input: str                  ,
                         num_of_data_points_input: int           = None  ,
                         num_of_repeats_input: int               = None  ,
-                        exposure_time_input: float or list      = None   ):
+                        exposure_time_input: float or list      = None  ,
+                        cutoff_input: float                     = None  ,
+                        exposure_list_input: np.ndarray         = None  ,
+                        milliseconds_input: bool                = False ):
         """
             Constructor member function
             :parameter str path_of_data_series_input:
@@ -62,6 +70,12 @@ class DataSequence:
             self.num_of_repeats         =   num_of_repeats_input
         if exposure_time_input is not None:
             self.exposure_time          =   exposure_time_input
+        if cutoff_input is not None:
+            self.cutoff                 =   cutoff_input
+        if exposure_list_input is not None:
+            self.exposure_list          =   exposure_list_input
+        if milliseconds_input:
+            self.milliseconds           =   milliseconds_input
 
 
 class CCD:
@@ -96,7 +110,7 @@ class CCD:
     name: str = []
 
     gain_factor: float = 1
-    time_calibration_factor: float = 1/15
+    time_calibration_factor: float = 0  # 1/15
 
     master_bias: np.ndarray = []
     master_dark: np.ndarray = []
@@ -109,11 +123,14 @@ class CCD:
 
     dark_current_versus_temperature:  np.ndarray = []
     readout_noise_versus_temperature: np.ndarray = []
+    gain_vs_temp:                     np.ndarray = []
 
     readout_noise_level: float = []
 
     analysis_data_storage_directory_path:  str = []
     master_frames_storage_directory_path:  str = []
+    datastorage_filename_append:           str = []
+    figure_directory_path:                 str = []
 
     construct_master_bias:   bool = True
     construct_master_dark:   bool = True
@@ -121,8 +138,9 @@ class CCD:
     do_noise_estimation:     bool = True
     do_time_calibration:     bool = True
     do_linearity_estimation: bool = True
+    do_gain_factor_estimation: bool = True
 
-    def __init__(self, name: str, gain_factor: float, analysis_data_path: str, master_frame_path: str):
+    def __init__(self, name: str, gain_factor: float, analysis_data_path: str, master_frame_path: str, datastorage_filename_append: str, figure_directory_path: str):
         """
         Constructor member function
         :parameter str name:
@@ -139,6 +157,8 @@ class CCD:
 
         self.analysis_data_storage_directory_path = analysis_data_path
         self.master_frames_storage_directory_path = master_frame_path
+        self.datastorage_filename_append          = datastorage_filename_append
+        self.figure_directory_path                = figure_directory_path
 
         print("")
 
@@ -149,6 +169,7 @@ class CCD:
                                         do_noise_estimation:        bool = True  ,
                                         do_time_calibration:        bool = True  ,
                                         do_linearity_estimation:    bool = True  ,
+                                        do_gain_factor_estimation:  bool = True,
                                         path_of_master_bias_frame:   str = None  ,
                                         path_of_master_dark_frame:   str = None  ,
                                         path_of_master_flat_frame:   str = None  ,
@@ -162,24 +183,25 @@ class CCD:
         self.do_noise_estimation     = do_noise_estimation
         self.do_time_calibration     = do_time_calibration
         self.do_linearity_estimation = do_linearity_estimation
+        self.do_gain_factor_estimation = do_gain_factor_estimation
 
-        if construct_master_bias is False:
+        if (construct_master_bias is False) and (path_of_master_bias_frame is not None):
             fullpath_master_bias = self.master_frames_storage_directory_path + path_of_master_bias_frame
             print(" Reading master bias frame from:\n ", fullpath_master_bias)
             self.master_bias                        =   np.loadtxt(fullpath_master_bias)
-        if construct_master_dark is False:
+        if (construct_master_dark is False) and (path_of_master_dark_frame is not None):
             fullpath_master_dark = self.master_frames_storage_directory_path + path_of_master_dark_frame
             print(" Reading master dark frame from:\n ", fullpath_master_dark)
             self.master_dark                        =   np.loadtxt(fullpath_master_dark)
-        if construct_master_flat is False:
+        if (construct_master_flat is False) and (path_of_master_flat_frame is not None):
             fullpath_master_flat = self.master_frames_storage_directory_path + path_of_master_flat_frame
             print(" Reading master flat frame from:\n ", fullpath_master_flat)
             self.master_flat                        =   np.loadtxt(fullpath_master_flat)
-        if do_linearity_estimation is False:
+        if (do_linearity_estimation is False) and (path_of_linearity_data is not None):
             fullpath_linearity = self.analysis_data_storage_directory_path + path_of_linearity_data
             print(" Reading linearity data from:\n ", fullpath_linearity)
             self.linearity                          =   np.loadtxt(fullpath_linearity)
-        if do_noise_estimation is False:
+        if (do_noise_estimation is False) and (path_of_readout_noise_data is not None) and (path_of_readout_noise_data is not None):
             fullpath_dark_current = self.analysis_data_storage_directory_path + path_of_dark_current_data
             fullpath_readout_noise = self.analysis_data_storage_directory_path + path_of_readout_noise_data
             print(" Reading dark current temperature data from:\n ", fullpath_dark_current)
@@ -195,7 +217,9 @@ class CCD:
                      linearity_data_sequence:           DataSequence,
                      hot_pixel_data_sequence:           DataSequence,
                      zero_point_data_sequence:          DataSequence,
-                     time_calibration_data_sequence:    DataSequence ):
+                     time_calibration_data_sequence:    DataSequence,
+                     gain_data_sequence:                DataSequence,
+                     old_timecal_data_sequence:         DataSequence = None):
         """
             The main interface for the characterization procedure. Calling this
             method will fully characterize the ccd in question. The method will
@@ -226,7 +250,7 @@ class CCD:
                 - A datasequence instance representing the zero point estimation data series
         """
 
-        print("Initializing characterization of CCD...")
+        print("\nInitializing characterization of CCD: " + self.name + " ...")
 
         if self.construct_master_bias:
             self.master_bias_image(         path_of_data_series =   bias_data_sequence.path_of_data_series       )
@@ -238,32 +262,50 @@ class CCD:
 
         self.readout_noise_estimation(  path_of_data_series =   bias_data_sequence.path_of_data_series      ,
                                         temperature         =   -10                                          )
+
+        self.gain_factor_estimation(    path_of_data_series =   flat_data_sequence.path_of_data_series)
         self.hot_pixel_estimation(      path_of_data_series =   hot_pixel_data_sequence.path_of_data_series ,
                                         num_of_repeats      =   hot_pixel_data_sequence.num_of_repeats      ,
-                                        exposure_time       =   hot_pixel_data_sequence.exposure_time        )
+                                        exposure_time       =   hot_pixel_data_sequence.exposure_time       ,
+                                        hot_pixel_cutoff    =   hot_pixel_data_sequence.cutoff               )
         self.test_zero_point(           path_of_data_series =   zero_point_data_sequence.path_of_data_series,
                                         num_of_data_points  =   zero_point_data_sequence.num_of_data_points,
                                         num_of_repeats      =   zero_point_data_sequence.num_of_repeats)
 
+        if self.do_gain_factor_estimation:
+            gain_data = self.gain_vs_temperature(path_of_data_series=gain_data_sequence.path_of_data_series,
+                                                 num_of_data_points=gain_data_sequence.num_of_data_points,
+                                                 num_of_repeats=gain_data_sequence.num_of_repeats
+                                                 )
+        else:
+            gain_data = []
+
         if self.do_noise_estimation:
             dark_current_data, readout_noise_data, ron_dists_vs_temp = self.noise_vs_temperature(dark_current_data_sequence, readout_noise_data_sequence)
+
         else:
             dark_current_data = self.dark_current_versus_temperature
             readout_noise_data = self.readout_noise_versus_temperature
 
         # ron_dists_vs_temp = []
-        """
-        time_calibration = self.time_calibration( path_of_data_series =   time_calibration_data_sequence.path_of_data_series ,
-                                                  num_of_exposures    =   time_calibration_data_sequence.num_of_data_points  ,
-                                                  num_of_repeats      =   time_calibration_data_sequence.num_of_repeats       )
-                                                  """
-        time_calibration = self.new_time_calibration( path_of_data_series = time_calibration_data_sequence.path_of_data_series   ,
-                                                      num_of_repeats      = time_calibration_data_sequence.num_of_repeats         )
+        if self.do_time_calibration and old_timecal_data_sequence is not None:
+            time_calibration = self.time_calibration(path_of_data_series =   old_timecal_data_sequence.path_of_data_series,
+                                                     num_of_exposures    =   old_timecal_data_sequence.num_of_data_points,
+                                                     num_of_repeats      =   old_timecal_data_sequence.num_of_repeats)
+        else:
+            time_calibration = []
+
+        self.new_time_calibration( path_of_data_series = time_calibration_data_sequence.path_of_data_series   ,
+                                   num_of_repeats      = time_calibration_data_sequence.num_of_repeats        ,
+                                   exposures           = time_calibration_data_sequence.exposure_list          )
+
         if self.do_linearity_estimation:
             linearity_data = self.linearity_estimation_with_reference( path_of_data_series =   linearity_data_sequence.path_of_data_series ,
                                                                        num_of_exposures    =   linearity_data_sequence.num_of_data_points  ,
                                                                        num_of_repeats      =   linearity_data_sequence.num_of_repeats      ,
-                                                                       reference_exposure  =   linearity_data_sequence.exposure_time        )
+                                                                       reference_exposure  =   linearity_data_sequence.exposure_time       ,
+                                                                       exposures           =   linearity_data_sequence.exposure_list       ,
+                                                                       milliseconds        =   linearity_data_sequence.milliseconds         )
         else:
             linearity_data  = self.linearity
 
@@ -273,7 +315,8 @@ class CCD:
         #                                                   num_of_data_points   =   linearity_data_sequence.num_of_data_points,
         #                                                   num_of_repeats       =   linearity_data_sequence.num_of_repeats)
         # stabillity_data = []
-        return [dark_current_data, readout_noise_data, time_calibration, linearity_data] #, ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data, ron_dists_vs_temp]
+        return [dark_current_data, readout_noise_data, time_calibration, linearity_data, gain_data]
+        #, ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data, ron_dists_vs_temp]
 
     def noise_vs_temperature(self, dark_current_vars: DataSequence, readout_noise_vars: DataSequence ):
         """
@@ -320,9 +363,9 @@ class CCD:
 
         data_series         =   util.list_data(path_of_data_series)
         mean_image_return   =   util.mean_image(data_series, path_of_data_series)
-        
 
-        util.print_txt_file("master_bias.txt", mean_image_return, which_directory=self.master_frames_storage_directory_path)
+
+        util.print_txt_file("master_bias" + self.datastorage_filename_append + ".txt", mean_image_return, which_directory=self.master_frames_storage_directory_path)
         self.master_bias = mean_image_return  # np.flip( , axis = 1)  # np.flip( , axis = 0)
 
     def bias_correction(self, image_to_be_corrected: np.ndarray):
@@ -333,7 +376,7 @@ class CCD:
         :parameter np.ndarray image_to_be_corrected:
             - A numpy array which is the image data to be corrected
         """
-        corrected_image = np.flip(np.subtract(image_to_be_corrected, self.master_bias), axis=0)
+        corrected_image = np.subtract(image_to_be_corrected, self.master_bias)  # np.flip(np.subtract(image_to_be_corrected, self.master_bias), axis=0)
         return corrected_image
 
     def master_dark_current_image(self, path_of_data_series: str, exposure_time: float):
@@ -361,18 +404,18 @@ class CCD:
             imagedata                   =   self.bias_correction(imagedata)
 
             # Check for consistency
-            if header['EXPTIME'] == exposure_time:
-                imagedata   =   np.divide(imagedata, exposure_time)
-            else:
-                print("  master_dark_current_image(): Error, exposure time does not match up")
-                print("  master_dark_current_image(): Exposure time was: ", header['EXPTIME'])
+            #if header['EXPTIME'] == exposure_time:
+            imagedata   =   np.divide(imagedata, exposure_time)
+            #else:
+             #   print("  master_dark_current_image(): Error, exposure time does not match up")
+              #  print("  master_dark_current_image(): Exposure time was: ", header['EXPTIME'])
 
             mean_image_array += imagedata
             hdul.close()
 
         mean_image_array   /=   number_of_images
 
-        util.print_txt_file("master_dark.txt", mean_image_array, which_directory=self.master_frames_storage_directory_path)
+        util.print_txt_file("master_dark" + self.datastorage_filename_append + ".txt", mean_image_array, which_directory=self.master_frames_storage_directory_path)
 
         self.master_dark    =   mean_image_array
 
@@ -427,7 +470,7 @@ class CCD:
                                                                 num_of_repeats_input=num_of_repeats,
                                                                 where_is_repeat_num_in_string=[6, 9],
                                                                 data_series_list=data_series)
-
+        tempid = 0
         for repeat_sequence in reordered_data:
             repeat_sequence_meaned      =   self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series))
 
@@ -443,20 +486,25 @@ class CCD:
 
             # Check for consistency
             if header['EXPTIME'] == exposure_time:
-                dark_per_time_per_pixel = np.mean(np.divide(np.multiply(repeat_sequence_meaned, self.gain_factor), exposure_time))
+                dark_per_time_per_pixel = np.mean(np.divide(np.multiply(repeat_sequence_meaned,  self.gain_vs_temp[tempid, 1]), exposure_time))
                 tmplist.append([temperature, dark_per_time_per_pixel, errorbar])
             else:
                 print("   dark_current_vs_temperature(): Error, exposure times do not match up")
                 print("   dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
 
             hdul.close()
+            tempid += 1
 
-        tmparray = np.sort(np.asarray(tmplist), axis=0)
+        #tmparray = np.sort(
+        tmplist = np.asarray(tmplist)
+        tmplist2D = tmplist.reshape(-1, tmplist.shape[-1])
+        tmparray = (tmplist2D[np.lexsort(tmplist2D.T[::-1])]).reshape(tmplist.shape)
+        #       , axis=0)
 
         self.dark_current_versus_temperature    = tmparray
         dark_current_versus_temperature_return  = tmparray
-        
-        util.print_txt_file("dark_current_versus_temperature.txt", dark_current_versus_temperature_return, which_directory=self.analysis_data_storage_directory_path)
+
+        util.print_txt_file("dark_current_versus_temperature" + self.datastorage_filename_append + ".txt", dark_current_versus_temperature_return, which_directory=self.analysis_data_storage_directory_path)
 
         return dark_current_versus_temperature_return
 
@@ -489,8 +537,8 @@ class CCD:
 
         meaned_flat /= number_of_images
         meaned_flat /= np.mean(meaned_flat)  # Normalize
-        
-        util.print_txt_file("master_flat.txt", meaned_flat, which_directory=self.master_frames_storage_directory_path)
+
+        util.print_txt_file("master_flat" + self.datastorage_filename_append + ".txt", meaned_flat, which_directory=self.master_frames_storage_directory_path)
 
         self.master_flat = meaned_flat
 
@@ -505,7 +553,7 @@ class CCD:
         corrected_image = np.divide(image_to_be_corrected, self.master_flat)
         return corrected_image
 
-    def hot_pixel_estimation(self, path_of_data_series: str, num_of_repeats: int, exposure_time: list):
+    def hot_pixel_estimation(self, path_of_data_series: str, num_of_repeats: int, exposure_time: list, hot_pixel_cutoff: float):
         """
         Method to find hot pixels qualitatively, and then construct a mask used to remove them
 
@@ -538,27 +586,26 @@ class CCD:
         long_exposure_image                 =   np.divide(np.multiply(long_exposure_image , self.gain_factor), exposure_time[1])
 
         # Find potential hot pixels
-        smallest_measurable_dark_current    =   2 * ((self.readout_noise_level / math.sqrt(num_of_repeats)) / exposure_time[0])
+        smallest_measurable_dark_current    =   2 * ((self.gain_factor * self.readout_noise_level / math.sqrt(num_of_repeats)) / exposure_time[0])
         potential_hot_pixels                =   long_exposure_image > smallest_measurable_dark_current
 
         # Plot to qualitatively decide upon cutoff
         self.hot_pixel_data = [short_exposure_image[potential_hot_pixels].flatten(), long_exposure_image[potential_hot_pixels].flatten()]
 
-        hot_pixels = (short_exposure_image > 7.5)
+        hot_pixels = (short_exposure_image > hot_pixel_cutoff)
         print("  No. of hot pixels:", hot_pixels.sum())
 
         self.hot_pixel_mask = hot_pixels
 
     def hot_pixel_correction(self, image_to_be_corrected: np.ndarray):
         """
-        Method that will apply the hot pixel correction to an image
-        by subtracting the hot pixel correction mask
+        Method that will apply the hot pixel correction to an image.
 
         :parameter np.ndarray image_to_be_corrected:
             - A numpy array which is the image data to be corrected
         """
-        corrected_image = np.subtract(image_to_be_corrected, image_to_be_corrected[self.hot_pixel_mask])
-        return corrected_image
+        image_to_be_corrected[np.where(self.hot_pixel_mask)] = np.mean(image_to_be_corrected[np.where(np.logical_not(self.hot_pixel_mask))])
+        return image_to_be_corrected
 
     def readout_noise_estimation(self, path_of_data_series: str, temperature: float):
         """
@@ -585,22 +632,35 @@ class CCD:
             hdul, header, imagedata     =   util.fits_handler(filepath)
 
             # Check for consistency
-            check_temperature = (temperature*1.1 <= header['CCD-TEMP'] <= temperature*0.9) or (temperature*1.1 >= header['CCD-TEMP'] >= temperature*0.9)
-            if check_temperature:
-                # noise_deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
-                noise_deviation     =   np.subtract(self.master_bias, imagedata)  # * self.gain_factor
-                tmp_std[it]         =   np.std(noise_deviation) * self.gain_factor * np.sqrt(8 * np.log(2))
-                tmp_mean[it]        =   np.mean(noise_deviation)
-            else:
-                print(header['CCD-TEMP'])
+            # check_temperature = (temperature*1.1 <= header['CCD-TEMP'] <= temperature*0.9) or (temperature*1.1 >= header['CCD-TEMP'] >= temperature*0.9)
+            # if check_temperature:
+            # noise_deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
+            noise_deviation     =   np.subtract(self.master_bias, imagedata)  # * self.gain_factor
+            tmp_std[it]         =   np.std(noise_deviation) # * self.gain_factor * np.sqrt(8 * np.log(2))
+            tmp_mean[it]        =   np.mean(noise_deviation)
+            #else:
+            #    print(header['CCD-TEMP'])
 
             hdul.close()
             it += 1
 
-        readout_noise   =  np.sqrt(np.mean(np.square(tmp_std)))
-        ron_mean        =  np.mean(tmp_mean)
+        readout_noise                   =  np.sqrt(np.mean(np.square(tmp_std)))
+        readout_noise_electrons         =  np.sqrt(np.mean(np.square(np.multiply(tmp_std, self.gain_factor))))
+        num_of_rons                     =  len(tmp_std)
+        readout_noise_error             =  np.std(tmp_std)
+        readout_noise_electrons_error   =  readout_noise_error * self.gain_factor
+        ron_mean                        =  np.mean(tmp_mean)
 
-        print(f"  The readout noise level is {readout_noise:.3f} RMS electrons per pixel")
+
+
+        plt.plot(np.linspace(0, num_of_rons, num_of_rons), tmp_std, 'k.', markersize=3, label="")
+        plt.plot(np.linspace(0, num_of_rons, num_of_rons), np.ones(num_of_rons) * readout_noise, ls='-', c='k', lw=1, label="Mean value")
+        plt.plot(np.linspace(0, num_of_rons, num_of_rons), np.ones(num_of_rons) * ((readout_noise_error / np.sqrt(len(data_series))) +  readout_noise ) , ls='--', c='k', lw=1, label="$\sigma / \sqrt{N}$")
+        plt.plot(np.linspace(0, num_of_rons, num_of_rons), np.ones(num_of_rons) * (-(readout_noise_error / np.sqrt(len(data_series))) + readout_noise ) , ls='--', c='k', lw=1)
+        pp.pubplot("$\mathbf{Readout\;Noise}$" + self.name, "Measurement no.", "Readout Noise [RMS $\mathbf{e}^-$/pixel]", self.figure_directory_path + "readout_noise_measurement" + self.datastorage_filename_append + ".png", legend=True, legendlocation="upper right")
+
+        print(f"  The readout noise level is {readout_noise:.3f} ± ", readout_noise_error / np.sqrt(len(data_series)), " RMS ADU per pixel")
+        print(f"  The readout noise level is {readout_noise_electrons:.3f} ± ", readout_noise_electrons_error / np.sqrt(len(data_series)), " RMS electrons per pixel")
         print(f"  The mean of the distribution is {ron_mean:.3f}, and should be equal to 0")
 
         self.readout_noise_level = readout_noise
@@ -647,6 +707,7 @@ class CCD:
 
         readout_noise = []
         ron_dists_vs_temp = []
+        tempid = 0
         for repeat_sequence in reordered_data:
             # Get temperatures from the filename
             temperature = float(repeat_sequence[0][16:18] + '.' + repeat_sequence[0][19])  # time in s
@@ -668,7 +729,7 @@ class CCD:
                 filepath = util.get_path(path_of_data_series + imageid)
                 hdul, header, imagedata = util.fits_handler(filepath)
 
-                noise_deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain_factor  # self.master_bias
+                noise_deviation     =   np.subtract(np.mean(imagedata), imagedata) * self.gain_vs_temp[tempid, 1]  # self.master_bias
                 tmp_std[it]         =   np.std(noise_deviation)  # / np.sqrt(2)
                 tmp_mean[it]        =   np.mean(noise_deviation)
 
@@ -682,18 +743,107 @@ class CCD:
             errorbar = util.compute_errorbar(repeat_sequence, path_of_data_series)
 
             readout_noise.append([temperature, np.sqrt(np.mean(np.square(tmp_std))), errorbar])
+            tempid += 1
 
-        tmparray = np.sort(np.asarray(readout_noise), axis=0)
+        #tmparray = np.sort(
+
+        tmplist = np.asarray(readout_noise)
+        tmplist2D = tmplist.reshape(-1, tmplist.shape[-1])
+        tmparray = (tmplist2D[np.lexsort(tmplist2D.T[::-1])]).reshape(tmplist.shape)
+            # tmparray=np.asarray(readout_noise)
+            #, axis=0)
 
         self.readout_noise_versus_temperature = tmparray
         readout_noise_versus_temperature_return = tmparray
-        
-        util.print_txt_file("readout_noise_versus_temperature.txt", readout_noise_versus_temperature_return,
+
+        util.print_txt_file("readout_noise_versus_temperature" + self.datastorage_filename_append + ".txt", readout_noise_versus_temperature_return,
                             which_directory=self.analysis_data_storage_directory_path)
-        util.print_txt_file("readout_noise_distribution_versus_temperature.txt", ron_dists_vs_temp,
+        util.print_txt_file("readout_noise_distribution_versus_temperature" + self.datastorage_filename_append + ".txt", ron_dists_vs_temp,
                             which_directory=self.analysis_data_storage_directory_path)
 
         return readout_noise_versus_temperature_return, ron_dists_vs_temp
+
+    def gain_factor_estimation(self, path_of_data_series: str):
+        data_series         =   util.list_data(path_of_data_series)
+
+        gain_factors = []
+        for id in range(0, len(data_series), 2):
+            filepath_first = util.get_path(path_of_data_series + data_series[id])
+            filepath_second = util.get_path(path_of_data_series + data_series[id + 1])
+            hdul, header, imagedata_first = util.fits_handler(filepath_first)
+            hdul, header, imagedata_second = util.fits_handler(filepath_second)
+            imagedata_first = self.bias_correction(imagedata_first)
+            imagedata_second = self.bias_correction(imagedata_second)
+
+            image_flux_ratios = np.divide(np.mean(imagedata_first), np.mean(imagedata_second))
+            numerator = np.mean(np.add(imagedata_first, imagedata_second))
+            denominator = np.std(np.subtract(imagedata_first, np.multiply(imagedata_second, image_flux_ratios)))**2 - 2 * (self.readout_noise_level**2)
+
+            gain_factors.append(np.divide(numerator, denominator))
+
+        gain_factor         = np.mean(np.asarray(gain_factors))
+        num_of_gain_factors = len(gain_factors)
+        gain_factor_error   = np.std(np.asarray(gain_factors))
+        gain_factor_relative_error = gain_factor_error / np.sqrt(1/2 * len(data_series))
+
+        plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors), gain_factors, 'k.', markersize=3, label="Measured value")
+        plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors), np.ones(num_of_gain_factors) * gain_factor, ls='-', c='k', lw=1, label="Mean value")
+        plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors), np.ones(num_of_gain_factors) * (  gain_factor_relative_error +  gain_factor ) , ls='--', c='k', lw=1, label="$\sigma / \sqrt{N}$")
+        plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors), np.ones(num_of_gain_factors) * (- gain_factor_relative_error + gain_factor ) , ls='--', c='k', lw=1)
+        pp.pubplot("$\mathbf{Gain\;factor}-10.0^\circ$C " + self.name, "Measurement no.", "Gain factor, $g$", self.figure_directory_path + "gain_factor_measurement" + self.datastorage_filename_append + ".png", legend=True, legendlocation="upper right")
+
+        print("  The estimated gain factor is ", gain_factor, " ± ", gain_factor_relative_error, " electrons/ADU, while the tabulated (input) value was ", self.gain_factor, " electrons/ADU")
+        self.gain_factor = np.float(gain_factor)
+
+    def gain_vs_temperature(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
+        print("  Computing gain factor as a function of temperature...")
+        data_series     =   util.list_data(path_of_data_series)
+        reordered_data  =   util.repeat_sequence_ordered_data(  num_of_data_points, num_of_repeats,
+                                                                where_is_repeat_num_in_string=[5, 8],
+                                                                data_series_list=data_series            )
+
+        gain_vs_temp = []
+        for repeat_sequence in reordered_data:
+            # Get temperatures from the filename
+            temperature = float(repeat_sequence[0][11:13] + '.' + repeat_sequence[0][14])  # time in s
+            if repeat_sequence[0][9] == "m":
+                temperature *= -1
+
+            gain_factors = []
+            for id in range(0, len(repeat_sequence), 2):
+                filepath_first = util.get_path(path_of_data_series + repeat_sequence[id])
+                filepath_second = util.get_path(path_of_data_series + repeat_sequence[id + 1])
+                hdul, header, imagedata_first = util.fits_handler(filepath_first)
+                hdul, header, imagedata_second = util.fits_handler(filepath_second)
+                imagedata_first = self.bias_correction(imagedata_first)
+                imagedata_second = self.bias_correction(imagedata_second)
+
+                image_flux_ratios = np.divide(np.mean(imagedata_first), np.mean(imagedata_second))
+                numerator = np.mean(np.add(imagedata_first, imagedata_second))
+                denominator = np.std(
+                    np.subtract(imagedata_first, np.multiply(imagedata_second, image_flux_ratios))) ** 2 - 2 * (
+                                      self.readout_noise_level ** 2)
+
+                gain_factors.append(np.divide(numerator, denominator))
+
+            gain_factor = np.mean(np.asarray(gain_factors))
+            gain_factor_error = np.std(np.asarray(gain_factors))
+
+            gain_vs_temp.append([temperature, gain_factor, gain_factor_error])
+
+        #gain_vs_temp = np.sort(gain_vs_temp, axis=0)
+
+        tmplist = np.asarray(gain_vs_temp)
+        tmplist2D = tmplist.reshape(-1, tmplist.shape[-1])
+        gain_vs_temp = (tmplist2D[np.lexsort(tmplist2D.T[::-1])]).reshape(tmplist.shape)
+        # gain_vs_temp = np.asarray(gain_vs_temp)
+        self.gain_vs_temp = gain_vs_temp
+
+        util.print_txt_file("gain_factor_versus_temperature" + self.datastorage_filename_append + ".txt",
+                            gain_vs_temp,
+                            which_directory=self.analysis_data_storage_directory_path)
+
+        return gain_vs_temp
 
     def linearity_estimation(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int):
         """
@@ -791,12 +941,12 @@ class CCD:
 
         self.linearity      =   linearity_array
 
-        util.print_txt_file("linearity.txt", linearity_array,
+        util.print_txt_file("linearity" + self.datastorage_filename_append + ".txt", linearity_array,
                             which_directory=self.analysis_data_storage_directory_path)
 
         return linearity_array
 
-    def linearity_estimation_with_reference(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int, reference_exposure: float):
+    def linearity_estimation_with_reference(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int, reference_exposure: float, exposures: np.ndarray, milliseconds: bool = False):
         """
         Method which will test the linearity, by plotting mean ADU in an image
         as a function of exposure time, which it returns as a list,
@@ -837,15 +987,16 @@ class CCD:
         from_id_in_str      =   where_is_repeat_num_in_string[0]
         to_id_in_str        =   where_is_repeat_num_in_string[1]
 
-        # exposures = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])
-        exposures = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240])
-
         index = 0
         for imageid in data_series:
             if imageid[-7:-4] == "(2)":
                 this_actual_exposure_time = 10.0
             else:
+                # this_actual_exposure_time = float(imageid[-9:-7] + "." + imageid[-7:-6])
+                # print(this_actual_exposure_time)
                 this_actual_exposure_time = float(imageid[-9:-6])  # -7:-4
+                if milliseconds:
+                    this_actual_exposure_time /= 10
             exposure_index      =   (np.where(exposures == this_actual_exposure_time))[0][0]
             repeat_num          =   int(imageid[from_id_in_str:to_id_in_str])
             reference_index     =   int(imageid[-5])
@@ -870,9 +1021,9 @@ class CCD:
                 hdul, header_first, imagedata_first_ref      =   util.fits_handler(filepath_first_ref)
                 hdul, header_next, imagedata_next_ref        =   util.fits_handler(filepath_next_ref)
 
-                imagedata_actual_bias_corrected_and_meaned   =   np.mean((self.bias_correction(imagedata_actual_image))[350:400, 350:400])
-                imagedata_first_bias_corrected_and_meaned    =   np.mean((self.bias_correction(imagedata_first_ref))[350:400, 350:400])
-                imagedata_next_bias_corrected_and_meaned     =   np.mean((self.bias_correction(imagedata_next_ref))[350:400, 350:400])
+                imagedata_actual_bias_corrected_and_meaned   =   np.mean((self.bias_correction(imagedata_actual_image)))  # [350:400, 350:400])
+                imagedata_first_bias_corrected_and_meaned    =   np.mean((self.bias_correction(imagedata_first_ref)))  # [350:400, 350:400])
+                imagedata_next_bias_corrected_and_meaned     =   np.mean((self.bias_correction(imagedata_next_ref)))  # [350:400, 350:400])
 
                 mean_lightsource_change                      =   (1/2) * (imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned)
                 time_calibration                             =   (reference_exposure + self.time_calibration_factor) / (this_actual_exposure_time + self.time_calibration_factor)
@@ -883,7 +1034,7 @@ class CCD:
                 tmp_mean += imagedata_converted_to_deviation
                 mean_ADU += imagedata_actual_bias_corrected_and_meaned
 
-                distribution_of_image_means.append(np.mean(imagedata_meaned_normed_and_corrected) / float(np.sqrt(num_of_repeats)))
+                distribution_of_image_means.append((np.mean(imagedata_meaned_normed_and_corrected) * 100) / float(np.sqrt(num_of_repeats)))
 
             tmp_mean /= num_of_repeats
             mean_ADU /= num_of_repeats
@@ -892,13 +1043,13 @@ class CCD:
             errorbar = np.std(np.asarray(distribution_of_image_means))
 
             # Check for consistency
-            if header_actual['EXPTIME'] == this_actual_exposure_time:
-                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
-            else:
-                print("  linearity_estimation(): Error, exposure times do not match up")
-                print("  linearity_estimation(): Exposure time was: ", header_actual['EXPTIME'], "should have been: ", this_actual_exposure_time)
+            #if header_actual['EXPTIME'] == this_actual_exposure_time:
+            tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
+            #else:
+            #    print("  linearity_estimation(): Error, exposure times do not match up")
+            #    print("  linearity_estimation(): Exposure time was: ", header_actual['EXPTIME'], "should have been: ", this_actual_exposure_time)
 
-                tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
+            #    tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
 
         linearity_array     =   np.asarray(tmplist)
         self.linearity      =   linearity_array
@@ -909,10 +1060,10 @@ class CCD:
         fitted_slope = fitted_linear_model[0]
         fitted_offset = fitted_linear_model[1]
         fitted_linearity = np.add(np.multiply(query_points, fitted_slope), fitted_offset)
-        util.print_txt_file("fitted_linearity.txt", fitted_linearity,
+        util.print_txt_file("fitted_linearity" + self.datastorage_filename_append + ".txt", fitted_linearity,
                             which_directory=self.analysis_data_storage_directory_path)
 
-        util.print_txt_file("linearity.txt", linearity_array,
+        util.print_txt_file("linearity" + self.datastorage_filename_append + ".txt", linearity_array,
                             which_directory=self.analysis_data_storage_directory_path)
 
         return linearity_array
@@ -1058,16 +1209,14 @@ class CCD:
 
         return [linearity_array, linear_model_data, corrected_data, new_linear_data, deviations, errors, new_deviations]
 
-    def new_time_calibration(self, path_of_data_series: str, num_of_repeats: int):
-
+    def new_time_calibration(self, path_of_data_series: str, num_of_repeats: int, exposures: np.ndarray):
+        print("Computing time calibration factor...")
         data_series = util.list_data(path_of_data_series)
         where_is_repeat_num_in_string = [8, 11]
 
         reordered_data = np.empty((3, num_of_repeats, 3), dtype=object)
         from_id_in_str = where_is_repeat_num_in_string[0]
         to_id_in_str = where_is_repeat_num_in_string[1]
-
-        exposures = np.array([1, 2])
 
         for imageid in data_series:
             repeat_num = int(imageid[from_id_in_str:to_id_in_str])
@@ -1097,6 +1246,15 @@ class CCD:
 
                 numerator = 1 - ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned)
                 denominator = ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (2 * imagedata_actual_bias_corrected_and_meaned)) - 1
+
+                # numerator   = ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned) - 1
+                # denominator = 1 - ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (2 * imagedata_actual_bias_corrected_and_meaned))
+
+                #time_offset += (numerator)    / denominator
+
+                numerator    = (((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned) * (exposures[1] / 2)) - exposures[0]
+                denominator  = 1 - ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (2 * imagedata_actual_bias_corrected_and_meaned))
+
                 time_offset += numerator / denominator
 
             time_offset /= num_of_repeats
@@ -1104,8 +1262,9 @@ class CCD:
 
 
         final_offset = np.float(np.mean(np.asarray(offsets)))
+        final_offset_error = np.float(np.std(np.asarray(offsets)))
         self.time_calibration_factor = final_offset
-        print(self.time_calibration_factor)
+        print("  Result: " + str(self.time_calibration_factor), "±", final_offset_error / np.sqrt(len(offsets)), " s")
 
 
     def test_lightsource_stability(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
@@ -1164,7 +1323,7 @@ class CCD:
         sequence_mean       =   np.mean(stability_array, axis=1, keepdims=True)
         stability_array     =   np.multiply(np.divide(np.subtract(stability_array, sequence_mean), sequence_mean), 100)
 
-        util.print_txt_file("lightsource_stability.txt", stability_array,
+        util.print_txt_file("lightsource_stability" + self.datastorage_filename_append + ".txt", stability_array,
                             which_directory=self.analysis_data_storage_directory_path)
 
         return stability_array
@@ -1211,11 +1370,11 @@ class CCD:
         deviations              =   np.multiply(np.divide(np.subtract(linearity_data, ideal_linearity), ideal_linearity), 100)
         errors                  =   np.multiply(np.divide(error_data, ideal_linearity), 100)
 
-        util.print_txt_file("ideal_linearity.txt", ideal_linearity,
+        util.print_txt_file("ideal_linearity" + self.datastorage_filename_append + ".txt", ideal_linearity,
                             which_directory=self.analysis_data_storage_directory_path)
-        util.print_txt_file("linearity_deviations.txt", deviations,
+        util.print_txt_file("linearity_deviations" + self.datastorage_filename_append + ".txt", deviations,
                             which_directory=self.analysis_data_storage_directory_path)
-        util.print_txt_file("linearity_deviation_errors.txt", errors,
+        util.print_txt_file("linearity_deviation_errors" + self.datastorage_filename_append + ".txt", errors,
                             which_directory=self.analysis_data_storage_directory_path)
 
         return ideal_linearity, deviations, errors
@@ -1274,20 +1433,3 @@ class CCD:
         result              =   np.subtract(lhs_final, rhs_final)
 
         print("  The result of the test is that the zeropoint assumption is valid to a precision of", result)
-
-    @staticmethod
-    def charge_transfer_efficiency():
-        """
-        Consider read out direction, plot mean ADU as function of
-        rows (if readout is down/up-wards). Say it is linear, we
-        can fit to this, and get the linear rate of loss per row
-        """
-        print(" Characterizing charge transfer efficiency...")
-
-    @staticmethod
-    def charge_diffusion():
-        print(" Characterizing charge diffusion rates")
-
-    @staticmethod
-    def quantum_efficiency():
-        print(" Testing quantum efficiency")

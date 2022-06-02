@@ -1,0 +1,97 @@
+\babel@toc {english}{}
+\contentsline {chapter}{Contents}{i}{section*.1}%
+\contentsline {chapter}{Acknowledgements}{v}{chapter*.2}%
+\contentsline {chapter}{Abstract}{vii}{chapter*.3}%
+\contentsline {chapter}{Dansk resumé}{ix}{chapter*.4}%
+\contentsline {chapter}{Preface}{xi}{chapter*.5}%
+\contentsline {chapter}{\chapternumberline {1}Introduction and motivations}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Small satellites}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Exoplanets}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Space mission requirements}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}The STEP mission design}{5}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Quantitative mission needs and requirements}{6}{subsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.1.1}Kepler HAT-P-7 precision findings as input for mission requirements}{6}{subsubsection.1.4.1.1}%
+\contentsline {subsection}{\numberline {1.4.2}Timeline and secondary missions}{11}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}The desired end product and problem statement}{11}{section.1.5}%
+\contentsline {chapter}{\chapternumberline {2}Photodetectors and their characterization}{15}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Charged-coupled devices (CCDs)}{15}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Semiconductors}{16}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}The pn-junction}{18}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}The MOS capacitor as the pixel}{20}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}CCD charge generation during exposure of the chip}{21}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}CCD charge transfer and image readout}{22}{subsection.2.1.5}%
+\contentsline {subsection}{\numberline {2.1.6}Different kinds of CCDs}{23}{subsection.2.1.6}%
+\contentsline {subsubsection}{\numberline {2.1.6.1}Back- and front illuminated CCDs}{23}{subsubsection.2.1.6.1}%
+\contentsline {subsubsection}{\numberline {2.1.6.2}Electron-multiplying CCD}{25}{subsubsection.2.1.6.2}%
+\contentsline {section}{\numberline {2.2}Characterization of CCDs}{28}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Bias}{28}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Noise}{29}{subsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}Photonic noise and counting statistics}{30}{subsubsection.2.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.2}Readout noise}{31}{subsubsection.2.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.3}Thermal noise and Dark current}{32}{subsubsection.2.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.3}Flat fielding}{35}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Gain}{35}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Hot pixels}{38}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Linearity}{38}{subsection.2.2.6}%
+\contentsline {chapter}{\chapternumberline {3}The CCD characterization procedure}{39}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Developing the characterization procedure}{39}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}The initial experimental setup for test plan development}{39}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Preliminary thoughts and considerations}{41}{subsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}Acquiring data and reducing noise}{41}{subsubsection.3.1.2.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}Background noise and dark current}{42}{subsubsection.3.1.2.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.3}Master bias and flat field frames}{43}{subsubsection.3.1.2.3}%
+\contentsline {subsubsection}{\numberline {3.1.2.4}Readout noise level}{44}{subsubsection.3.1.2.4}%
+\contentsline {subsubsection}{\numberline {3.1.2.5}Gain factor}{45}{subsubsection.3.1.2.5}%
+\contentsline {subsubsection}{\numberline {3.1.2.6}Exposure times for linearity}{46}{subsubsection.3.1.2.6}%
+\contentsline {subsubsection}{\numberline {3.1.2.7}Noise as a function of temperature}{47}{subsubsection.3.1.2.7}%
+\contentsline {subsubsection}{\numberline {3.1.2.8}Hot pixel treatment}{48}{subsubsection.3.1.2.8}%
+\contentsline {subsubsection}{\numberline {3.1.2.9}Testing of initial assumptions}{51}{subsubsection.3.1.2.9}%
+\contentsline {subsection}{\numberline {3.1.3}Stability of the lightsource}{51}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Time calibration}{55}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}Linearity}{58}{subsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.1.6}Digital saturation}{60}{subsection.3.1.6}%
+\contentsline {section}{\numberline {3.2}Measurement plan}{62}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Preparations and corrections}{62}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Linearity}{63}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Temperature dependence of noise}{64}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Proof of concept: Characterizing the Prosilica GC660M camera}{65}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Initial considerations}{65}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Running the test procedure}{66}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Results and requirements from scientific requirements}{68}{section.3.4}%
+\contentsline {section}{\numberline {3.5}How to apply the results}{71}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Bias and hot pixel corrections}{71}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Gain and nonlinearity}{71}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Flat field corrections}{72}{subsection.3.5.3}%
+\contentsline {chapter}{\chapternumberline {4}Determination of pointing requirements}{75}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Photometry}{76}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Differential photometry}{76}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Aperture photometry}{77}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Attitude determination and control systems}{78}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental methods to assert pointing requirements}{81}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Experimental setup}{81}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Experimental procedure and data analysis}{81}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}Data analysis}{81}{subsubsection.4.3.2.1}%
+\contentsline {section}{\numberline {4.4}Accounting for noise budgets}{84}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Results and technical specifications from scientific requirements}{89}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Measurement plan}{92}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Proof of concept: Testing the Prosilica GC660M camera}{94}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Preparations and experimental setup}{94}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Data acquisition}{94}{subsection.4.7.2}%
+\contentsline {subsection}{\numberline {4.7.3}Data analysis}{95}{subsection.4.7.3}%
+\contentsline {section}{\numberline {4.8}Summary of results}{97}{section.4.8}%
+\contentsline {chapter}{\chapternumberline {5}Discussion and conclusions}{99}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Summary}{99}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Consequences}{101}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Measurement of detector linearity}{101}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Testing of pointing stability requirements}{103}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Comparison with other astronomical satellite missions}{104}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Kepler}{104}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}TESS}{106}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}CoRoT}{109}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}MOST}{112}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}CHEOPS}{112}{subsection.5.3.5}%
+\contentsline {subsection}{\numberline {5.3.6}Summary of comparisons and practical reccomendations}{114}{subsection.5.3.6}%
+\contentsline {section}{\numberline {5.4}Conclusion}{115}{section.5.4}%
+\contentsline {chapter}{Bibliography}{117}{chapter*.6}%
+\contentsline {appendix}{\chapternumberline {A}ATIK 414EX Mono: Readout noise and Dark Current as a function of temperature - data tabulated}{122}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {B}Source code}{124}{appendix.B}%

@@ -4,220 +4,16 @@
 # -----       By Marc Breiner Sørensen        ----- #
 # ------------------------------------------------- #
 # ----- Implemented:           August    2021 ----- #
-# ----- Last edit:          1. November  2021 ----- #
+# ----- Last edit:       6th   January   2021 ----- #
 # ------------------------------------------------- #
 #####################################################
 """
-import matplotlib.pyplot as plt
-import matplotlib.lines as mlines
-import pubplot as pp
+
 import utilities as util
 import numpy as np
 import ccd
-
-
-def gauss_dist_plot():
-    """
-        A method for plotting the distribution in bias frames
-        to show that there is a 1/sqrt(N) reduction in the noise
-        for the master bias frame, in comparison to the individual
-        arbitrarily chosen bias frame
-    """
-
-    # Start by plotting the distribution of an individual bias frame
-    data_series                 =   util.list_data(bias_sequence)
-    filepath                    =   util.get_path(bias_sequence + data_series[0])
-    hdul, header, imagedata     =   util.fits_handler(filepath)
-
-    bias_dist           =   imagedata.flatten()
-    n, bins, patches    =   plt.hist(bias_dist, bins=1000, color='dodgerblue', width=0.8, label="Arbitrary individual bias frame")
-    gaussdata           =   np.linspace(240, 375, 1000)
-    gaussheight         =   np.amax(n)
-    gaussmean           =   float(np.mean(imagedata))
-    gausswidth          =   float(np.std(bias_dist))
-
-    plt.plot(gaussdata, util.gaussian(gaussdata, gaussheight, gaussmean, gausswidth), c='navy', label="Gauss. dist.")
-
-    individual_gauss_width = gausswidth
-    print("\nThe found width of the ADU distribution is ", individual_gauss_width, " ADUs")
-    print("This corresponds to a readout noise of ", individual_gauss_width * 0.28 * np.sqrt(8 * np.log(2)))
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    # Then plot the distribution of the master bias frame with reduced noise
-    bias_dist           =   atik_camera.master_bias.flatten()
-    n, bins, patches    =   plt.hist(bias_dist, bins=350, color='steelblue', width=0.4, label="Master bias frame")
-    gaussheight         =   np.amax(n)
-    gaussmean           =   float(np.mean(bias_dist))
-    gausswidth          =   float(np.std(bias_dist))
-
-    plt.plot(gaussdata, util.gaussian(gaussdata, gaussheight, gaussmean, gausswidth), c='k', ls="--", label="Reduced wdith gauss. dist.")
-
-    print("The found, reduced width of the ADU distribution is ", gausswidth, " ADUs")
-    print("It should be equal to ",  individual_gauss_width/np.sqrt(300))
-    print("This corresponds to a readout noise of ", gausswidth * 0.28 * np.sqrt(8 * np.log(2)))
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    plt.legend(bbox_to_anchor=(1, 1), loc="upper left")
-    pp.pubplot("$\mathbf{Bias\;\;distribution:}$ " + atik_camera.name, "Bias value", "Arb. units.", figure_directory + "gauss_bias.png", legend=False, xlim=[260, 350])
-
-
-def master_frame_plot(image: np.ndarray, figurename: str, title: str, label: str, filename: str, raisetitle: bool = False):
-    """
-        A method that will produce a plot of a given master frame (bias, dark or flat).
-
-        :param np.ndarray image:
-            - np.ndarray representing the image
-        :param str figurename:
-            - str representing the figurename
-        :param str title:
-            - str representing the title of the figure for printing
-        :parameter str label:
-            - The camera name used as a label in the plot
-        :param str filename:
-            - str representing the name of the file to be printed to
-        :param bool raisetitle:
-            - bool that toggles raising of the title in the figure
-    """
-
-    pp.plot_image(image, title, "x", "y", "Camera: " + label, filename, figurename, raisetitle=raisetitle)
-
-
-def noise_plot():
-    """
-        A method that will produce a plot of the stability data
-        from the ccd.dark_current_versus_temperature() and ccd.readout_noise_versus_temperature() methods
-    """
-
-    plt.plot(dark_current_data[:, 0], dark_current_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Dark current")
-    plt.ylim(-0.1, 3)
-    pp.pubplot("$\mathbf{Dark\;current\;}$ " + atik_camera.name, "Temperature [$^\circ$C]", "$\mathbf{e}^-$/s/pixel", figure_directory + "darkcurrent_versus_temperature.png", legend=True)
-
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    plt.plot(readout_noise_data[:, 0], readout_noise_data[:, 1], ls='--', c='k', lw=1, marker='o', markersize=3, label="Readout noise")
-    plt.ylim(3, 14)
-    pp.pubplot("$\mathbf{Readout\;noise\;}$" + atik_camera.name, "Temperature [$^\circ$C]", "Readout Noise [RMS $\mathbf{e}^-$/pixel]", figure_directory + "readoutnoise_versus_temperature.png", legend=True)
-
-
-def linearity_plot():
-    """
-        A method that will produce a plot of the stability data
-        from the ccd.linearity_estimation() and ccd.linearity_deviations() methods
-    """
-
-    # Plot the linearity data as a function of exposure times, and plot the ideal linear relation
-    plt.errorbar(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.concatenate((linearity_data[0:3, 1], linearity_data[6:, 1])), yerr=np.concatenate((linearity_data[0:3, 2], linearity_data[6:, 2])), ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    plt.plot(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.zeros(len(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])))), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%", figure_directory + "linearity.png", legendlocation="lower right")
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    plt.errorbar(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.concatenate((linearity_data[0:3, 1], linearity_data[6:, 1])), yerr=np.concatenate((linearity_data[0:3, 2], linearity_data[6:, 2])), ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    plt.plot(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])), np.zeros(len(np.concatenate((linearity_data[0:3, 3], linearity_data[6:, 3])))), ls='-', c='dodgerblue', lw=1, label="Ideal linear relation")
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%", figure_directory + "linearity_zoom.png", legendlocation="lower right", xlim=[0, 60e3], ylim=[-7.5, 3])
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-def lightsource_stability_plot():
-    """
-        A method that will produce a plot of the stability data
-        from the ccd.lightsource_stability() method
-    """
-
-    params = {'legend.fontsize': 7, 'legend.handlelength': 2}
-    plt.rcParams.update(params)
-
-    new = 0
-    for exposure in range(0, 29):
-        if exposure <= 10:
-            plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls='-', lw=1, label="No. " + str(exposure))
-        if 20 > exposure > 10:
-            plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls='--', lw=1, label="No. " + str(exposure))
-        if exposure >= 20:
-            plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls='-.', lw=1, label="No. " + str(exposure))
-
-    plt.legend(bbox_to_anchor=(1, 1), loc="upper left")
-    pp.pubplot("$\mathbf{Lightsource\;\;stabillity}$", "Repeat no.", "\%- dev. from seq. mean", figure_directory + "lightsource.png", legend=False)
-
-
-def ron_dist_plot():
-    plt.figure()
-    i = 0
-    temperatures = [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-    for dist in ron_dists_vs_temp:
-        n, bins, patches = plt.hist(dist, bins=500, width=0.8, label= str(temperatures[i]) + "s")
-        i += 1
-
-    plt.legend(bbox_to_anchor=(1, 1), loc="upper left")
-    pp.pubplot("$\mathbf{Readout\;\;noise\;\;distributions}$ ", "Bias value", "Arb. units.", figure_directory + "ron_dists.png", legend=False, xlim=[300, 475])
-
-def time_calibration_plot():
-    time_cal_linearity_array    = time_calibration[0]
-    time_cal_linear_model_data  = time_calibration[1]
-    time_cal_corrected_data     = time_calibration[2]
-    time_cal_new_linear_model   = time_calibration[3]
-    time_cal_deviations         = time_calibration[4]
-    time_cal_errors             = time_calibration[5]
-    time_cal_new_deviations     = time_calibration[6]
-
-    plt.plot(time_cal_linearity_array[:, 0], time_cal_linear_model_data, ls='-', c='dodgerblue', lw=1, label="Ideal relationship")
-    plt.errorbar(time_cal_linearity_array[:, 0], time_cal_linearity_array[:, 1], yerr=time_cal_linearity_array[:, 2], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)  # + "$-10.0^\circ $ C")
-    plt.plot(time_cal_corrected_data, time_cal_linearity_array[:, 1], ls='--', c='r', lw=1, marker='o', markersize=3, label="Corrected data")
-    plt.plot(time_cal_corrected_data, time_cal_new_linear_model, ls='-', c='red', lw=1, label="New ideal relationship")
-
-    pp.pubplot("$\mathbf{Time calibration}$ ", "Exposure time [s]", "Mean ADU/pixel", "time_calibration.png", legendlocation="lower right")  # xlim=[0, 2], ylim=[0,   1])
-    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
-
-    # Plot the relative linearity deviations and the ideal relation
-    plt.errorbar(time_cal_linearity_array[:, 1], time_cal_deviations, yerr=time_cal_errors[:], ls='--', c='k', lw=1, marker='o', markersize=3, label=atik_camera.name, capsize=2)
-    plt.plot(time_cal_linearity_array[:, 1], np.zeros(len(time_cal_linearity_array[:, 1])), ls='-', c='dodgerblue', lw=1, label="Ideal relation")
-    plt.plot(time_cal_linearity_array[:, 1], time_cal_new_deviations,  ls='--', c='r', lw=1, marker='o', markersize=3, label=atik_camera.name)
-
-    pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ", figure_directory + "time_calibration_deviations.png", legendlocation="upper left")
-
-
-def shutter_test_plot():
-    filepath = util.get_path(shutter_test[:-1])
-    hdul, header, imagedata = util.fits_handler(filepath)
-    pp.plot_image(imagedata, "Shuttertest", "x", "y", "Camera: " + atik_camera.name, "shutter_test.png", "shutter_test", scale=650)
-
-
-def hot_pixels_plot():
-    hot_pixel_data = atik_camera.hot_pixel_data
-    plt.plot(hot_pixel_data[0], hot_pixel_data[1], '.', c="k", markersize = 2.5, label='Data')
-    plt.plot([0, 1e3], [0, 1e3], c="dodgerblue", label='Ideal relationship')
-    pp.pubplot("Hot pixels", "$e^-$/sec [90s]", "$e^-$/sec [1000s]", "hot_pixels_test.png", xlim=[0.5, 100.0], ylim=[0.5, 20], legendlocation="lower right")
-
-    mask = atik_camera.hot_pixel_mask
-    padding = 10
-    for i in range(padding, len(mask[:,0])):
-        for j in range(padding, len(mask[0,:])):
-            if mask[i, j] == 1:
-                for k in range(i - padding, i):
-                    for l in range(j - padding, j):
-                        mask[k, l] = 1
-
-    pp.plot_image(mask, "Hot pixel mask", "x", "y", "Camera: " + atik_camera.name, "hot_pixel_mask.png", "hot_pixel_mask")
-
-
-def produce_plots():
-    """
-        A method that will produce all the relevant plots, from the data constructed
-        from the characterization procedure.
-    """
-
-    # gauss_dist_plot()
-    shutter_test_plot()
-    hot_pixels_plot()
-
-    master_frame_plot(atik_camera.master_bias, "master_bias_fig", "$\mathbf{Master\;\;bias\;\;frame}$ "            , atik_camera.name, figure_directory + "master_bias.png"                    )
-    master_frame_plot(atik_camera.master_dark, "master_dark_fig", "$\mathbf{Master\;\;dark\;\;current\;\;frame}$ " , atik_camera.name, figure_directory + "master_dark.png",    raisetitle=True)
-    master_frame_plot(atik_camera.master_flat, "master_flat_fig", "$\mathbf{Master\;\;flat\;\;field\;\;frame}$ "   , atik_camera.name, figure_directory + "master_flat.png"                    )
-
-    noise_plot()
-    # time_calibration_plot()
-    linearity_plot()
-
-    # lightsource_stability_plot()
-    # ron_dist_plot()
+import plots
+import mission_requirements as mreq
 
 
 if __name__ == '__main__':
@@ -225,37 +21,29 @@ if __name__ == '__main__':
     # For example  if "construct_master_bias" is set to "True", then the characterization
     # method will construct a new master bias frame from the data fed to the procedure.
     # If these are set to "False" data from previous runs are used instead.
-    construct_master_bias       =   False
-    construct_master_dark       =   False
-    construct_master_flat       =   False
-    do_noise_estimation         =   False
-    do_time_calibration         =   True
-    do_linearity_estimation     =   False
+    construct_master_bias_atik       =   False
+    construct_master_dark_atik       =   False
+    construct_master_flat_atik       =   False
+    do_noise_estimation_atik         =   False
+    do_gain_factor_estimation_atik   =   True
+    do_old_time_calibration_atik     =   False
+    do_linearity_estimation_atik     =   False
+    produce_plots_atik               =   False
+
+    construct_master_bias_AVT        =   False
+    construct_master_dark_AVT        =   False
+    construct_master_flat_AVT        =   False
+    do_noise_estimation_AVT          =   False
+    do_gain_factor_estimation_AVT    =   False
+    do_old_time_calibration_AVT      =   False
+    do_linearity_estimation_AVT      =   False
+    produce_plots_AVT                =   False
 
     # These are the paths at which to save the constructed master frames and data sets
     # from the analysis procedures. If these methods are not used in characterization,
     # these paths are used as paths at which to collect the data
     analysis_data_path          =   "/home/marc/Dropbox/STEP_Speciale_Marc/data_from_characterization/"
     master_frame_path           =   "/home/marc/Documents/Master_frames/"
-
-    # Initialize the camera in question
-    atik_camera = ccd.CCD( name                  =   "Atik 414EX mono"  ,
-                           gain_factor           =   0.28               ,
-                           analysis_data_path    =   analysis_data_path ,
-                           master_frame_path     =   master_frame_path   )
-
-    atik_camera.load_ccd_characterization_data( construct_master_bias       =   construct_master_bias                   ,
-                                                construct_master_dark       =   construct_master_dark                   ,
-                                                construct_master_flat       =   construct_master_flat                   ,
-                                                do_noise_estimation         =   do_noise_estimation                     ,
-                                                do_time_calibration         =   do_time_calibration                     ,
-                                                do_linearity_estimation     =   do_linearity_estimation                 ,
-                                                path_of_master_bias_frame   =   "master_bias.txt"                       ,
-                                                path_of_master_dark_frame   =   "master_dark.txt"                       ,
-                                                path_of_master_flat_frame   =   "master_flat.txt"                       ,
-                                                path_of_linearity_data      =   "linearity.txt"                         ,
-                                                path_of_dark_current_data   =   "dark_current_versus_temperature.txt"   ,
-                                                path_of_readout_noise_data  =   "readout_noise_versus_temperature.txt"   )
 
     # Define the path of the data and where to put the figures
     file_directory      =   "/home/marc/Documents/FITS_files/"
@@ -264,75 +52,237 @@ if __name__ == '__main__':
     print("Directory of data:    ", file_directory        )
     print("Directory of figures: ", figure_directory, "\n")
 
+    # Initialize the camera in question
+    atik_camera = ccd.CCD( name                         =   "Atik 414EX mono"  ,
+                           gain_factor                  =   0.28               ,
+                           analysis_data_path           =   analysis_data_path ,
+                           master_frame_path            =   master_frame_path  ,
+                           datastorage_filename_append  =   "_atikcam"         ,
+                           figure_directory_path        =   figure_directory    )
+
+    atik_camera.load_ccd_characterization_data(construct_master_bias       =   construct_master_bias_atik,
+                                               construct_master_dark       =   construct_master_dark_atik,
+                                               construct_master_flat       =   construct_master_flat_atik,
+                                               do_noise_estimation         =   do_noise_estimation_atik,
+                                               do_time_calibration         =   do_old_time_calibration_atik,
+                                               do_linearity_estimation     =   do_linearity_estimation_atik,
+                                               do_gain_factor_estimation   =   do_gain_factor_estimation_atik,
+                                               path_of_master_bias_frame   =   "master_bias" + atik_camera.datastorage_filename_append + ".txt",
+                                               path_of_master_dark_frame   =   "master_dark" + atik_camera.datastorage_filename_append + ".txt",
+                                               path_of_master_flat_frame   =   "master_flat" + atik_camera.datastorage_filename_append + ".txt",
+                                               path_of_linearity_data      =   "linearity" + atik_camera.datastorage_filename_append + ".txt",
+                                               path_of_dark_current_data   =   "dark_current_versus_temperature" + atik_camera.datastorage_filename_append + ".txt",
+                                               path_of_readout_noise_data  =   "readout_noise_versus_temperature" + atik_camera.datastorage_filename_append + ".txt")
 
     # Get the paths of the individual data sequences
-    shutter_test                =    util.complete_path(file_directory + "shuttertest.fit"                                       , here=False)
-    bias_sequence               =    util.complete_path(file_directory + "BIAS atik414ex 29-9-21 m10deg"                         , here=False)
-    flat_sequence               =    util.complete_path(file_directory + "FLATS atik414ex 29-9-21 m10deg"                        , here=False)
-    dark_current_sequence       =    util.complete_path(file_directory + "temp seq noise atik414ex 27-9-21"                      , here=False)
-    dark_current_sequence       =    util.complete_path(file_directory + "preliminary dark current"                              , here=False)
-    readout_noise_sequence      =    util.complete_path(file_directory + "ron seq atik414ex 27-9-21"                             , here=False)
+    shutter_test                     =    util.complete_path(file_directory + "laser_000(2).fit"                                      , here=False)
+    bias_sequence_AVT                =    util.complete_path(file_directory + "AVT_camera/Bias"                                       , here=False)
+    bias_sequence_atik               =    util.complete_path(file_directory + "BIAS atik414ex 29-9-21 m10deg"                         , here=False)
+    flat_sequence_AVT                =    util.complete_path(file_directory + "AVT_camera/Flats"                                      , here=False)
+    flat_sequence_atik               =    util.complete_path(file_directory + "FLATS atik414ex 29-9-21 m10deg"                        , here=False)
+    dark_current_sequence_atik       =    util.complete_path(file_directory + "temp seq noise atik414ex 27-9-21"                      , here=False)
+    # dark_current_sequence       =    util.complete_path(file_directory + "preliminary dark current"                              , here=False)
+    readout_noise_sequence_atik      =    util.complete_path(file_directory + "ron seq atik414ex 27-9-21"                             , here=False)
     # linearity_sequence          =    util.complete_path(file_directory + "total linearity with reference"                        , here=False)
-    linearity_sequence_20C      =    util.complete_path(file_directory + "Linearity at 20 degrees celcius atik414ex 29-9-21"     , here=False)
-    linearity_sequence          =    util.complete_path(file_directory + "linearity dimmed"     , here=False)
-    time_calibration_sequence   =    util.complete_path(file_directory + "time calibration 15-11-21"                             , here=False)
-    new_timecal_sequence        =    util.complete_path(file_directory + "new time calibration"                                  , here=False)
-    hot_pixel_sequence          =    util.complete_path(file_directory + "hotpix atik414ex 27-9-21"                              , here=False)
-    zeropoint_sequence          =    util.complete_path(file_directory + "zeropoint value"                                       , here=False)
-
+    # linearity_sequence_20C      =    util.complete_path(file_directory + "Linearity at 20 degrees celcius atik414ex 29-9-21"     , here=False)
+    linearity_sequence_AVT           =    util.complete_path(file_directory + "AVT_camera/linearity"                                  , here=False)
+    linearity_sequence_atik          =    util.complete_path(file_directory + "linearity dimmed"                                      , here=False)
+    time_calibration_sequence_atik   =    util.complete_path(file_directory + "time calibration 15-11-21"                             , here=False)
+    new_timecal_sequence_AVT         =    util.complete_path(file_directory + "AVT_camera/timecal"                                    , here=False)
+    new_timecal_sequence_atik        =    util.complete_path(file_directory + "new time calibration"                                  , here=False)
+    hot_pixel_sequence_AVT           =    util.complete_path(file_directory + "AVT_camera/hotpix"                                     , here=False)
+    hot_pixel_sequence_atik          =    util.complete_path(file_directory + "hotpix atik414ex 27-9-21"                              , here=False)
+    zeropoint_sequence_atik          =    util.complete_path(file_directory + "zeropoint value"                                       , here=False)
+    gaintemp_sequence_atik           =    util.complete_path(file_directory + "gain vs temp"                                          , here=False)
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+    # exposures = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])
+    exposures_atik = np.array([2, 5, 7, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240])
 
     # Construct data sequence class instances for use with the CCD class
-    bias_dataseq                =    ccd.DataSequence(   path_of_data_series_input   =   bias_sequence             ,
-                                                         exposure_time_input         =   0.001                     )
-    flat_dataseq                =    ccd.DataSequence(   path_of_data_series_input   =   flat_sequence             ,
-                                                         exposure_time_input         =   10                        )
-    readout_noise_dataseq       =    ccd.DataSequence(   path_of_data_series_input   =   readout_noise_sequence    ,
-                                                         num_of_data_points_input    =   16                        ,
-                                                         num_of_repeats_input        =   100                       )
-    dark_current_dataseq        =    ccd.DataSequence(   path_of_data_series_input   =   dark_current_sequence     ,
-                                                         num_of_data_points_input    =   16                        ,
-                                                         num_of_repeats_input        =   100                       ,
-                                                         exposure_time_input         =   10                        )
-    linearity_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   linearity_sequence        ,
-                                                         num_of_data_points_input    =   24                        ,
-                                                         num_of_repeats_input        =   10                        ,
-                                                         exposure_time_input         =   10                        )
-    time_calibration_dataseq    =    ccd.DataSequence(   path_of_data_series_input   =   time_calibration_sequence ,
-                                                         num_of_data_points_input    =   20                        ,
-                                                         num_of_repeats_input        =   10                        )
-    new_timecal_dataseq         =    ccd.DataSequence(   path_of_data_series_input   =   new_timecal_sequence      ,
-                                                         num_of_repeats_input        =   10                        )
-    hot_pixel_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   hot_pixel_sequence        ,
-                                                         num_of_repeats_input        =   2                         ,
-                                                         exposure_time_input         =   [90, 1000]                )
-    zeropoint_dataseq           =    ccd.DataSequence(   path_of_data_series_input   =   zeropoint_sequence        ,
-                                                         num_of_data_points_input    =   8                         ,
-                                                         num_of_repeats_input        =   100                       )
+    bias_dataseq_atik               =    ccd.DataSequence(  path_of_data_series_input   =   bias_sequence_atik             ,
+                                                            exposure_time_input         =   0.001                           )
+    flat_dataseq_atik               =    ccd.DataSequence(  path_of_data_series_input   =   flat_sequence_atik             ,
+                                                            exposure_time_input         =   10                              )
+    readout_noise_dataseq_atik      =    ccd.DataSequence(  path_of_data_series_input   =   readout_noise_sequence_atik    ,
+                                                            num_of_data_points_input    =   16                             ,
+                                                            num_of_repeats_input        =   100                             )
+    dark_current_dataseq_atik       =    ccd.DataSequence(  path_of_data_series_input   =   dark_current_sequence_atik     ,
+                                                            num_of_data_points_input    =   16                             ,
+                                                            num_of_repeats_input        =   100                            ,
+                                                            exposure_time_input         =   10                              )
+    linearity_dataseq_atik          =    ccd.DataSequence(  path_of_data_series_input   =   linearity_sequence_atik        ,
+                                                            num_of_data_points_input    =   27                             ,
+                                                            num_of_repeats_input        =   10                             ,
+                                                            exposure_time_input         =   10                             ,
+                                                            exposure_list_input         =   exposures_atik                 ,
+                                                            milliseconds_input          =   False                           )
+    old_time_calibration_dataseq_atik =  ccd.DataSequence(  path_of_data_series_input   =   time_calibration_sequence_atik,
+                                                            num_of_data_points_input    =   20,
+                                                            num_of_repeats_input        =   10)
+    new_timecal_dataseq_atik        =    ccd.DataSequence(  path_of_data_series_input   =   new_timecal_sequence_atik      ,
+                                                            num_of_repeats_input        =   10                             ,
+                                                            exposure_list_input         =   np.array([1, 2])                )
+    hot_pixel_dataseq_atik          =    ccd.DataSequence(  path_of_data_series_input   =   hot_pixel_sequence_atik        ,
+                                                            num_of_repeats_input        =   2                              ,
+                                                            exposure_time_input         =   [90, 1000]                     ,
+                                                            cutoff_input                =   7.5                             )
+    zeropoint_dataseq_atik          =    ccd.DataSequence(  path_of_data_series_input   =   zeropoint_sequence_atik        ,
+                                                            num_of_data_points_input    =   8                              ,
+                                                            num_of_repeats_input        =   100                             )
+    gaintemp_dataseq_atik           =    ccd.DataSequence(  path_of_data_series_input   =   gaintemp_sequence_atik        ,
+                                                            num_of_data_points_input    =   16                              ,
+                                                            num_of_repeats_input        =   20                              )
 
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
-    characterization = atik_camera.characterize(    bias_data_sequence               =   bias_dataseq             ,
-                                                    flat_data_sequence               =   flat_dataseq             ,
-                                                    dark_current_data_sequence       =   dark_current_dataseq     ,
-                                                    readout_noise_data_sequence      =   readout_noise_dataseq    ,
-                                                    linearity_data_sequence          =   linearity_dataseq        ,
-                                                    hot_pixel_data_sequence          =   hot_pixel_dataseq        ,
-                                                    zero_point_data_sequence         =   zeropoint_dataseq        ,
-                                                    # time_calibration_data_sequence   =   time_calibration_dataseq
-                                                    time_calibration_data_sequence   =   new_timecal_dataseq      )
+    characterization_atik = atik_camera.characterize(bias_data_sequence               =   bias_dataseq_atik,
+                                                     flat_data_sequence               =   flat_dataseq_atik,
+                                                     dark_current_data_sequence       =   dark_current_dataseq_atik,
+                                                     readout_noise_data_sequence      =   readout_noise_dataseq_atik,
+                                                     linearity_data_sequence          =   linearity_dataseq_atik,
+                                                     hot_pixel_data_sequence          =   hot_pixel_dataseq_atik,
+                                                     zero_point_data_sequence         =   zeropoint_dataseq_atik,
+                                                     old_timecal_data_sequence        =   old_time_calibration_dataseq_atik,
+                                                     time_calibration_data_sequence   =   new_timecal_dataseq_atik,
+                                                     gain_data_sequence               =   gaintemp_dataseq_atik             )
 
-    dark_current_data       =   characterization[0]
-    readout_noise_data      =   characterization[1]
-    time_calibration        =   characterization[2]
-    linearity_data          =   characterization[3]
+    dark_current_data_atik       =   characterization_atik[0]
+    readout_noise_data_atik      =   characterization_atik[1]
+    time_calibration_atik        =   characterization_atik[2]
+    linearity_data_atik          =   characterization_atik[3]
+    gain_data_atik               =   characterization_atik[4]
     """
-    ideal_linear_relation   =   characterization[3]
-    linearity_deviations    =   characterization[4]
-    linearity_dev_err       =   characterization[5]
-    stabillity_data         =   characterization[6]
-    ron_dists_vs_temp       =   characterization[7]
+    ideal_linear_relation_atik   =   characterization_atik[3]
+    linearity_deviations_atik    =   characterization_atik[4]
+    linearity_dev_err_atik       =   characterization_atik[5]
+    stabillity_data_atik         =   characterization_atik[6]
+    ron_dists_vs_temp_atik       =   characterization_atik[7]
     """
     # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
 
-    produce_plots()
+    if produce_plots_atik:
+        plots.produce_plots(atik_camera, figure_directory, analysis_data_path, linearity_data_atik, dark_current_data_atik, readout_noise_data_atik, gain_data_atik, time_calibration_atik, hot_pixels=True, shutter_test=shutter_test, lightsource_stabillity=True, bias_sequence=bias_sequence_atik)
+
+
+    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+    AVT_camera  = ccd.CCD( name                         =   "AVT GC660M"       ,
+                           gain_factor                  =   5.3                ,
+                           analysis_data_path           =   analysis_data_path ,
+                           master_frame_path            =   master_frame_path  ,
+                           datastorage_filename_append  =   "_AVT"             ,
+                           figure_directory_path        =   figure_directory    )
+
+    AVT_camera.load_ccd_characterization_data(  construct_master_bias      =   construct_master_bias_AVT,
+                                                construct_master_dark      =   construct_master_dark_AVT,
+                                                construct_master_flat      =   construct_master_flat_AVT,
+                                                do_noise_estimation        =   do_noise_estimation_AVT,
+                                                do_time_calibration        =   do_old_time_calibration_AVT,
+                                                do_linearity_estimation    =   do_linearity_estimation_AVT,
+                                                do_gain_factor_estimation  =   do_gain_factor_estimation_AVT,
+                                                path_of_master_bias_frame  =   "master_bias" + AVT_camera.datastorage_filename_append + ".txt",
+                                                path_of_master_dark_frame  =   "master_dark" + AVT_camera.datastorage_filename_append + ".txt",
+                                                path_of_master_flat_frame  =   "master_flat" + AVT_camera.datastorage_filename_append + ".txt",
+                                                path_of_linearity_data     =   "linearity" + AVT_camera.datastorage_filename_append + ".txt")
+
+    # Define the exposure series used for the AVT camera
+    exposures_AVT = []
+    for number in range(0, 4):
+        for decimal in range(0, 10):
+            if number == 0 and decimal == 0:
+                continue
+            exposures_AVT.append(float(str(number) + "." + str(decimal)))
+    exposures_AVT = np.asarray(exposures_AVT)
+
+    # Construct data sequence class instances for use with the CCD class
+    bias_dataseq_AVT            = ccd.DataSequence( path_of_data_series_input   =   bias_sequence_AVT           ,
+                                                    exposure_time_input         =   0.001                        )
+    flat_dataseq_AVT            = ccd.DataSequence( path_of_data_series_input   =   flat_sequence_AVT           ,
+                                                    exposure_time_input         =   1                            )
+    readout_noise_dataseq_AVT   = ccd.DataSequence( path_of_data_series_input   =   readout_noise_sequence_atik ,
+                                                    num_of_data_points_input    =   16                          ,
+                                                    num_of_repeats_input        =   100                          )
+    dark_current_dataseq_AVT    = ccd.DataSequence( path_of_data_series_input   =   dark_current_sequence_atik  ,
+                                                    num_of_data_points_input    =   16                          ,
+                                                    num_of_repeats_input        =   100                         ,
+                                                    exposure_time_input         =   10                           )
+    linearity_dataseq_AVT       = ccd.DataSequence( path_of_data_series_input   =   linearity_sequence_AVT      ,
+                                                    num_of_data_points_input    =   39                          ,
+                                                    num_of_repeats_input        =   10                          ,
+                                                    exposure_time_input         =   1                           ,
+                                                    exposure_list_input         =   exposures_AVT               ,
+                                                    milliseconds_input          =   True                         )
+    new_timecal_dataseq_AVT     = ccd.DataSequence( path_of_data_series_input   =   new_timecal_sequence_AVT    ,
+                                                    num_of_repeats_input        =   10                          ,
+                                                    exposure_list_input         =   np.array([0.1, 0.2])         )
+    hot_pixel_dataseq_AVT       = ccd.DataSequence( path_of_data_series_input   =   hot_pixel_sequence_AVT      ,
+                                                    num_of_repeats_input        =   2                           ,
+                                                    exposure_time_input         =   [5, 50]                     ,
+                                                    cutoff_input                =   49.5                         )
+    zeropoint_dataseq_AVT       = ccd.DataSequence( path_of_data_series_input   =   zeropoint_sequence_atik     ,
+                                                    num_of_data_points_input    =   8                           ,
+                                                    num_of_repeats_input        =   100                          )
+
+    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+    characterization_AVT = AVT_camera.characterize( bias_data_sequence              =   bias_dataseq_AVT            ,
+                                                    flat_data_sequence              =   flat_dataseq_AVT            ,
+                                                    dark_current_data_sequence      =   dark_current_dataseq_AVT    ,
+                                                    readout_noise_data_sequence     =   readout_noise_dataseq_AVT   ,
+                                                    linearity_data_sequence         =   linearity_dataseq_AVT       ,
+                                                    hot_pixel_data_sequence         =   hot_pixel_dataseq_AVT       ,
+                                                    zero_point_data_sequence        =   zeropoint_dataseq_AVT       ,
+                                                    time_calibration_data_sequence  =   new_timecal_dataseq_AVT     ,
+                                                    gain_data_sequence=gaintemp_dataseq_atik)
+
+    dark_current_data_AVT   =   characterization_AVT[0]
+    readout_noise_data_AVT  =   characterization_AVT[1]
+    time_calibration_AVT    =   characterization_AVT[2]
+    linearity_data_AVT      =   characterization_AVT[3]
+    """
+    ideal_linear_relation_AVT   =   characterization_AVT[3]
+    linearity_deviations_AVT    =   characterization_AVT[4]
+    linearity_dev_err_AVT       =   characterization_AVT[5]
+    stabillity_data_AVT         =   characterization_AVT[6]
+    ron_dists_vs_temp_AVT       =   characterization_AVT[7]
+    """
+    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+    if produce_plots_AVT:
+        plots.produce_plots(AVT_camera, figure_directory, analysis_data_path, linearity_data_AVT, hot_pixels=True)
+
+    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+    print("\n\n---\nMission requirements:\n---")
+    requirement_input = 0.01  # Allowable flux deviaion in percent
+
+    print(" The input mission requirement is an allowable flux change of ", requirement_input, "%")
+    print("  (", requirement_input / 100, " absolute flux change )")
+
+    difftest_ATIK = util.complete_path(file_directory + "difftest tidsvar lang ATIK", here=False)
+    mreq.pointing_requirements(atik_camera, path_of_data_series=difftest_ATIK,
+                               requirement_input = requirement_input,
+                               aperture_positions=[(643., 676.), (434., 503.)], aperture_radius=65.,
+                               annulus_radii=[75., 150.], num_of_images=500, exposure_time=40, cutoffs=[60, 499])
+    print("Linearity errors for detector :", atik_camera.name, "\n ", atik_camera.linearity[:, 2])
+
+    difftest_AVT = util.complete_path(file_directory + "AVT_camera/difftest_tid_2", here=False)
+    mreq.pointing_requirements(AVT_camera, path_of_data_series=difftest_AVT,
+                               requirement_input = requirement_input,
+                               aperture_positions=[(359., 229.), (204., 104.)], aperture_radius=65., annulus_radii=[70., 100.], num_of_images=4000 - 1751, cutoffs=[1750, 3999], exposure_time=5)
+    print("Linearity errors for detector :", AVT_camera.name, "\n ", AVT_camera.linearity[:, 2])
+    # ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+
+    # exit()
+    import pubplot as pp
+    filepath = util.get_path(difftest_ATIK + "differentialtest_033.fit")
+    hdul, header, imagedata = util.fits_handler(filepath)
+    pp.plot_image(imagedata, "test", "x", "y", "test ", "test.png", "test", raisetitle=False)
+    pp.plot_image(imagedata, "Pointing test Atik 414EX", "x", "y", "Atik 414EX", "pointingtest_atik.png", "test",
+                  raisetitle=False)
+
+    filepath = util.get_path(difftest_AVT + "difftest_time_0013.fit")
+    hdul, header, imagedata = util.fits_handler(filepath)
+    pp.plot_image(imagedata, "test", "x", "y", "test ", "test.png", "test", raisetitle=False)
+    pp.plot_image(imagedata, "Pointing test AVT GC660M", "x", "y", "AVT GC660M", "pointingtest_avt.png", "test",
+                  raisetitle=False)

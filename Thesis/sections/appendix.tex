@@ -1,0 +1,3010 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+\begin{document}
+	\newpage
+	\appendix
+	\chapter{ATIK 414EX Mono: Readout noise and Dark Current as a function of temperature - data tabulated}
+	Here the data used to plot figures \ref{fig:darkcurrent} and \ref{fig:readoutnoise} is presented in a tabulated form with errors.
+	\begin{table}[]
+		\centering
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\rowcolor[HTML]{C0C0C0} 
+			{\color[HTML]{000000} \textbf{Temperature {[}$^\circ$C{]}}} & {\color[HTML]{000000} \textbf{Readout noise {[}RMS $e^-/ $pixel{]}}} & {\color[HTML]{000000} \textbf{Dark current {[}$e^- / $ s / pixel{]}}} \\ \hline
+			$-10$ & $3.227 \pm 0.096$ & $0.026 \pm 0.032$ \\ \hline
+			$-8$ & $3.233 \pm 0.148$ & $0.038 \pm 0.073$ \\ \hline
+			$-6$ & $3.267 \pm 0.189$ & $0.055\pm 0.178$ \\ \hline
+			$-4$ & $3.304\pm 0.308$ & $0.078\pm0.312$ \\ \hline
+			$-2$ & $3.342\pm0.578$ & $0.107\pm0.891$ \\ \hline
+			$0$ & $3.420\pm0.308$ & $0.140\pm0.812$ \\ \hline
+			$2$ & $3.568\pm1.310$ & $0.186\pm1.195$ \\ \hline
+			$4$ & $3.711\pm1.769$ & $0.241\pm1.634$ \\ \hline
+			$6$ & $3.929\pm2.313$ & $0.318\pm2.159$ \\ \hline
+			$8$ & $4.262\pm2.629$ & $0.425\pm2.588$ \\ \hline
+			$10$ & $4.785\pm2.974$ & $0.572\pm2.872$ \\ \hline
+			$12$ & $5.491\pm3.273$ & $0.744\pm3.358$ \\ \hline
+			$14$ & $6.539\pm3.832$ & $0.989\pm3.478$ \\ \hline
+			$16$ & $7.851\pm3.854$ & $1.281\pm3.690$ \\ \hline
+			$18$ & $9.583\pm3.049$ & $1.652\pm3.219$ \\ \hline
+			$20$ & $12.270\pm3.758$ & $2.184\pm3.359 $ \\ \hline
+		\end{tabular}
+	\label{table:rondc}
+	\caption{The results for the analysis of readout noise and dark current levels as a function of temperature, as seen plotted in figures \ref{fig:darkcurrent} and \ref{fig:readoutnoise}}
+	\end{table}
+
+\clearpage
+\chapter{Source code}
+
+The source code consists of five .py files. \textbf{main.py} is the interface of the code base. Here variables are set, data is loaded and the analysis is run. All of the data analysis for the characterization procedure is found in the class definition contained in \textbf{ccd.py}. The data analysis pertaining to the attitude testing procedure is contained in \textbf{mission\_requirements.py}. Plots are generated in the \textbf{plots.py} file. Dependencies, function definitions and utilities are all contained in the files \textbf{utilities.py} and \textbf{pubplot.py}.\\ 
+
+The source code is accessed through github: \url{https://github.com/Achnos/Marc_Speciale_STEP}\\
+The files are contained here for completion, and acts as a future-proof reference.
+
+\clearpage
+\textbf{main.py}
+\begin{mintedbox}{python}
+"""
+###############################################
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# -----       By Marc Breiner Sørensen        ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# ----- Implemented:           August    2021 ----- #
+# ----- Last edit:       6th   January   2021 ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+###############################################
+"""
+
+import utilities as util
+import numpy as np
+import ccd
+import plots
+import mission_requirements as mreq
+
+if __name__  =  =  '__main__':
+# These bools can be changed in order to change the characterization procedure
+# For example  if "construct_master_bias" is set to "True", then the characterization
+# method will construct a new master bias frame from the data fed to the procedure.
+# If these are set to "False" data from previous runs are used instead.
+construct_master_bias_atik  =  False
+construct_master_dark_atik  =  False
+construct_master_flat_atik  =  False
+do_noise_estimation_atik  =  False
+do_gain_factor_estimation_atik  =  True
+do_old_time_calibration_atik  =  False
+do_linearity_estimation_atik  =  False
+produce_plots_atik  =  False
+
+construct_master_bias_AVT  =  False
+construct_master_dark_AVT  =  False
+construct_master_flat_AVT  =  False
+do_noise_estimation_AVT  =  False
+do_gain_factor_estimation_AVT  =  False
+do_old_time_calibration_AVT  =  False
+do_linearity_estimation_AVT  =  False
+produce_plots_AVT  =  False
+
+# These are the paths at which to save the constructed master frames and data sets
+# from the analysis procedures. If these methods are not used in characterization,
+# these paths are used as paths at which to collect the data
+analysis_data_path  =  "/home/marc/Dropbox/STEP_Speciale_Marc/data_from_characterization/"
+master_frame_path  =  "/home/marc/Documents/Master_frames/"
+
+# Define the path of the data and where to put the figures
+file_directory  =  "/home/marc/Documents/FITS_files/"
+figure_directory  =  "/home/marc/Dropbox/STEP_Speciale_Marc/figures/"
+
+print("Directory of data:    ", file_directory)
+print("Directory of figures: ", figure_directory, "\n")
+
+# Initialize the camera in question
+atik_camera  =  ccd.CCD(name  =  "Atik 414EX mono",
+gain_factor  =  0.28,
+analysis_data_path  =  analysis_data_path,
+master_frame_path  =  master_frame_path,
+datastorage_filename_append  =  "_atikcam",
+figure_directory_path  =  figure_directory)
+
+atik_camera.load_ccd_characterization_data(construct_master_bias  =  construct_master_bias_atik,
+construct_master_dark  =  construct_master_dark_atik,
+construct_master_flat  =  construct_master_flat_atik,
+do_noise_estimation  =  do_noise_estimation_atik,
+do_time_calibration  =  do_old_time_calibration_atik,
+do_linearity_estimation  =  do_linearity_estimation_atik,
+do_gain_factor_estimation  =  do_gain_factor_estimation_atik,
+path_of_master_bias_frame  =  "master_bias" + atik_camera.datastorage_filename_append + ".txt",
+path_of_master_dark_frame  =  "master_dark" + atik_camera.datastorage_filename_append + ".txt",
+path_of_master_flat_frame  =  "master_flat" + atik_camera.datastorage_filename_append + ".txt",
+path_of_linearity_data  =  "linearity" + atik_camera.datastorage_filename_append + ".txt",
+path_of_dark_current_data  =  "dark_current_versus_temperature" + atik_camera.datastorage_filename_append + ".txt",
+path_of_readout_noise_data  =  "readout_noise_versus_temperature" + atik_camera.datastorage_filename_append + ".txt")
+
+# Get the paths of the individual data sequences
+shutter_test  =  util.complete_path(file_directory + "laser_000(2).fit", here  =  False)
+bias_sequence_AVT  =  util.complete_path(file_directory + "AVT_camera/Bias", here  =  False)
+bias_sequence_atik  =  util.complete_path(file_directory + "BIAS atik414ex 29-9-21 m10deg", here  =  False)
+flat_sequence_AVT  =  util.complete_path(file_directory + "AVT_camera/Flats", here  =  False)
+flat_sequence_atik  =  util.complete_path(file_directory + "FLATS atik414ex 29-9-21 m10deg", here  =  False)
+dark_current_sequence_atik  =  util.complete_path(file_directory + "temp seq noise atik414ex 27-9-21", here  =  False)
+# dark_current_sequence        =     util.complete_path(file_directory + "preliminary dark current"                              , here = False)
+readout_noise_sequence_atik  =  util.complete_path(file_directory + "ron seq atik414ex 27-9-21", here  =  False)
+# linearity_sequence           =     util.complete_path(file_directory + "total linearity with reference"                        , here = False)
+# linearity_sequence_20C       =     util.complete_path(file_directory + "Linearity at 20 degrees celcius atik414ex 29-9-21"     , here = False)
+linearity_sequence_AVT  =  util.complete_path(file_directory + "AVT_camera/linearity", here  =  False)
+linearity_sequence_atik  =  util.complete_path(file_directory + "linearity dimmed", here  =  False)
+time_calibration_sequence_atik  =  util.complete_path(file_directory + "time calibration 15-11-21", here  =  False)
+new_timecal_sequence_AVT  =  util.complete_path(file_directory + "AVT_camera/timecal", here  =  False)
+new_timecal_sequence_atik  =  util.complete_path(file_directory + "new time calibration", here  =  False)
+hot_pixel_sequence_AVT  =  util.complete_path(file_directory + "AVT_camera/hotpix", here  =  False)
+hot_pixel_sequence_atik  =  util.complete_path(file_directory + "hotpix atik414ex 27-9-21", here  =  False)
+zeropoint_sequence_atik  =  util.complete_path(file_directory + "zeropoint value", here  =  False)
+gaintemp_sequence_atik  =  util.complete_path(file_directory + "gain vs temp", here  =  False)
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+# exposures  =  np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110])
+exposures_atik  =  np.array(
+[2, 5, 7, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220,
+230, 240])
+
+# Construct data sequence class instances for use with the CCD class
+bias_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  bias_sequence_atik,
+exposure_time_input  =  0.001)
+flat_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  flat_sequence_atik,
+exposure_time_input  =  10)
+readout_noise_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  readout_noise_sequence_atik,
+num_of_data_points_input  =  16,
+num_of_repeats_input  =  100)
+dark_current_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  dark_current_sequence_atik,
+num_of_data_points_input  =  16,
+num_of_repeats_input  =  100,
+exposure_time_input  =  10)
+linearity_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  linearity_sequence_atik,
+num_of_data_points_input  =  27,
+num_of_repeats_input  =  10,
+exposure_time_input  =  10,
+exposure_list_input  =  exposures_atik,
+milliseconds_input  =  False)
+old_time_calibration_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  time_calibration_sequence_atik,
+num_of_data_points_input  =  20,
+num_of_repeats_input  =  10)
+new_timecal_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  new_timecal_sequence_atik,
+num_of_repeats_input  =  10,
+exposure_list_input  =  np.array([1, 2]))
+hot_pixel_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  hot_pixel_sequence_atik,
+num_of_repeats_input  =  2,
+exposure_time_input  =  [90, 1000],
+cutoff_input  =  7.5)
+zeropoint_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  zeropoint_sequence_atik,
+num_of_data_points_input  =  8,
+num_of_repeats_input  =  100)
+gaintemp_dataseq_atik  =  ccd.DataSequence(path_of_data_series_input  =  gaintemp_sequence_atik,
+num_of_data_points_input  =  16,
+num_of_repeats_input  =  20)
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+characterization_atik  =  atik_camera.characterize(bias_data_sequence  =  bias_dataseq_atik,
+flat_data_sequence  =  flat_dataseq_atik,
+dark_current_data_sequence  =  dark_current_dataseq_atik,
+readout_noise_data_sequence  =  readout_noise_dataseq_atik,
+linearity_data_sequence  =  linearity_dataseq_atik,
+hot_pixel_data_sequence  =  hot_pixel_dataseq_atik,
+zero_point_data_sequence  =  zeropoint_dataseq_atik,
+old_timecal_data_sequence  =  old_time_calibration_dataseq_atik,
+time_calibration_data_sequence  =  new_timecal_dataseq_atik,
+gain_data_sequence  =  gaintemp_dataseq_atik)
+
+dark_current_data_atik  =  characterization_atik[0]
+readout_noise_data_atik  =  characterization_atik[1]
+time_calibration_atik  =  characterization_atik[2]
+linearity_data_atik  =  characterization_atik[3]
+gain_data_atik  =  characterization_atik[4]
+"""
+ideal_linear_relation_atik    =    characterization_atik[3]
+linearity_deviations_atik     =    characterization_atik[4]
+linearity_dev_err_atik        =    characterization_atik[5]
+stabillity_data_atik          =    characterization_atik[6]
+ron_dists_vs_temp_atik        =    characterization_atik[7]
+"""
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+if produce_plots_atik:
+plots.produce_plots(atik_camera, figure_directory, analysis_data_path, linearity_data_atik,
+dark_current_data_atik, readout_noise_data_atik, gain_data_atik, time_calibration_atik,
+hot_pixels  =  True, shutter_test  =  shutter_test, lightsource_stabillity  =  True,
+bias_sequence  =  bias_sequence_atik)
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+AVT_camera  =  ccd.CCD(name  =  "AVT GC660M",
+gain_factor  =  5.3,
+analysis_data_path  =  analysis_data_path,
+master_frame_path  =  master_frame_path,
+datastorage_filename_append  =  "_AVT",
+figure_directory_path  =  figure_directory)
+
+AVT_camera.load_ccd_characterization_data(construct_master_bias  =  construct_master_bias_AVT,
+construct_master_dark  =  construct_master_dark_AVT,
+construct_master_flat  =  construct_master_flat_AVT,
+do_noise_estimation  =  do_noise_estimation_AVT,
+do_time_calibration  =  do_old_time_calibration_AVT,
+do_linearity_estimation  =  do_linearity_estimation_AVT,
+do_gain_factor_estimation  =  do_gain_factor_estimation_AVT,
+path_of_master_bias_frame  =  "master_bias" + AVT_camera.datastorage_filename_append + ".txt",
+path_of_master_dark_frame  =  "master_dark" + AVT_camera.datastorage_filename_append + ".txt",
+path_of_master_flat_frame  =  "master_flat" + AVT_camera.datastorage_filename_append + ".txt",
+path_of_linearity_data  =  "linearity" + AVT_camera.datastorage_filename_append + ".txt")
+
+# Define the exposure series used for the AVT camera
+exposures_AVT  =  []
+for number in range(0, 4):
+for decimal in range(0, 10):
+if number  =  =  0 and decimal  =  =  0:
+continue
+exposures_AVT.append(float(str(number) + "." + str(decimal)))
+exposures_AVT  =  np.asarray(exposures_AVT)
+
+# Construct data sequence class instances for use with the CCD class
+bias_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  bias_sequence_AVT,
+exposure_time_input  =  0.001)
+flat_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  flat_sequence_AVT,
+exposure_time_input  =  1)
+readout_noise_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  readout_noise_sequence_atik,
+num_of_data_points_input  =  16,
+num_of_repeats_input  =  100)
+dark_current_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  dark_current_sequence_atik,
+num_of_data_points_input  =  16,
+num_of_repeats_input  =  100,
+exposure_time_input  =  10)
+linearity_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  linearity_sequence_AVT,
+num_of_data_points_input  =  39,
+num_of_repeats_input  =  10,
+exposure_time_input  =  1,
+exposure_list_input  =  exposures_AVT,
+milliseconds_input  =  True)
+new_timecal_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  new_timecal_sequence_AVT,
+num_of_repeats_input  =  10,
+exposure_list_input  =  np.array([0.1, 0.2]))
+hot_pixel_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  hot_pixel_sequence_AVT,
+num_of_repeats_input  =  2,
+exposure_time_input  =  [5, 50],
+cutoff_input  =  49.5)
+zeropoint_dataseq_AVT  =  ccd.DataSequence(path_of_data_series_input  =  zeropoint_sequence_atik,
+num_of_data_points_input  =  8,
+num_of_repeats_input  =  100)
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+characterization_AVT  =  AVT_camera.characterize(bias_data_sequence  =  bias_dataseq_AVT,
+flat_data_sequence  =  flat_dataseq_AVT,
+dark_current_data_sequence  =  dark_current_dataseq_AVT,
+readout_noise_data_sequence  =  readout_noise_dataseq_AVT,
+linearity_data_sequence  =  linearity_dataseq_AVT,
+hot_pixel_data_sequence  =  hot_pixel_dataseq_AVT,
+zero_point_data_sequence  =  zeropoint_dataseq_AVT,
+time_calibration_data_sequence  =  new_timecal_dataseq_AVT,
+gain_data_sequence  =  gaintemp_dataseq_atik)
+
+dark_current_data_AVT  =  characterization_AVT[0]
+readout_noise_data_AVT  =  characterization_AVT[1]
+time_calibration_AVT  =  characterization_AVT[2]
+linearity_data_AVT  =  characterization_AVT[3]
+"""
+ideal_linear_relation_AVT    =    characterization_AVT[3]
+linearity_deviations_AVT     =    characterization_AVT[4]
+linearity_dev_err_AVT        =    characterization_AVT[5]
+stabillity_data_AVT          =    characterization_AVT[6]
+ron_dists_vs_temp_AVT        =    characterization_AVT[7]
+"""
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+if produce_plots_AVT:
+plots.produce_plots(AVT_camera, figure_directory, analysis_data_path, linearity_data_AVT, hot_pixels  =  True)
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+print("\n\n---\nMission requirements:\n---")
+requirement_input  =  0.01  # Allowable flux deviaion in percent
+
+print(" The input mission requirement is an allowable flux change of ", requirement_input, "%")
+print("  (", requirement_input / 100, " absolute flux change )")
+
+difftest_ATIK  =  util.complete_path(file_directory + "difftest tidsvar lang ATIK", here  =  False)
+mreq.pointing_requirements(atik_camera, path_of_data_series  =  difftest_ATIK,
+requirement_input  =  requirement_input,
+aperture_positions  =  [(643., 676.), (434., 503.)], aperture_radius  =  65.,
+annulus_radii  =  [75., 150.], num_of_images  =  500, exposure_time  =  40,
+cutoffs  =  [60, 499])
+print("Linearity errors for detector :", atik_camera.name, "\n ", atik_camera.linearity[:, 2])
+
+difftest_AVT  =  util.complete_path(file_directory + "AVT_camera/difftest_tid_2", here  =  False)
+mreq.pointing_requirements(AVT_camera, path_of_data_series  =  difftest_AVT,
+requirement_input  =  requirement_input,
+aperture_positions  =  [(359., 229.), (204., 104.)], aperture_radius  =  65.,
+annulus_radii  =  [70., 100.], num_of_images  =  4000 - 1751, cutoffs  =  [1750, 3999],
+exposure_time  =  5)
+print("Linearity errors for detector :", AVT_camera.name, "\n ", AVT_camera.linearity[:, 2])
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+# exit()
+import pubplot as pp
+
+filepath  =  util.get_path(difftest_ATIK + "differentialtest_033.fit")
+hdul, header, imagedata  =  util.fits_handler(filepath)
+pp.plot_image(imagedata, "test", "x", "y", "test ", "test.png", "test", raisetitle  =  False)
+pp.plot_image(imagedata, "Pointing test Atik 414EX", "x", "y", "Atik 414EX", "pointingtest_atik.png", "test",
+raisetitle  =  False)
+
+filepath  =  util.get_path(difftest_AVT + "difftest_time_0013.fit")
+hdul, header, imagedata  =  util.fits_handler(filepath)
+pp.plot_image(imagedata, "test", "x", "y", "test ", "test.png", "test", raisetitle  =  False)
+pp.plot_image(imagedata, "Pointing test AVT GC660M", "x", "y", "AVT GC660M", "pointingtest_avt.png", "test",
+raisetitle  =  False)
+
+\end{mintedbox}
+\clearpage
+\textbf{ccd.py}
+\begin{mintedbox}{python}
+"""
+###############################################
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# -----       By Marc Breiner Sørensen        ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# ----- Implemented:           August    2021 ----- #
+# ----- Last edit:       8th   April     2021 ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+###############################################
+"""
+import math
+import numpy as np
+import utilities as util
+import matplotlib.pyplot as plt
+import pubplot as pp
+
+plt.style.use(['science', 'ieee', 'vibrant'])
+
+
+class DataSequence:
+"""
+A general class to store informations about a data sequence.
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_datapoints:
+- Integer representing the number of different datapoints
+in the data sequence
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of each datapoint
+in the data series
+:parameter exposure_time:
+- The exposure time in seconds of the data_series
+"""
+path_of_data_series: str
+num_of_data_points: int
+num_of_repeats: int
+exposure_time: float or list
+cutoff: float
+exposure_list: np.ndarray
+milliseconds: bool  =  False
+
+def __init__(self, path_of_data_series_input: str,
+num_of_data_points_input: int  =  None,
+num_of_repeats_input: int  =  None,
+exposure_time_input: float or list  =  None,
+cutoff_input: float  =  None,
+exposure_list_input: np.ndarray  =  None,
+milliseconds_input: bool  =  False):
+"""
+Constructor member function
+:parameter str path_of_data_series_input:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_datapoints_input:
+- Integer representing the number of different datapoints
+in the data sequence
+:parameter int num_of_repeats_input:
+- Integer representing the total number of repeats of each datapoint
+in the data series
+:parameter exposure_time_input:
+- The exposure time in seconds of the data_series
+"""
+self.path_of_data_series  =  path_of_data_series_input
+
+if num_of_data_points_input is not None:
+self.num_of_data_points  =  num_of_data_points_input
+if num_of_repeats_input is not None:
+self.num_of_repeats  =  num_of_repeats_input
+if exposure_time_input is not None:
+self.exposure_time  =  exposure_time_input
+if cutoff_input is not None:
+self.cutoff  =  cutoff_input
+if exposure_list_input is not None:
+self.exposure_list  =  exposure_list_input
+if milliseconds_input:
+self.milliseconds  =  milliseconds_input
+
+
+class CCD:
+"""
+A general CCD class, that will contain a number of useful functions to do
+data analysis of image data from a Charge Coupled Device (CCD). Will be
+used to characterize CCD's.
+
+:parameter str name:
+- String representing the name of the CCD instance
+:parameter float gain_factor:
+- The gain factor of the CCD, either from specs or found experimentally
+default value is 1.
+:parameter np.ndarray master_bias:
+- Numpy array representing the master bias image
+for use in corrections
+:parameter np.ndarray master_dark:
+- Numpy array representing the master dark current image
+for use in corrections
+:parameter np.ndarray master_flat:
+- Numpy array representing the master flat field image
+for use in corrections
+:parameter np.ndarray hot_pixel_mask:
+- A mask array of indices of hot pixels in the camera
+:parameter np.ndarray linearity:
+- Numpy array of data from the CCD linearity test
+:parameter np.ndarray dark_current_versus_temperature:
+- Numpy array of data from the CCD dark current temperature test
+:parameter np.ndarray readout_noise_versus_temperature:
+- Numpy array of data from the CCD readout noise levels temperature test
+"""
+name: str  =  []
+
+gain_factor: float  =  1
+time_calibration_factor: float  =  0  # 1/15
+
+master_bias: np.ndarray  =  []
+master_dark: np.ndarray  =  []
+master_flat: np.ndarray  =  []
+
+hot_pixel_mask: np.ndarray  =  []
+hot_pixel_data: np.ndarray  =  []
+
+linearity: np.ndarray  =  []
+
+dark_current_versus_temperature: np.ndarray  =  []
+readout_noise_versus_temperature: np.ndarray  =  []
+gain_vs_temp: np.ndarray  =  []
+
+readout_noise_level: float  =  []
+
+analysis_data_storage_directory_path: str  =  []
+master_frames_storage_directory_path: str  =  []
+datastorage_filename_append: str  =  []
+figure_directory_path: str  =  []
+
+construct_master_bias: bool  =  True
+construct_master_dark: bool  =  True
+construct_master_flat: bool  =  True
+do_noise_estimation: bool  =  True
+do_time_calibration: bool  =  True
+do_linearity_estimation: bool  =  True
+do_gain_factor_estimation: bool  =  True
+
+def __init__(self, name: str, gain_factor: float, analysis_data_path: str, master_frame_path: str,
+datastorage_filename_append: str, figure_directory_path: str):
+"""
+Constructor member function
+:parameter str name:
+- String representing the name of the CCD instance
+:parameter float gain_factor:
+- Float representing the gain factor of the CCD instance
+"""
+print("\nInitiallizing CCD with ")
+print(" Name:", name)
+print(" Gain:", gain_factor)
+
+self.name  =  name
+self.gain_factor  =  gain_factor
+
+self.analysis_data_storage_directory_path  =  analysis_data_path
+self.master_frames_storage_directory_path  =  master_frame_path
+self.datastorage_filename_append  =  datastorage_filename_append
+self.figure_directory_path  =  figure_directory_path
+
+print("")
+
+def load_ccd_characterization_data(self,
+construct_master_bias: bool  =  True,
+construct_master_dark: bool  =  True,
+construct_master_flat: bool  =  True,
+do_noise_estimation: bool  =  True,
+do_time_calibration: bool  =  True,
+do_linearity_estimation: bool  =  True,
+do_gain_factor_estimation: bool  =  True,
+path_of_master_bias_frame: str  =  None,
+path_of_master_dark_frame: str  =  None,
+path_of_master_flat_frame: str  =  None,
+path_of_linearity_data: str  =  None,
+path_of_dark_current_data: str  =  None,
+path_of_readout_noise_data: str  =  None):
+
+self.construct_master_bias  =  construct_master_bias
+self.construct_master_dark  =  construct_master_dark
+self.construct_master_flat  =  construct_master_flat
+self.do_noise_estimation  =  do_noise_estimation
+self.do_time_calibration  =  do_time_calibration
+self.do_linearity_estimation  =  do_linearity_estimation
+self.do_gain_factor_estimation  =  do_gain_factor_estimation
+
+if (construct_master_bias is False) and (path_of_master_bias_frame is not None):
+fullpath_master_bias  =  self.master_frames_storage_directory_path + path_of_master_bias_frame
+print(" Reading master bias frame from:\n ", fullpath_master_bias)
+self.master_bias  =  np.loadtxt(fullpath_master_bias)
+if (construct_master_dark is False) and (path_of_master_dark_frame is not None):
+fullpath_master_dark  =  self.master_frames_storage_directory_path + path_of_master_dark_frame
+print(" Reading master dark frame from:\n ", fullpath_master_dark)
+self.master_dark  =  np.loadtxt(fullpath_master_dark)
+if (construct_master_flat is False) and (path_of_master_flat_frame is not None):
+fullpath_master_flat  =  self.master_frames_storage_directory_path + path_of_master_flat_frame
+print(" Reading master flat frame from:\n ", fullpath_master_flat)
+self.master_flat  =  np.loadtxt(fullpath_master_flat)
+if (do_linearity_estimation is False) and (path_of_linearity_data is not None):
+fullpath_linearity  =  self.analysis_data_storage_directory_path + path_of_linearity_data
+print(" Reading linearity data from:\n ", fullpath_linearity)
+self.linearity  =  np.loadtxt(fullpath_linearity)
+if (do_noise_estimation is False) and (path_of_readout_noise_data is not None) and (
+path_of_readout_noise_data is not None):
+fullpath_dark_current  =  self.analysis_data_storage_directory_path + path_of_dark_current_data
+fullpath_readout_noise  =  self.analysis_data_storage_directory_path + path_of_readout_noise_data
+print(" Reading dark current temperature data from:\n ", fullpath_dark_current)
+print(" Reading readout noise temperature data from:\n ", fullpath_readout_noise)
+self.dark_current_versus_temperature  =  np.loadtxt(
+self.analysis_data_storage_directory_path + path_of_dark_current_data)
+self.readout_noise_versus_temperature  =  np.loadtxt(
+self.analysis_data_storage_directory_path + path_of_readout_noise_data)
+
+def characterize(self,
+bias_data_sequence: DataSequence,
+flat_data_sequence: DataSequence,
+dark_current_data_sequence: DataSequence,
+readout_noise_data_sequence: DataSequence,
+linearity_data_sequence: DataSequence,
+hot_pixel_data_sequence: DataSequence,
+zero_point_data_sequence: DataSequence,
+time_calibration_data_sequence: DataSequence,
+gain_data_sequence: DataSequence,
+old_timecal_data_sequence: DataSequence  =  None):
+"""
+The main interface for the characterization procedure. Calling this
+method will fully characterize the ccd in question. The method will
+call all of the members below, to first construct master frames of
+the bias, flat field and dark current. A preliminary estimation of
+the readout noise levels is computed by readout_noise_estimation().
+A hot pixel mask is then constructed by hot_pixel_estimation().
+The noise of the CCD is then characterized by noise_versus_temperature()
+and the linearity data analyzed and characterized by the methods
+linearity_estimation() and linearity_precision(). Finally the light
+source stability and the CCD preliminary zero point estimation are
+both treated by, respectively, the lightsource_stability() and
+zeropoint_estimation() methods.
+
+:param DataSequence bias_data_sequence:
+- A datasequence instance representing the bias data series
+:param DataSequence flat_data_sequence:
+- A datasequence instance representing the flat field data series
+:param DataSequence dark_current_data_sequence:
+- A datasequence instance representing the dark current data series
+:param DataSequence readout_noise_data_sequence:
+- A datasequence instance representing the readout noise data series
+:param DataSequence linearity_data_sequence:
+- A datasequence instance representing the linearity data series
+:param DataSequence hot_pixel_data_sequence:
+- A datasequence instance representing the hot pixel data series
+:param DataSequence zero_point_data_sequence:
+- A datasequence instance representing the zero point estimation data series
+"""
+
+print("\nInitializing characterization of CCD: " + self.name + " ...")
+
+if self.construct_master_bias:
+self.master_bias_image(path_of_data_series = bias_data_sequence.path_of_data_series)
+if self.construct_master_dark:
+self.master_dark_current_image(path_of_data_series = bias_data_sequence.path_of_data_series,
+exposure_time = bias_data_sequence.exposure_time)
+if self.construct_master_flat:
+self.master_flat_field_image(path_of_data_series = flat_data_sequence.path_of_data_series)
+
+self.readout_noise_estimation(path_of_data_series = bias_data_sequence.path_of_data_series,
+temperature = -10)
+
+self.gain_factor_estimation(path_of_data_series = flat_data_sequence.path_of_data_series)
+self.hot_pixel_estimation(path_of_data_series = hot_pixel_data_sequence.path_of_data_series,
+num_of_repeats = hot_pixel_data_sequence.num_of_repeats,
+exposure_time = hot_pixel_data_sequence.exposure_time,
+hot_pixel_cutoff = hot_pixel_data_sequence.cutoff)
+self.test_zero_point(path_of_data_series = zero_point_data_sequence.path_of_data_series,
+num_of_data_points = zero_point_data_sequence.num_of_data_points,
+num_of_repeats = zero_point_data_sequence.num_of_repeats)
+
+if self.do_gain_factor_estimation:
+gain_data  =  self.gain_vs_temperature(path_of_data_series = gain_data_sequence.path_of_data_series,
+num_of_data_points = gain_data_sequence.num_of_data_points,
+num_of_repeats = gain_data_sequence.num_of_repeats
+)
+else:
+gain_data  =  []
+
+if self.do_noise_estimation:
+dark_current_data, readout_noise_data, ron_dists_vs_temp  =  self.noise_vs_temperature(
+dark_current_data_sequence, readout_noise_data_sequence)
+
+else:
+dark_current_data  =  self.dark_current_versus_temperature
+readout_noise_data  =  self.readout_noise_versus_temperature
+
+# ron_dists_vs_temp  =  []
+if self.do_time_calibration and old_timecal_data_sequence is not None:
+time_calibration  =  self.time_calibration(path_of_data_series = old_timecal_data_sequence.path_of_data_series,
+num_of_exposures = old_timecal_data_sequence.num_of_data_points,
+num_of_repeats = old_timecal_data_sequence.num_of_repeats)
+else:
+time_calibration  =  []
+
+self.new_time_calibration(path_of_data_series = time_calibration_data_sequence.path_of_data_series,
+num_of_repeats = time_calibration_data_sequence.num_of_repeats,
+exposures = time_calibration_data_sequence.exposure_list)
+
+if self.do_linearity_estimation:
+linearity_data  =  self.linearity_estimation_with_reference(
+path_of_data_series = linearity_data_sequence.path_of_data_series,
+num_of_exposures = linearity_data_sequence.num_of_data_points,
+num_of_repeats = linearity_data_sequence.num_of_repeats,
+reference_exposure = linearity_data_sequence.exposure_time,
+exposures = linearity_data_sequence.exposure_list,
+milliseconds = linearity_data_sequence.milliseconds)
+else:
+linearity_data  =  self.linearity
+
+# ideal_linear_relation, linearity_deviations, linearity_dev_err  =  self.linearity_precision()
+
+# stabillity_data  =  self.test_lightsource_stability(path_of_data_series   =    linearity_data_sequence.path_of_data_series,
+#                                                   num_of_data_points    =    linearity_data_sequence.num_of_data_points,
+#                                                   num_of_repeats        =    linearity_data_sequence.num_of_repeats)
+# stabillity_data  =  []
+return [dark_current_data, readout_noise_data, time_calibration, linearity_data, gain_data]
+# , ideal_linear_relation, linearity_deviations, linearity_dev_err, stabillity_data, ron_dists_vs_temp]
+
+def noise_vs_temperature(self, dark_current_vars: DataSequence, readout_noise_vars: DataSequence):
+"""
+Fully characterizes the noise of the CCD, both thermal (dark current) and
+readout noise (RON) as a function of temperature
+
+:param DataSequence dark_current_vars:
+- A datasequence instance representing the dark current data series
+:param DataSequence readout_noise_vars:
+- A datasequence instance representing the readout noise data series
+"""
+
+print(" Characterizing the noise levels of the CCD...")
+
+path_of_data_series_dark_current  =  dark_current_vars.path_of_data_series
+exposure_time_dark_current  =  dark_current_vars.exposure_time
+num_of_repeats_dark_current  =  dark_current_vars.num_of_repeats
+num_of_temperatures_dark_current  =  dark_current_vars.num_of_data_points
+
+dark_current_data  =  self.dark_current_vs_temperature(path_of_data_series = path_of_data_series_dark_current,
+exposure_time = exposure_time_dark_current,
+num_of_repeats = num_of_repeats_dark_current,
+num_of_temperatures = num_of_temperatures_dark_current)
+
+path_of_data_series_readout_noise  =  readout_noise_vars.path_of_data_series
+num_of_repeats_readout_noise  =  readout_noise_vars.num_of_repeats
+num_of_temperatures_readout_noise  =  readout_noise_vars.num_of_data_points
+
+readout_noise_data, ron_dists_vs_temp  =  self.readout_noise_vs_temperature(
+path_of_data_series = path_of_data_series_readout_noise,
+num_of_repeats = num_of_repeats_readout_noise,
+num_of_temperatures = num_of_temperatures_readout_noise)
+return dark_current_data, readout_noise_data, ron_dists_vs_temp
+
+def master_bias_image(self, path_of_data_series: str):
+"""
+Method that will set the class member np.ndarray master_bias
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the
+master bias image
+"""
+print(" Constructing the master bias correction image...")
+
+data_series  =  util.list_data(path_of_data_series)
+mean_image_return  =  util.mean_image(data_series, path_of_data_series)
+
+util.print_txt_file("master_bias" + self.datastorage_filename_append + ".txt", mean_image_return,
+which_directory = self.master_frames_storage_directory_path)
+self.master_bias  =  mean_image_return  # np.flip( , axis  =  1)  # np.flip( , axis  =  0)
+
+def bias_correction(self, image_to_be_corrected: np.ndarray):
+"""
+Method that will apply the bias correction to an image
+by subtracting the master bias image
+
+:parameter np.ndarray image_to_be_corrected:
+- A numpy array which is the image data to be corrected
+"""
+corrected_image  =  np.subtract(image_to_be_corrected,
+self.master_bias)  # np.flip(np.subtract(image_to_be_corrected, self.master_bias), axis = 0)
+return corrected_image
+
+def master_dark_current_image(self, path_of_data_series: str, exposure_time: float):
+"""
+Method that will set the class member np.ndarray master_dark
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the
+master dark current image
+:parameter exposure_time:
+- The exposure time in seconds of the data_series
+"""
+print(" Constructing the master dark current correction image...")
+
+data_series  =  util.list_data(path_of_data_series)
+dim_path  =  util.get_path(path_of_data_series + data_series[0])
+image_shape  =  util.get_dims(dim_path)  # Need the shape to prepare dummy array
+mean_image_array  =  np.zeros(image_shape)  # Prepare dummy array
+number_of_images  =  len(data_series)
+
+for imageid in data_series:
+filepath  =  util.get_path(path_of_data_series + imageid)
+hdul, header, imagedata  =  util.fits_handler(filepath)
+imagedata  =  self.bias_correction(imagedata)
+
+# Check for consistency
+# if header['EXPTIME']  =  =  exposure_time:
+imagedata  =  np.divide(imagedata, exposure_time)
+# else:
+#   print("  master_dark_current_image(): Error, exposure time does not match up")
+#  print("  master_dark_current_image(): Exposure time was: ", header['EXPTIME'])
+
+mean_image_array + =  imagedata
+hdul.close()
+
+mean_image_array / =  number_of_images
+
+util.print_txt_file("master_dark" + self.datastorage_filename_append + ".txt", mean_image_array,
+which_directory = self.master_frames_storage_directory_path)
+
+self.master_dark  =  mean_image_array
+
+def dark_current_correction(self, image_to_be_corrected: np.ndarray):
+"""
+Method that will apply the dark current correction to an image
+by subtracting the master dark current image
+
+:parameter np.ndarray image_to_be_corrected:
+- A numpy array which is the image data to be corrected
+"""
+corrected_image  =  np.subtract(image_to_be_corrected, self.master_dark)
+return corrected_image
+
+def dark_current_vs_temperature(self, path_of_data_series: str, exposure_time: float, num_of_repeats: int,
+num_of_temperatures: int, ):
+"""
+Method which will compute the dark current levels as a function
+of temperature, which it returns as a list, and fills the member
+dark_current_versus_temperature with as well. Implies a certain
+file naming convention of the type
+
+noise_rrr_dc_s_tt_d.fit
+
+- where nnn is an arbitrary descriptive string, s is
+a character representing the sign of the temperature
+either m or p, representing plus or minus (degrees),
+tt is the temperature in degrees, while d is the decimal.
+rrr represents the repeat number of the given data file.
+
+An example of this:
+
+noise_000_dc_m_04_9.fit
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter exposure_time:
+- The exposure time in seconds of the data_series
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:parameter int num_of_temperatures:
+- Integer representing the number of different temperatures
+in the data sequence
+:returns np.ndarray dark_current_versus_temperature_return:
+- A numpy array of data points of the form (temperature, value)
+"""
+print("  Computing dark current as a function of temperature...")
+
+tmplist  =  []
+data_series  =  util.list_data(path_of_data_series)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_datapoints_input = num_of_temperatures,
+num_of_repeats_input = num_of_repeats,
+where_is_repeat_num_in_string = [6, 9],
+data_series_list = data_series)
+tempid  =  0
+for repeat_sequence in reordered_data:
+repeat_sequence_meaned  =  self.bias_correction(util.mean_image(repeat_sequence, path_of_data_series))
+
+# Get temperatures from the filename
+filepath  =  util.get_path(path_of_data_series + repeat_sequence[0])
+hdul, header, imagedata  =  util.fits_handler(filepath)
+temperature  =  float(float(repeat_sequence[0][15:17] + '.' + repeat_sequence[0][18]))  # time in s
+if repeat_sequence[0][13]  =  =  "m":
+temperature * =  -1
+
+# Error bars
+errorbar  =  util.compute_errorbar(repeat_sequence, path_of_data_series)
+
+# Check for consistency
+if header['EXPTIME']  =  =  exposure_time:
+dark_per_time_per_pixel  =  np.mean(
+np.divide(np.multiply(repeat_sequence_meaned, self.gain_vs_temp[tempid, 1]), exposure_time))
+tmplist.append([temperature, dark_per_time_per_pixel, errorbar])
+else:
+print("   dark_current_vs_temperature(): Error, exposure times do not match up")
+print("   dark_current_vs_temperature(): Exposure time was: ", header['EXPTIME'])
+
+hdul.close()
+tempid + =  1
+
+# tmparray  =  np.sort(
+tmplist  =  np.asarray(tmplist)
+tmplist2D  =  tmplist.reshape(-1, tmplist.shape[-1])
+tmparray  =  (tmplist2D[np.lexsort(tmplist2D.T[::-1])]).reshape(tmplist.shape)
+#       , axis = 0)
+
+self.dark_current_versus_temperature  =  tmparray
+dark_current_versus_temperature_return  =  tmparray
+
+util.print_txt_file("dark_current_versus_temperature" + self.datastorage_filename_append + ".txt",
+dark_current_versus_temperature_return,
+which_directory = self.analysis_data_storage_directory_path)
+
+return dark_current_versus_temperature_return
+
+def master_flat_field_image(self, path_of_data_series: str):
+"""
+Method that will set the class member np.ndarray master_flat
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the
+master flat field image
+"""
+print(" Constructing the master flat field correction image...")
+
+data_series  =  util.list_data(path_of_data_series)
+dim_path  =  util.get_path(path_of_data_series + data_series[0])
+image_shape  =  util.get_dims(dim_path)
+number_of_images  =  len(data_series)
+meaned_flat  =  np.zeros(image_shape)
+
+for imageid in data_series:
+filepath  =  util.get_path(path_of_data_series + imageid)
+hdul, header, imagedata  =  util.fits_handler(filepath)
+imagedata  =  self.bias_correction(imagedata)
+
+corrected_image  =  self.dark_current_correction(imagedata)
+meaned_flat + =  corrected_image
+
+hdul.close()
+
+meaned_flat / =  number_of_images
+meaned_flat / =  np.mean(meaned_flat)  # Normalize
+
+util.print_txt_file("master_flat" + self.datastorage_filename_append + ".txt", meaned_flat,
+which_directory = self.master_frames_storage_directory_path)
+
+self.master_flat  =  meaned_flat
+
+def flat_field_correction(self, image_to_be_corrected: np.ndarray):
+"""
+Method that will apply the flat field correction to an image
+by subtracting the master flat field image
+
+:parameter np.ndarray image_to_be_corrected:
+- A numpy array which is the image data to be corrected
+"""
+corrected_image  =  np.divide(image_to_be_corrected, self.master_flat)
+return corrected_image
+
+def hot_pixel_estimation(self, path_of_data_series: str, num_of_repeats: int, exposure_time: list,
+hot_pixel_cutoff: float):
+"""
+Method to find hot pixels qualitatively, and then construct a mask used to remove them
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the
+master flat field image
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:parameter list exposure_time:
+- list of shape [exposure time of short exposure image, exposure time of long exposure image]
+"""
+print(" Looking for hot pixels...")
+
+data_series  =  util.list_data(path_of_data_series)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_datapoints_input = 2,
+num_of_repeats_input = num_of_repeats,
+where_is_repeat_num_in_string = [7, 8],
+data_series_list = data_series)
+# Construct the two images from the data files in the path
+short_exposure_image  =  util.mean_image(reordered_data[0].tolist(), path_of_data_series)
+long_exposure_image  =  util.mean_image(reordered_data[1].tolist(), path_of_data_series)
+
+# Apply bias correction
+short_exposure_image  =  self.bias_correction(short_exposure_image)
+long_exposure_image  =  self.bias_correction(long_exposure_image)
+
+# Convert ADU to dark current
+short_exposure_image  =  np.divide(np.multiply(short_exposure_image, self.gain_factor), exposure_time[0])
+long_exposure_image  =  np.divide(np.multiply(long_exposure_image, self.gain_factor), exposure_time[1])
+
+# Find potential hot pixels
+smallest_measurable_dark_current  =  2 * (
+(self.gain_factor * self.readout_noise_level / math.sqrt(num_of_repeats)) / exposure_time[0])
+potential_hot_pixels  =  long_exposure_image > smallest_measurable_dark_current
+
+# Plot to qualitatively decide upon cutoff
+self.hot_pixel_data  =  [short_exposure_image[potential_hot_pixels].flatten(),
+long_exposure_image[potential_hot_pixels].flatten()]
+
+hot_pixels  =  (short_exposure_image > hot_pixel_cutoff)
+print("  No. of hot pixels:", hot_pixels.sum())
+
+self.hot_pixel_mask  =  hot_pixels
+
+def hot_pixel_correction(self, image_to_be_corrected: np.ndarray):
+"""
+Method that will apply the hot pixel correction to an image.
+
+:parameter np.ndarray image_to_be_corrected:
+- A numpy array which is the image data to be corrected
+"""
+image_to_be_corrected[np.where(self.hot_pixel_mask)]  =  np.mean(
+image_to_be_corrected[np.where(np.logical_not(self.hot_pixel_mask))])
+return image_to_be_corrected
+
+def readout_noise_estimation(self, path_of_data_series: str, temperature: float):
+"""
+Method to compute the readout noise level at a given temperature
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the
+master flat field image
+:parameter float temperature:
+- Integer representing the temperature at which the data series
+was acquired
+"""
+print(" Computing readout noise level...")
+
+data_series  =  util.list_data(path_of_data_series)
+number_of_images  =  len(data_series)
+tmp_std  =  np.zeros(number_of_images)
+tmp_mean  =  np.zeros(number_of_images)
+
+it  =  0
+for imageid in data_series:
+filepath  =  util.get_path(path_of_data_series + imageid)
+hdul, header, imagedata  =  util.fits_handler(filepath)
+
+# Check for consistency
+# check_temperature  =  (temperature*1.1 < =  header['CCD-TEMP'] < =  temperature*0.9) or (temperature*1.1 > =  header['CCD-TEMP'] > =  temperature*0.9)
+# if check_temperature:
+# noise_deviation      =    np.subtract(np.mean(imagedata), imagedata) * self.gain_factor # self.master_bias
+noise_deviation  =  np.subtract(self.master_bias, imagedata)  # * self.gain_factor
+tmp_std[it]  =  np.std(noise_deviation)  # * self.gain_factor * np.sqrt(8 * np.log(2))
+tmp_mean[it]  =  np.mean(noise_deviation)
+# else:
+#    print(header['CCD-TEMP'])
+
+hdul.close()
+it + =  1
+
+readout_noise  =  np.sqrt(np.mean(np.square(tmp_std)))
+readout_noise_electrons  =  np.sqrt(np.mean(np.square(np.multiply(tmp_std, self.gain_factor))))
+num_of_rons  =  len(tmp_std)
+readout_noise_error  =  np.std(tmp_std)
+readout_noise_electrons_error  =  readout_noise_error * self.gain_factor
+ron_mean  =  np.mean(tmp_mean)
+
+plt.plot(np.linspace(0, num_of_rons, num_of_rons), tmp_std, 'k.', markersize = 3, label = "")
+plt.plot(np.linspace(0, num_of_rons, num_of_rons), np.ones(num_of_rons) * readout_noise, ls = '-', c = 'k', lw = 1,
+label = "Mean value")
+plt.plot(np.linspace(0, num_of_rons, num_of_rons),
+np.ones(num_of_rons) * ((readout_noise_error / np.sqrt(len(data_series))) + readout_noise), ls = '--',
+c = 'k', lw = 1, label = "$\sigma / \sqrt{N}$")
+plt.plot(np.linspace(0, num_of_rons, num_of_rons),
+np.ones(num_of_rons) * (-(readout_noise_error / np.sqrt(len(data_series))) + readout_noise), ls = '--',
+c = 'k', lw = 1)
+pp.pubplot("$\mathbf{Readout\;Noise}$" + self.name, "Measurement no.",
+"Readout Noise [RMS $\mathbf{e}^-$/pixel]",
+self.figure_directory_path + "readout_noise_measurement" + self.datastorage_filename_append + ".png",
+legend = True, legendlocation = "upper right")
+
+print(f"  The readout noise level is {readout_noise:.3f} ± ", readout_noise_error / np.sqrt(len(data_series)),
+" RMS ADU per pixel")
+print(f"  The readout noise level is {readout_noise_electrons:.3f} ± ",
+readout_noise_electrons_error / np.sqrt(len(data_series)), " RMS electrons per pixel")
+print(f"  The mean of the distribution is {ron_mean:.3f}, and should be equal to 0")
+
+self.readout_noise_level  =  readout_noise
+return np.mean(tmp_std)
+
+def readout_noise_vs_temperature(self, path_of_data_series, num_of_temperatures, num_of_repeats):
+"""
+Method which will compute the readout noise levels as a function
+of temperature, which it returns as a list, and fills the member
+readout_noise_versus_temperature with as well. Implies a certain
+file naming convention of the type
+
+noise_rrr_ron_s_tt_d.fit
+
+- where nnn is an arbitrary descriptive string, s is
+a character representing the sign of the temperature
+either m or p, representing plus or minus (degrees),
+tt is the temperature in degrees, while d is the decimal.
+rrr represents the repeat number of the given data file.
+
+An example of this:
+
+noise_000_ron_m_04_9.fit
+
+:parameter str path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:parameter int num_of_temperatures:
+- Integer representing the number of different temperatures
+in the data sequence
+:returns np.ndarray dark_current_versus_temperature_return:
+- A numpy array of data points of the form (temperature, value)
+"""
+
+print("  Computing readout noise as a function of temperature...")
+data_series  =  util.list_data(path_of_data_series)
+tmp_std  =  np.zeros(num_of_repeats)
+tmp_mean  =  np.zeros(num_of_repeats)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_temperatures, num_of_repeats,
+where_is_repeat_num_in_string = [6, 9],
+data_series_list = data_series)
+
+readout_noise  =  []
+ron_dists_vs_temp  =  []
+tempid  =  0
+for repeat_sequence in reordered_data:
+# Get temperatures from the filename
+temperature  =  float(repeat_sequence[0][16:18] + '.' + repeat_sequence[0][19])  # time in s
+if repeat_sequence[0][14]  =  =  "m":
+temperature * =  -1
+
+dist_at_this_temperature  =  util.mean_image(repeat_sequence, path_of_data_series)
+ron_dists_vs_temp.append(dist_at_this_temperature.flatten())
+
+it  =  0
+for imageid in repeat_sequence:
+"""
+For each image in each repeat sequence, find noise in electrons 
+by subtracting the mean of the image from the image itself, and 
+multiplying with the gain. This yields a noise image, that is a 
+gaussian distribution. The noise is found as the  width of said 
+distribution. In addition we check that the mean is equal to 0.
+"""
+filepath  =  util.get_path(path_of_data_series + imageid)
+hdul, header, imagedata  =  util.fits_handler(filepath)
+
+noise_deviation  =  np.subtract(np.mean(imagedata), imagedata) * self.gain_vs_temp[
+tempid, 1]  # self.master_bias
+tmp_std[it]  =  np.std(noise_deviation)  # / np.sqrt(2)
+tmp_mean[it]  =  np.mean(noise_deviation)
+
+hdul.close()
+it + =  1
+
+if it  =  =  num_of_repeats:
+it  =  0
+
+# Errorbars
+errorbar  =  util.compute_errorbar(repeat_sequence, path_of_data_series)
+
+readout_noise.append([temperature, np.sqrt(np.mean(np.square(tmp_std))), errorbar])
+tempid + =  1
+
+# tmparray  =  np.sort(
+
+tmplist  =  np.asarray(readout_noise)
+tmplist2D  =  tmplist.reshape(-1, tmplist.shape[-1])
+tmparray  =  (tmplist2D[np.lexsort(tmplist2D.T[::-1])]).reshape(tmplist.shape)
+# tmparray = np.asarray(readout_noise)
+# , axis = 0)
+
+self.readout_noise_versus_temperature  =  tmparray
+readout_noise_versus_temperature_return  =  tmparray
+
+util.print_txt_file("readout_noise_versus_temperature" + self.datastorage_filename_append + ".txt",
+readout_noise_versus_temperature_return,
+which_directory = self.analysis_data_storage_directory_path)
+util.print_txt_file("readout_noise_distribution_versus_temperature" + self.datastorage_filename_append + ".txt",
+ron_dists_vs_temp,
+which_directory = self.analysis_data_storage_directory_path)
+
+return readout_noise_versus_temperature_return, ron_dists_vs_temp
+
+def gain_factor_estimation(self, path_of_data_series: str):
+data_series  =  util.list_data(path_of_data_series)
+
+gain_factors  =  []
+for id in range(0, len(data_series), 2):
+filepath_first  =  util.get_path(path_of_data_series + data_series[id])
+filepath_second  =  util.get_path(path_of_data_series + data_series[id + 1])
+hdul, header, imagedata_first  =  util.fits_handler(filepath_first)
+hdul, header, imagedata_second  =  util.fits_handler(filepath_second)
+imagedata_first  =  self.bias_correction(imagedata_first)
+imagedata_second  =  self.bias_correction(imagedata_second)
+
+image_flux_ratios  =  np.divide(np.mean(imagedata_first), np.mean(imagedata_second))
+numerator  =  np.mean(np.add(imagedata_first, imagedata_second))
+denominator  =  np.std(
+np.subtract(imagedata_first, np.multiply(imagedata_second, image_flux_ratios))) ** 2 - 2 * (
+self.readout_noise_level ** 2)
+
+gain_factors.append(np.divide(numerator, denominator))
+
+gain_factor  =  np.mean(np.asarray(gain_factors))
+num_of_gain_factors  =  len(gain_factors)
+gain_factor_error  =  np.std(np.asarray(gain_factors))
+gain_factor_relative_error  =  gain_factor_error / np.sqrt(1 / 2 * len(data_series))
+
+plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors), gain_factors, 'k.', markersize = 3,
+label = "Measured value")
+plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors), np.ones(num_of_gain_factors) * gain_factor,
+ls = '-', c = 'k', lw = 1, label = "Mean value")
+plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors),
+np.ones(num_of_gain_factors) * (gain_factor_relative_error + gain_factor), ls = '--', c = 'k', lw = 1,
+label = "$\sigma / \sqrt{N}$")
+plt.plot(np.linspace(0, num_of_gain_factors, num_of_gain_factors),
+np.ones(num_of_gain_factors) * (- gain_factor_relative_error + gain_factor), ls = '--', c = 'k', lw = 1)
+pp.pubplot("$\mathbf{Gain\;factor}-10.0^\circ$C " + self.name, "Measurement no.", "Gain factor, $g$",
+self.figure_directory_path + "gain_factor_measurement" + self.datastorage_filename_append + ".png",
+legend = True, legendlocation = "upper right")
+
+print("  The estimated gain factor is ", gain_factor, " ± ", gain_factor_relative_error,
+" electrons/ADU, while the tabulated (input) value was ", self.gain_factor, " electrons/ADU")
+self.gain_factor  =  np.float(gain_factor)
+
+def gain_vs_temperature(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
+print("  Computing gain factor as a function of temperature...")
+data_series  =  util.list_data(path_of_data_series)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_data_points, num_of_repeats,
+where_is_repeat_num_in_string = [5, 8],
+data_series_list = data_series)
+
+gain_vs_temp  =  []
+for repeat_sequence in reordered_data:
+# Get temperatures from the filename
+temperature  =  float(repeat_sequence[0][11:13] + '.' + repeat_sequence[0][14])  # time in s
+if repeat_sequence[0][9]  =  =  "m":
+temperature * =  -1
+
+gain_factors  =  []
+for id in range(0, len(repeat_sequence), 2):
+filepath_first  =  util.get_path(path_of_data_series + repeat_sequence[id])
+filepath_second  =  util.get_path(path_of_data_series + repeat_sequence[id + 1])
+hdul, header, imagedata_first  =  util.fits_handler(filepath_first)
+hdul, header, imagedata_second  =  util.fits_handler(filepath_second)
+imagedata_first  =  self.bias_correction(imagedata_first)
+imagedata_second  =  self.bias_correction(imagedata_second)
+
+image_flux_ratios  =  np.divide(np.mean(imagedata_first), np.mean(imagedata_second))
+numerator  =  np.mean(np.add(imagedata_first, imagedata_second))
+denominator  =  np.std(
+np.subtract(imagedata_first, np.multiply(imagedata_second, image_flux_ratios))) ** 2 - 2 * (
+self.readout_noise_level ** 2)
+
+gain_factors.append(np.divide(numerator, denominator))
+
+gain_factor  =  np.mean(np.asarray(gain_factors))
+gain_factor_error  =  np.std(np.asarray(gain_factors))
+
+gain_vs_temp.append([temperature, gain_factor, gain_factor_error])
+
+# gain_vs_temp  =  np.sort(gain_vs_temp, axis = 0)
+
+tmplist  =  np.asarray(gain_vs_temp)
+tmplist2D  =  tmplist.reshape(-1, tmplist.shape[-1])
+gain_vs_temp  =  (tmplist2D[np.lexsort(tmplist2D.T[::-1])]).reshape(tmplist.shape)
+# gain_vs_temp  =  np.asarray(gain_vs_temp)
+self.gain_vs_temp  =  gain_vs_temp
+
+util.print_txt_file("gain_factor_versus_temperature" + self.datastorage_filename_append + ".txt",
+gain_vs_temp,
+which_directory = self.analysis_data_storage_directory_path)
+
+return gain_vs_temp
+
+def linearity_estimation(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int):
+"""
+Method which will test the linearity, by plotting mean ADU in an image
+as a function of exposure time, which it returns as a list,
+and fills the member linearity with as well. Implies a certain
+file naming convention of the type
+
+nnn_rrr_eee.fit
+
+- where nnn is an arbitrary descriptive string, rrr
+is the number of repeats, and eee is the exposure
+time in seconds
+
+An example of this:
+
+linearity_001_008.fit
+
+:parameter path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:parameter int num_of_exposures:
+- Integer representing the number of different exposure times
+in the data sequence
+:returns np.ndarray linearity_array:
+- A numpy array of data points of the form (exposure time, mean ADU)
+"""
+print(" Testing linearity...")
+
+tmplist  =  []
+
+data_series  =  util.list_data(path_of_data_series)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_datapoints_input = num_of_exposures,
+num_of_repeats_input = num_of_repeats,
+where_is_repeat_num_in_string = [10, 13],
+data_series_list = data_series)
+
+# stability_data      =    self.test_lightsource_stability(path_of_data_series, num_of_exposures, num_of_repeats)
+
+first_it  =  0
+second_it  =  0
+for repeat_sequence in reordered_data:
+# repeat_sequence_meaned       =    util.mean_image(repeat_sequence, path_of_data_series)
+dim_path  =  util.get_path(path_of_data_series + repeat_sequence[0])
+image_shape  =  util.get_dims(dim_path)
+number_of_images  =  len(repeat_sequence)
+mean_image_array  =  np.zeros(image_shape)
+
+for imageid in repeat_sequence:
+filepath  =  util.get_path(path_of_data_series + imageid)
+hdul, header, imagedata  =  util.fits_handler(filepath)
+imagedata_meaned  =  self.bias_correction(imagedata)
+imagedata_meaned_and_corrected  =  imagedata_meaned  # np.divide(imagedata_meaned, (stability_data[first_it, second_it] / 100 + 1))
+
+mean_image_array + =  imagedata_meaned_and_corrected
+
+hdul.close()
+second_it + =  1
+if second_it  =  =  num_of_repeats:
+second_it  =  0
+
+first_it + =  1
+
+mean_image_array / =  number_of_images
+
+# repeat_sequence_meaned       =    self.bias_correction(repeat_sequence_meaned)  # self.flat_field_correction(  ,   util.mean_image(repeat_sequence, path_of_data_series)
+
+# Get exposure time from filename within a given repeat sequence
+repeat_sequence_meaned  =  mean_image_array
+filepath  =  util.get_path(path_of_data_series + repeat_sequence[0])
+hdul, header, imagedata  =  util.fits_handler(filepath)
+exposure_time  =  float(repeat_sequence[0][-7:-4])  # time in s
+
+# Treat hot pixels
+repeat_sequence_meaned[np.where(self.hot_pixel_mask)]  =  np.mean(
+repeat_sequence_meaned[np.where(np.logical_not(self.hot_pixel_mask))])
+
+# Compute errorbars
+errorbar  =  util.compute_errorbar(repeat_sequence, path_of_data_series)
+
+# Check for consistency
+if header['EXPTIME']  =  =  exposure_time:
+tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
+else:
+print("  linearity_estimation(): Error, exposure times do not match up")
+print("  linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ",
+exposure_time)
+
+tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
+
+linearity_array  =  np.asarray(tmplist)
+
+# print("  Done! Data constructed from linearity measurements:")
+# print(linearity_array)
+
+self.linearity  =  linearity_array
+
+util.print_txt_file("linearity" + self.datastorage_filename_append + ".txt", linearity_array,
+which_directory = self.analysis_data_storage_directory_path)
+
+return linearity_array
+
+def linearity_estimation_with_reference(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int,
+reference_exposure: float, exposures: np.ndarray,
+milliseconds: bool  =  False):
+"""
+Method which will test the linearity, by plotting mean ADU in an image
+as a function of exposure time, which it returns as a list,
+and fills the member linearity with as well. Implies a certain
+file naming convention of the type
+
+nnn_rrr_eee.fit
+
+- where nnn is an arbitrary descriptive string, rrr
+is the number of repeats, and eee is the exposure
+time in seconds
+
+An example of this:
+
+linearity_001_008.fit
+
+:parameter path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:parameter int num_of_exposures:
+- Integer representing the number of different exposure times
+in the data sequence
+:parameter float reference_exposure:
+- The reference measurement exposure time
+:returns np.ndarray linearity_array:
+- A numpy array of data points of the form (exposure time, mean ADU)
+"""
+print(" Testing linearity...")
+
+tmplist  =  []
+
+data_series  =  util.list_data(path_of_data_series)
+where_is_repeat_num_in_string  =  [10, 13]
+
+reordered_data  =  np.empty((num_of_exposures, num_of_repeats, 3), dtype = object)
+from_id_in_str  =  where_is_repeat_num_in_string[0]
+to_id_in_str  =  where_is_repeat_num_in_string[1]
+
+index  =  0
+for imageid in data_series:
+if imageid[-7:-4]  =  =  "(2)":
+this_actual_exposure_time  =  10.0
+else:
+# this_actual_exposure_time  =  float(imageid[-9:-7] + "." + imageid[-7:-6])
+# print(this_actual_exposure_time)
+this_actual_exposure_time  =  float(imageid[-9:-6])  # -7:-4
+if milliseconds:
+this_actual_exposure_time / =  10
+exposure_index  =  (np.where(exposures  =  =  this_actual_exposure_time))[0][0]
+repeat_num  =  int(imageid[from_id_in_str:to_id_in_str])
+reference_index  =  int(imageid[-5])
+
+reordered_data[exposure_index][repeat_num][reference_index]  =  str(imageid)
+
+index + =  1
+if index  =  =  num_of_exposures:
+index  =  0
+
+for repeat_sequence_id in range(0, num_of_exposures):
+this_actual_exposure_time  =  exposures[repeat_sequence_id]
+tmp_mean  =  0
+mean_ADU  =  0
+distribution_of_image_means  =  []
+for repeat_id in range(0, num_of_repeats):
+filepath_first_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
+filepath_actual_image  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+filepath_next_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][2])
+
+hdul, header_actual, imagedata_actual_image  =  util.fits_handler(filepath_actual_image)
+hdul, header_first, imagedata_first_ref  =  util.fits_handler(filepath_first_ref)
+hdul, header_next, imagedata_next_ref  =  util.fits_handler(filepath_next_ref)
+
+imagedata_actual_bias_corrected_and_meaned  =  np.mean(
+(self.bias_correction(imagedata_actual_image)))  # [350:400, 350:400])
+imagedata_first_bias_corrected_and_meaned  =  np.mean(
+(self.bias_correction(imagedata_first_ref)))  # [350:400, 350:400])
+imagedata_next_bias_corrected_and_meaned  =  np.mean(
+(self.bias_correction(imagedata_next_ref)))  # [350:400, 350:400])
+
+mean_lightsource_change  =  (1 / 2) * (
+imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned)
+time_calibration  =  (reference_exposure + self.time_calibration_factor) / (
+this_actual_exposure_time + self.time_calibration_factor)
+
+imagedata_meaned_normed_and_corrected  =  np.divide(
+np.multiply(imagedata_actual_bias_corrected_and_meaned, time_calibration), mean_lightsource_change)
+imagedata_converted_to_deviation  =  np.subtract(imagedata_meaned_normed_and_corrected, 1) * 100
+
+tmp_mean + =  imagedata_converted_to_deviation
+mean_ADU + =  imagedata_actual_bias_corrected_and_meaned
+
+distribution_of_image_means.append(
+(np.mean(imagedata_meaned_normed_and_corrected) * 100) / float(np.sqrt(num_of_repeats)))
+
+tmp_mean / =  num_of_repeats
+mean_ADU / =  num_of_repeats
+
+# Compute errorbars
+errorbar  =  np.std(np.asarray(distribution_of_image_means))
+
+# Check for consistency
+# if header_actual['EXPTIME']  =  =  this_actual_exposure_time:
+tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
+# else:
+#    print("  linearity_estimation(): Error, exposure times do not match up")
+#    print("  linearity_estimation(): Exposure time was: ", header_actual['EXPTIME'], "should have been: ", this_actual_exposure_time)
+
+#    tmplist.append([this_actual_exposure_time, tmp_mean, errorbar, mean_ADU])
+
+linearity_array  =  np.asarray(tmplist)
+self.linearity  =  linearity_array
+
+query_points  =  self.linearity[:, 3]
+linearity_data  =  self.linearity[:, 1]
+fitted_linear_model  =  np.polyfit(query_points[6:19], linearity_data[6:19], deg = 1)
+fitted_slope  =  fitted_linear_model[0]
+fitted_offset  =  fitted_linear_model[1]
+fitted_linearity  =  np.add(np.multiply(query_points, fitted_slope), fitted_offset)
+util.print_txt_file("fitted_linearity" + self.datastorage_filename_append + ".txt", fitted_linearity,
+which_directory = self.analysis_data_storage_directory_path)
+
+util.print_txt_file("linearity" + self.datastorage_filename_append + ".txt", linearity_array,
+which_directory = self.analysis_data_storage_directory_path)
+
+return linearity_array
+
+def time_calibration(self, path_of_data_series: str, num_of_exposures: int, num_of_repeats: int):
+"""
+
+:parameter path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:parameter int num_of_exposures:
+- Integer representing the number of different exposure times
+in the data sequence
+:returns np.ndarray linearity_array:
+- A numpy array of data points of the form (exposure time, mean ADU)
+"""
+print(" Performing time calibration...")
+
+tmplist  =  []
+
+data_series  =  util.list_data(path_of_data_series)
+
+num_of_datapoints_input  =  num_of_exposures
+num_of_repeats_input  =  num_of_repeats
+data_series_list  =  data_series
+where_is_repeat_num_in_string  =  [8, 11]
+
+reordered_data  =  np.empty((num_of_exposures, num_of_repeats, 2), dtype = object)
+from_id_in_str  =  where_is_repeat_num_in_string[0]
+to_id_in_str  =  where_is_repeat_num_in_string[1]
+
+exposures  =  np.array([0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10])
+index  =  0
+for imageid in data_series_list:
+if imageid[-7:-4]  =  =  "(2)":
+exposure_time  =  10.0
+else:
+exposure_time  =  float(imageid[-8:-5] + "." + imageid[-5])
+
+exposure_index  =  (np.where(exposures  =  =  exposure_time))[0][0]
+repeat_num  =  int(imageid[from_id_in_str:to_id_in_str])
+
+reference_string  =  imageid[12:16]
+is_reference  =  (reference_string  =  =  "0100")
+if is_reference:
+if imageid[-7:-4]  =  =  "(2)":
+reordered_data[exposure_index][repeat_num][0]  =  str(imageid)
+reordered_data[exposure_index][repeat_num][1]  =  str(imageid)
+else:
+reordered_data[exposure_index][repeat_num][0]  =  str(imageid)
+
+index + =  1
+if index  =  =  num_of_datapoints_input:
+index  =  0
+
+dim_path  =  util.get_path(path_of_data_series + reordered_data[0][0][0])
+image_shape  =  util.get_dims(dim_path)
+
+scaling  =  1
+for repeat_sequence_id in range(0, num_of_exposures):
+mean_image_array  =  np.zeros(image_shape)
+
+distribution_of_image_means  =  []
+for repeat_id in range(0, num_of_repeats):
+if repeat_sequence_id  =  =  num_of_exposures - 1:
+filepath_actual_image  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
+filepath_first_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+filepath_next_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+else:
+filepath_actual_image  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
+filepath_first_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+filepath_next_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id + 1][repeat_id][1])
+
+hdul, header, imagedata_actual_image  =  util.fits_handler(filepath_actual_image)
+hdul, header, imagedata_first_ref  =  util.fits_handler(filepath_first_ref)
+hdul, header, imagedata_next_ref  =  util.fits_handler(filepath_next_ref)
+
+imagedata_actual  =  self.bias_correction(imagedata_actual_image)
+imagedata_first  =  self.bias_correction(imagedata_first_ref)
+imagedata_next  =  self.bias_correction(imagedata_next_ref)
+
+scaling  =  np.mean(imagedata_next) / np.mean(imagedata_first)
+
+imagedata_meaned_and_corrected  =  np.multiply(imagedata_actual, scaling)
+
+mean_image_array + =  imagedata_meaned_and_corrected
+
+distribution_of_image_means.append(np.mean(imagedata_meaned_and_corrected))
+
+mean_image_array / =  num_of_repeats
+
+# Get exposure time from filename within a given repeat sequence
+repeat_sequence_meaned  =  mean_image_array
+filepath  =  util.get_path(path_of_data_series + reordered_data[repeat_sequence_id][0][0])
+hdul, header, imagedata  =  util.fits_handler(filepath)
+if reordered_data[repeat_sequence_id][0][0][-7:-4]  =  =  "(2)":
+exposure_time  =  10.0
+else:
+exposure_time  =  float(
+reordered_data[repeat_sequence_id][0][0][-8:-5] + "." + reordered_data[repeat_sequence_id][0][0][
+-5])  # time in s
+
+# Treat hot pixels
+repeat_sequence_meaned[np.where(self.hot_pixel_mask)]  =  np.mean(
+repeat_sequence_meaned[np.where(np.logical_not(self.hot_pixel_mask))])
+
+# Compute errorbars
+errorbar  =  np.std(np.asarray(distribution_of_image_means))
+
+# Check for consistency
+if header['EXPTIME']  =  =  exposure_time:
+tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
+else:
+print("  linearity_estimation(): Error, exposure times do not match up")
+print("  linearity_estimation(): Exposure time was: ", header['EXPTIME'], "should have been: ",
+exposure_time)
+
+tmplist.append([exposure_time, np.mean(repeat_sequence_meaned), errorbar])
+
+linearity_array  =  np.asarray(tmplist)
+
+query_points  =  linearity_array[:, 0]
+linearity_data  =  linearity_array[:, 1]
+error_data  =  linearity_array[:, 2]
+
+linear_model  =  np.polyfit(query_points, linearity_data, deg = 1)
+linear_model_func  =  np.poly1d(linear_model)
+time_offset  =  np.roots(linear_model)
+linear_model_data  =  linear_model_func(query_points)
+
+# Apply time calibration to the exposure times
+self.time_calibration_factor  =  float(time_offset)
+print(time_offset, self.time_calibration_factor)
+print("  The time offset (time calibration factor) has been estimated to ", self.time_calibration_factor,
+" s ...")
+
+corrected_data  =  np.add(query_points, self.time_calibration_factor)
+new_linear_model  =  np.polyfit(corrected_data, linearity_data, deg = 1)
+new_linear_model_func  =  np.poly1d(new_linear_model)
+new_linear_data  =  new_linear_model_func(corrected_data)
+
+deviations  =  np.multiply(np.divide(np.subtract(linearity_data, linear_model_data), linear_model_data), 100)
+errors  =  np.multiply(np.divide(error_data, linearity_data), 100)
+new_deviations  =  np.multiply(np.divide(np.subtract(linearity_data, new_linear_data), new_linear_data), 100)
+
+return [linearity_array, linear_model_data, corrected_data, new_linear_data, deviations, errors, new_deviations]
+
+def new_time_calibration(self, path_of_data_series: str, num_of_repeats: int, exposures: np.ndarray):
+print("Computing time calibration factor...")
+data_series  =  util.list_data(path_of_data_series)
+where_is_repeat_num_in_string  =  [8, 11]
+
+reordered_data  =  np.empty((3, num_of_repeats, 3), dtype = object)
+from_id_in_str  =  where_is_repeat_num_in_string[0]
+to_id_in_str  =  where_is_repeat_num_in_string[1]
+
+for imageid in data_series:
+repeat_num  =  int(imageid[from_id_in_str:to_id_in_str])
+reference_index  =  int(imageid[-7])
+intensity_index  =  int(imageid[-5])
+
+reordered_data[intensity_index][repeat_num][reference_index]  =  str(imageid)
+
+offsets  =  []
+one_second_correction  =  1  # (1 - 2.826937348128014116e-01)  # 3.269314122356812846e-01)  # 2.335026485015368747e-01)  # 4.061413920020190416e-01)
+two_second_correction  =  1  # (1 - 2.470296021393934560e-01)  # 2.862068501265830345e-01)  # 2.034781685231622506e-01)  # 3.563827129498361446e-01)
+for repeat_sequence_id in range(0, 3):
+time_offset  =  0
+for repeat_id in range(0, num_of_repeats):
+filepath_first_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][0])
+filepath_actual_image  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][1])
+filepath_next_ref  =  util.get_path(
+path_of_data_series + reordered_data[repeat_sequence_id][repeat_id][2])
+
+hdul, header_actual, imagedata_actual_image  =  util.fits_handler(filepath_actual_image)
+hdul, header_first, imagedata_first_ref  =  util.fits_handler(filepath_first_ref)
+hdul, header_next, imagedata_next_ref  =  util.fits_handler(filepath_next_ref)
+
+imagedata_actual_bias_corrected_and_meaned  =  one_second_correction * np.mean(
+(self.bias_correction(imagedata_actual_image)))
+imagedata_first_bias_corrected_and_meaned  =  two_second_correction * np.mean(
+(self.bias_correction(imagedata_first_ref)))
+imagedata_next_bias_corrected_and_meaned  =  one_second_correction * np.mean(
+(self.bias_correction(imagedata_next_ref)))
+
+numerator  =  1 - ((
+imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned)
+denominator  =  ((
+imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (
+2 * imagedata_actual_bias_corrected_and_meaned)) - 1
+
+# numerator    =  ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned) - 1
+# denominator  =  1 - ((imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (2 * imagedata_actual_bias_corrected_and_meaned))
+
+# time_offset + =  (numerator)    / denominator
+
+numerator  =  (((
+imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / imagedata_actual_bias_corrected_and_meaned) * (
+exposures[1] / 2)) - exposures[0]
+denominator  =  1 - (
+(imagedata_first_bias_corrected_and_meaned + imagedata_next_bias_corrected_and_meaned) / (
+2 * imagedata_actual_bias_corrected_and_meaned))
+
+time_offset + =  numerator / denominator
+
+time_offset / =  num_of_repeats
+offsets.append(time_offset)
+
+final_offset  =  np.float(np.mean(np.asarray(offsets)))
+final_offset_error  =  np.float(np.std(np.asarray(offsets)))
+self.time_calibration_factor  =  final_offset
+print("  Result: " + str(self.time_calibration_factor), "±", final_offset_error / np.sqrt(len(offsets)), " s")
+
+def test_lightsource_stability(self, path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
+"""
+Method to analyze the stabillity of the lightsource used to acquire the
+linearity data sequences. All of the images are analyzed. For a given
+exposure sequence, a mean ADU value is computed from the entire sequence
+and this value is the same as what is ultimately used for the linearity
+analysis above. For each image in a sequence the mean ADU value is computed
+and it's deviation from the sequence mean is computed as a percentage.
+This is hence interpreted as the temporal lightsource (in)stabillity.
+
+Returns an array of datapoints. A temporal series for each exposure sequence
+of size (num_of_data_points, num_of_repeats)
+
+:parameter path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_data_points:
+- Integer representing the number of different exposure times
+in the data sequence
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+:returns np.ndarray stability_array:
+- A numpy array of data points of size (num_of_data_points, num_of_repeats)
+"""
+print(" Testing light source stabillity...")
+data_series  =  util.list_data(path_of_data_series)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_datapoints_input = num_of_data_points,
+num_of_repeats_input = num_of_repeats,
+where_is_repeat_num_in_string = [10, 13],
+data_series_list = data_series)
+
+stability_array  =  np.empty([num_of_data_points, num_of_repeats])
+
+data_point  =  0
+repeat  =  0
+
+for sequence in reordered_data:
+for image in sequence:
+filepath  =  util.get_path(path_of_data_series + image)
+hdul, header, imagedata  =  util.fits_handler(filepath)
+
+if data_point > 0:
+self.bias_correction(imagedata)
+
+mean_adu  =  np.mean(imagedata)
+
+stability_array[data_point, repeat]  =  mean_adu
+repeat + =  1
+if repeat  =  =  num_of_repeats:
+repeat  =  0
+
+data_point + =  1
+
+sequence_mean  =  np.mean(stability_array, axis = 1, keepdims = True)
+stability_array  =  np.multiply(np.divide(np.subtract(stability_array, sequence_mean), sequence_mean), 100)
+
+util.print_txt_file("lightsource_stability" + self.datastorage_filename_append + ".txt", stability_array,
+which_directory = self.analysis_data_storage_directory_path)
+
+return stability_array
+
+def linearity_precision(self):
+"""
+A method to complete the linearity analysis by computing the deviations
+of the measured mean ADU (linearity datapoints acquired from the method
+linearity_estimation()), from an ideal linear relation found from linear
+regression.
+
+Does not take any parameters, but uses filled members from other methods
+in the class definition. Assumes that the method linearity_estimation()
+has been completed successfully.
+"""
+
+print(" Testing the precision of the linearity measurement...")
+query_points  =  self.linearity[:, 0]
+linearity_data  =  self.linearity[:, 1]
+error_data  =  self.linearity[:, 2]
+
+# Apply time calibration to the exposure times
+query_points  =  np.add(query_points, self.time_calibration_factor)
+self.linearity[:, 0]  =  query_points
+
+# Preliminary estimation of ideal linearity curve
+ideal_slope  =  self.linearity[9, 1] / query_points[
+9]  # - self.linearity[6, 1]) / (query_points[7] - query_points[6])
+ideal_offset  =  0
+
+# ideal_linear_model             =    np.polyfit(query_points[:14], linearity_data[:14], deg = 1)
+
+ideal_linear_model  =  np.polyfit(np.concatenate([query_points[0:14]]), np.concatenate([linearity_data[0:14]]),
+deg = 1)
+# linear_model_func        =    np.poly1d(ideal_linear_model)
+# time_offset              =    np.roots(ideal_linear_model)
+# query_points             =    np.subtract(query_points, time_offset)
+# self.linearity[:, 0]     =    query_points
+ideal_slope  =  ideal_linear_model[0]
+ideal_offset  =  ideal_linear_model[1]
+# ideal_offset  =  0
+print(ideal_slope, ideal_offset)
+
+# Construct the ideal linear relation and compute deviations from that
+ideal_linearity  =  np.add(np.multiply(query_points, ideal_slope),
+ideal_offset)  # linear_model_func(query_points)  #
+deviations  =  np.multiply(np.divide(np.subtract(linearity_data, ideal_linearity), ideal_linearity), 100)
+errors  =  np.multiply(np.divide(error_data, ideal_linearity), 100)
+
+util.print_txt_file("ideal_linearity" + self.datastorage_filename_append + ".txt", ideal_linearity,
+which_directory = self.analysis_data_storage_directory_path)
+util.print_txt_file("linearity_deviations" + self.datastorage_filename_append + ".txt", deviations,
+which_directory = self.analysis_data_storage_directory_path)
+util.print_txt_file("linearity_deviation_errors" + self.datastorage_filename_append + ".txt", errors,
+which_directory = self.analysis_data_storage_directory_path)
+
+return ideal_linearity, deviations, errors
+
+@staticmethod
+def test_zero_point(path_of_data_series: str, num_of_data_points: int, num_of_repeats: int):
+"""
+Method that will test the ground assumption that the zero exposure time, is actually
+an exposure time of zero seconds. This will be used in the time calibration. The working
+idea is to test whether the following is true:
+
+[ IM(11s) - IM(1s) ]         [ IM(10s) - Bias ]
+--------------------     =     ------------------
+[ IM(21s) - IM(1s) ]         [ Im(20s) - Bias ]
+
+Which geometrically means that the slope is such that the ideal linear relation of ADU
+from exposures passes through zero. The method assumes that data acquired, is then
+reordered/restructured in the following order (basically sorting of the data seq.):
+
+Bias, Bias, 1s, 1s, 10s, 11s, 20s, 21s
+
+:parameter path_of_data_series:
+- A string representing the path to the directory
+containing the data series used to construct the data points
+:parameter int num_of_data_points:
+- Integer representing the number of different exposure times
+in the data sequence
+:parameter int num_of_repeats:
+- Integer representing the total number of repeats of the data sequence
+
+Returns nothing, but prints the result of the test below.
+"""
+print(" Testing zero point assumption...")
+data_series  =  util.list_data(path_of_data_series)
+reordered_data  =  util.repeat_sequence_ordered_data(num_of_datapoints_input = num_of_data_points,
+num_of_repeats_input = num_of_repeats,
+where_is_repeat_num_in_string = [10, 13],
+data_series_list = data_series)
+
+repeat_sequence_meaned  =  []
+for repeat_sequence in reordered_data:
+repeat_sequence_meaned.append(util.mean_image(repeat_sequence, path_of_data_series))
+
+# The following assumes the reordered data on the form as specified in the docstring above
+# Construct numerators and denominators on both sides
+lhs_numerator  =  np.mean(np.subtract(repeat_sequence_meaned[5], repeat_sequence_meaned[2]))
+lhs_denominator  =  np.mean(np.subtract(repeat_sequence_meaned[7], repeat_sequence_meaned[3]))
+rhs_numerator  =  np.mean(np.subtract(repeat_sequence_meaned[4], repeat_sequence_meaned[0]))
+rhs_denominator  =  np.mean(np.subtract(repeat_sequence_meaned[6], repeat_sequence_meaned[1]))
+
+# Construct fractions on both sides
+lhs_final  =  np.divide(lhs_numerator, lhs_denominator)
+rhs_final  =  np.divide(rhs_numerator, rhs_denominator)
+
+# Subtract both sides from each other, to check if result is zero
+result  =  np.subtract(lhs_final, rhs_final)
+
+print("  The result of the test is that the zeropoint assumption is valid to a precision of", result)
+\end{mintedbox}
+\clearpage
+\textbf{mission\_requirements.py}
+\begin{mintedbox}{python}
+"""
+###############################################
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# -----       By Marc Breiner Sørensen        ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# ----- Implemented:           August    2021 ----- #
+# ----- Last edit:       8th   April     2021 ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+###############################################
+"""
+import matplotlib.pyplot as plt
+import utilities as util
+import ccd
+import pubplot as pp
+from scipy.linalg import lstsq
+import numpy as np
+from photutils.aperture import aperture_photometry
+from photutils.aperture import CircularAperture
+from photutils.aperture import CircularAnnulus
+from photutils.centroids import centroid_sources, centroid_com
+
+plt.style.use(['science', 'ieee', 'vibrant'])
+
+
+def compute_noise(camera: ccd,
+aperture_counts_list: np.ndarray,
+annulus_counts_list: np.ndarray,
+aperture_areas: np.ndarray,
+annulus_areas: np.ndarray
+):
+print("  Computing total noise...")
+# Total noise calculations
+# Compute the ratio of the areas of the apertures to annuli
+area_ratio  =  np.divide(aperture_areas, annulus_areas)
+
+# Compute the standard deviation of the photonic (and readout noise) distribution in the first aperture
+count_dist_width_first  =  np.sqrt(camera.gain_factor * aperture_counts_list[:, 0]
++ np.multiply(camera.gain_factor * annulus_counts_list[:, 0],
+np.square(area_ratio) + area_ratio)
++ np.multiply(aperture_areas,
+np.multiply(np.add(1, area_ratio),
+camera.gain_factor * camera.readout_noise_level ** 2)
+)
+)  # eq (9.11.28) in Detector book
+
+# Compute, from the standard deviation, the relative error
+count_dist_error_first  =  np.divide(count_dist_width_first,
+aperture_counts_list[:, 0] * camera.gain_factor)  # eq (9.11.29)
+
+# Compute the standard deviation of the photonic (and readout noise) distribution in the second aperture
+count_dist_width_second  =  np.sqrt(camera.gain_factor * aperture_counts_list[:, 1]
++ np.multiply(camera.gain_factor * annulus_counts_list[:, 1],
+np.square(area_ratio) + area_ratio)
++ np.multiply(aperture_areas,
+np.multiply(np.add(1, area_ratio),
+camera.gain_factor * camera.readout_noise_level ** 2)
+)
+)  # eq (9.11.28) in Detector book
+
+# Compute, from the standard deviation, the relative error
+count_dist_error_second  =  np.divide(count_dist_width_second,
+aperture_counts_list[:, 1] * camera.gain_factor)  # eq (9.11.29)
+
+total_noise  =  np.mean(np.sqrt(np.square(count_dist_error_first) + np.square(count_dist_error_second)))
+
+return total_noise
+
+
+def differential_aperture_photometry(camera: ccd,
+data_series: list,
+path_of_data_series: str,
+num_of_images: int,
+aperture_positions: list,
+aperture_radius: float,
+annulus_radii: list
+):
+print("  Performing aperture photometry with aperture positions:")
+print("   ", aperture_positions)
+print("   Aperture radius: \n    ", aperture_radius)
+print("   Annulus radii:   \n    ", annulus_radii)
+
+# Prepare a set of lists for the data analysis below
+differential_flux_data  =  []
+timestamps  =  []
+aperture_data_list  =  []
+aperture_areas  =  []
+annulus_areas  =  []
+aperture_counts_list  =  []
+annulus_counts_list  =  []
+
+id  =  0
+for imageid in range(0, num_of_images):
+# Load the image, and correct it
+filepath  =  util.get_path(path_of_data_series + data_series[imageid])
+hdul, header, imagedata  =  util.fits_handler(filepath)
+imagedata_corrected  =  camera.hot_pixel_correction(
+camera.flat_field_correction(camera.bias_correction(imagedata)))
+
+# Append to a list of timestamps for use in the figure below
+try:
+timestamp  =  id  #  =    header['DATE-OBS']
+timestamps.append(str(timestamp[11:16]))
+except:
+timestamp  =  id
+timestamps.append(timestamp)
+
+# Initiallize the x and y positions of the apertures from the function call
+aperture_x_position  =  (
+aperture_positions[0][0], aperture_positions[1][0])  # (first aperture x position, second aperture x position)
+aperture_y_position  =  (
+aperture_positions[0][1], aperture_positions[1][1])  # (first aperture y position, second aperture y position)
+# Determine centroid positions of the light in the apertures
+box_size_for_centroid_search  =  int(2 * aperture_radius)
+aperture_centroid_x_pos, aperture_centroid_y_pos  =  centroid_sources(imagedata_corrected, aperture_x_position,
+aperture_y_position,
+box_size  =  box_size_for_centroid_search,
+centroid_func  =  centroid_com)
+
+# Construct two apertures of same radii and two annuli of the same radii
+aperture  =  CircularAperture([aperture_positions[0], aperture_positions[1]], r  =  aperture_radius)
+annulus  =  CircularAnnulus([aperture_positions[0], aperture_positions[1]], r_in  =  annulus_radii[0],
+r_out  =  annulus_radii[1])
+aperatures  =  [aperture, annulus]  # Collect the objects in a list
+photometry_table  =  aperture_photometry(imagedata_corrected, aperatures)  # Do aperture photometry
+for col in photometry_table.colnames:
+photometry_table[col].info.format  =  '%.8g'
+
+# The aperture_sum_0 column refers to the first aperture in the list of input apertures (i.e., the circular aperture)
+# and the aperture_sum_1 column refers to the second aperture (i.e., the circular annulus).
+# Note that we cannot simply subtract the aperture sums because the apertures have different areas.
+annulus_counts  =  photometry_table['aperture_sum_1']
+aperture_counts  =  photometry_table['aperture_sum_0']
+background_counts_per_pixel  =  annulus_counts / annulus.area
+background_counts_in_aperture  =  background_counts_per_pixel * aperture.area
+aperture_counts_background_subtracted  =  aperture_counts - background_counts_in_aperture
+# Collect the corrected fluxes in a new table
+photometry_table[
+'residual_aperture_sum']  =  aperture_counts_background_subtracted / aperture.area  # The flux per pixel
+photometry_table['residual_aperture_sum'].info.format  =  '%.3g'  # for consistent table output
+differential_flux  =  photometry_table['residual_aperture_sum'][0] / photometry_table['residual_aperture_sum'][1]
+
+# Fill out lists
+differential_flux_data.append(differential_flux)
+aperture_data_list.append([photometry_table['residual_aperture_sum'][0], float(aperture_centroid_x_pos[0]),
+float(aperture_centroid_y_pos[0])])
+aperture_areas.append(aperture.area)
+annulus_areas.append(annulus.area)
+aperture_counts_list.append([aperture_counts[0], aperture_counts[1]])
+annulus_counts_list.append([annulus_counts[0], annulus_counts[1]])
+
+id + =  1
+
+# Convert to numpy arrays
+aperture_areas  =  np.asarray(aperture_areas)
+annulus_areas  =  np.asarray(annulus_areas)
+aperture_counts_list  =  np.asarray(aperture_counts_list)
+annulus_counts_list  =  np.asarray(annulus_counts_list)
+aperture_data_list  =  np.asarray(aperture_data_list)
+timestamps  =  np.asarray(timestamps)
+
+# Compute total noise in the experiment
+total_noise  =  compute_noise(camera, aperture_counts_list, annulus_counts_list, aperture_areas, annulus_areas)
+
+return [differential_flux_data, aperture_data_list, timestamps, total_noise]
+
+
+def drift_correct_data(dataset: list):
+num_of_datapoints  =  len(dataset)
+drift_corrected_data  =  []
+for data_id in range(1, num_of_datapoints - 1):
+new_datapoint  =  dataset[data_id] - ((dataset[data_id - 1] + dataset[data_id + 1]) / 2)
+drift_corrected_data.append(new_datapoint)
+return drift_corrected_data
+
+
+def move_tol_pixel(requirement: float, linear_model_movement):
+return requirement / linear_model_movement[0]
+
+
+def output_requirements(aperture_data_list: np.ndarray,
+diffflux_percentage_dev: np.ndarray,
+num_of_images: int,
+requirement_input: float
+):
+# Fit a linear model to the flux variation as a function of positions
+linear_model_x_movement  =  np.polyfit(aperture_data_list[:, 1], diffflux_percentage_dev, 1)
+linear_model_y_movement  =  np.polyfit(aperture_data_list[:, 2], diffflux_percentage_dev, 1)
+linear_model_x_function  =  np.poly1d(linear_model_x_movement)
+linear_model_y_function  =  np.poly1d(linear_model_y_movement)
+fitquery_x  =  np.linspace(np.min(aperture_data_list[:, 1]), np.max(aperture_data_list[:, 1]), num_of_images)
+fitquery_y  =  np.linspace(np.min(aperture_data_list[:, 2]), np.max(aperture_data_list[:, 2]), num_of_images)
+
+print(" Linear model fit to x movement: \n ", linear_model_x_movement)
+print(" Linear model fit to y movement: \n ", linear_model_y_movement)
+
+print(" For the flux to change at most ΔF  =  ", requirement_input, "%")
+print(" We must require at most ")
+print("  Δx  =  ", move_tol_pixel(requirement_input, linear_model_x_movement), "\n  Δy  =  ",
+move_tol_pixel(requirement_input, linear_model_y_movement))
+
+return [linear_model_x_function, linear_model_y_function, fitquery_x, fitquery_y]
+
+
+def plot_variations(camera: ccd,
+aperture_data_list: np.ndarray,
+differential_flux_list: np.ndarray,
+diffflux_percentage_dev: np.ndarray,
+fit_query_pts_x: np.ndarray,
+fit_query_pts_y: np.ndarray,
+linear_model_x_function,
+linear_model_y_function,
+timestamp_ticks: np.ndarray,
+drift_corrected_diffflux_data,
+):
+# Plot the deviation in the differential flux as a function of x-movement
+plt.plot(aperture_data_list[:, 1], diffflux_percentage_dev, '.', markersize  =  3, color  =  "k", label  =  "Flux")
+plt.plot(fit_query_pts_x, linear_model_x_function(fit_query_pts_x), color  =  "r", linewidth  =  1.5)
+pp.pubplot("Flux dep. on X pos.", "X pixel pos.", "Diff. corr. flux deviation (\%)",
+"fluxVsX" + camera.datastorage_filename_append + ".png", legend  =  False)
+
+# Plot the deviation in the differential flux as a function of y-movement
+plt.plot(aperture_data_list[:, 2], diffflux_percentage_dev, '.', markersize  =  3, color  =  "k", label  =  "Flux")
+plt.plot(fit_query_pts_y, linear_model_y_function(fit_query_pts_y), color  =  "r", linewidth  =  1.5)
+pp.pubplot("Flux dep. on Y pos.", "Y pixel pos.", "Diff. corr. flux deviation (\%)",
+"fluxVsY" + camera.datastorage_filename_append + ".png", legend  =  False)
+
+# Plot the deviation in the differential flux as a function of variations in the raw flux
+plt.plot(aperture_data_list[:, 0], differential_flux_list, '.', markersize  =  3, color  =  "k", label  =  "Flux")
+pp.pubplot("Diff. flux dep. on raw flux", "Differential corrected flux", "Raw flux corrected",
+"fluxVsB" + camera.datastorage_filename_append + ".png", legend  =  False)
+
+# Plot the differential flux as a function of time, as well as
+# the position as a function of time
+fig, ax  =  plt.subplots()
+
+# Construct extra axes to tidy up the plot a bit
+def make_patch_spines_invisible(ax):
+ax.set_frame_on(True)
+ax.patch.set_visible(False)
+for sp in ax.spines.values():
+sp.set_visible(False)
+
+fig, host  =  plt.subplots()
+# Move axis out a bit
+fig.subplots_adjust(right  =  0.75)
+
+par1  =  host.twinx()
+par2  =  host.twinx()
+par2.spines["right"].set_position(("axes", 1.4))
+make_patch_spines_invisible(par2)
+par2.spines["right"].set_visible(True)
+
+p1,  =  host.plot(timestamp_ticks[1:-1], drift_corrected_diffflux_data, '.', color  =  "k", markersize  =  3,
+label  =  "Flux vs time")
+p2,  =  par1.plot(timestamp_ticks, aperture_data_list[:, 1], '.', color  =  "r", markersize  =  3,
+label  =  "X pos. vs time")
+p3,  =  par2.plot(timestamp_ticks, aperture_data_list[:, 2], '.', color  =  "b", markersize  =  3,
+label  =  "Y pos. vs time")
+
+"""host.set_xlim(0, 2)
+host.set_ylim(0, 2)
+par1.set_ylim(0, 4)
+par2.set_ylim(1, 65)"""
+
+host.set_xlabel("Timestamp")
+host.set_ylabel("Flux")
+par1.set_ylabel("X pos.")
+par2.set_ylabel("Y pos.")
+
+host.yaxis.label.set_color(p1.get_color())
+par1.yaxis.label.set_color(p2.get_color())
+par2.yaxis.label.set_color(p3.get_color())
+
+tkw  =  dict(size  =  4, width  =  1.5)
+host.tick_params(axis  =  'y', colors  =  p1.get_color(), **tkw)
+par1.tick_params(axis  =  'y', colors  =  p2.get_color(), **tkw)
+par2.tick_params(axis  =  'y', colors  =  p3.get_color(), **tkw)
+host.tick_params(axis  =  'x', **tkw)
+lines  =  [p1, p2, p3]
+
+# Move legend outside
+host.legend(lines, [l.get_label() for l in lines], bbox_to_anchor  =  (1.5, 1), loc  =  "upper left")
+# Print the plot nicely
+pp.pubplot("Flux and position as a function of time", "Timestamp", "Y pos.",
+"fluxposvtimecorr" + camera.datastorage_filename_append + ".png", legend  =  False)
+
+
+def uncorrectable_variations_plot(camera: ccd,
+aperture_data_list: np.ndarray,
+differential_flux_list: np.ndarray,
+timestamp_ticks: np.ndarray
+):
+print(" Analyzing data, and constructing linear fit...")
+# Begin analysis of corrections
+dX  =  np.subtract(aperture_data_list[:, 1], np.mean(aperture_data_list[:, 1]))  # Changes in x positions
+dY  =  np.subtract(aperture_data_list[:, 2], np.mean(aperture_data_list[:, 2]))  # Changes in y positions
+dB  =  np.subtract(aperture_data_list[:, 0], np.mean(aperture_data_list[:, 0]))  # Changes in flux
+y  =  differential_flux_list
+
+# Construct a linear fit in four parameters (first list of ones is the offset)
+M  =  np.asarray(np.transpose(np.asarray([np.ones(len(dX)), dX, dY, dB])))
+p, res, rnk, s  =  lstsq(M, y)
+print("Found linear coefficients are: ", p, res, rnk, s)
+fit  =  p[0] + dX * p[1] + dY * p[2] + dB * p[3]
+
+mean  =  np.mean(np.subtract(differential_flux_list, fit))
+error  =  np.std(np.subtract(differential_flux_list, fit))
+precision  =  ((error + 1) / (mean + 1) - 1) * 100
+print("The precision is ", precision, "%")
+
+# plot the differential flux as a function of time
+# as well as the fit to the flux as a function of time
+fig, ax  =  plt.subplots()
+ax.plot(timestamp_ticks, differential_flux_list, label  =  "Differential flux")
+ax.plot(timestamp_ticks, fit, label  =  "Fit to diff. flux")
+ax.plot(timestamp_ticks, np.subtract(differential_flux_list, fit), label  =  "Diff. flux minus fit")
+pp.pubplot("Diff. flux. vs image no.", "Timestamp", "Flux", "fluxfit" + camera.datastorage_filename_append + ".png",
+legend  =  True)
+
+
+def pointing_requirements(camera: ccd, path_of_data_series: str, requirement_input: float, aperture_positions: list,
+aperture_radius: float, annulus_radii: list, num_of_images: int, exposure_time: float,
+cutoffs: list  =  None):
+print("\nAnalyzing the pointing requirements for detector: ", camera.name, "...")
+
+# Prepare the data set
+data_series  =  util.list_data(path_of_data_series)
+if cutoffs is not None:
+# These cutoffs are for only applying the analysis to a subset of the data
+first_cutoff  =  cutoffs[0]
+last_cutoff  =  cutoffs[1]
+# If a subset is defined, the number of images used will be less
+num_of_images  =  last_cutoff - first_cutoff
+data_series  =  data_series[first_cutoff:last_cutoff]
+
+# Perform differential aperture photometry, and gather data in a set of convenient arrays.
+diff_ap_phot_data  =  differential_aperture_photometry(camera, data_series, path_of_data_series, num_of_images,
+aperture_positions, aperture_radius, annulus_radii)
+differential_flux_list  =  diff_ap_phot_data[
+0]  # The list of computed differential fluxes (as a function of timestamps)
+aperture_data_list  =  diff_ap_phot_data[
+1]  # Aperture photometry data [actual flux in first aperture, x position of first aperture, y position of first aperture]
+timestamps  =  diff_ap_phot_data[2]  # A list of timestamps
+total_noise  =  diff_ap_phot_data[3]  # A float representing the computed total noise in the dataset
+
+# Correct the differential flux for drifts, so it is only noise, and we may compare with noise computed above
+drift_corrected_diffflux_data  =  drift_correct_data(differential_flux_list)
+# Convert differential flux to a percentage deviation from the first data point in the list
+diffflux_percentage_dev  =  np.multiply(
+np.divide(np.subtract(differential_flux_list, differential_flux_list[0]), differential_flux_list[0]), 100)
+
+print(" The relative photonic- (and readout-) noise is ", "{0:.10f}".format(total_noise))
+print(" The standard deviation of the drift corrected flux is ",
+"{0:.10f}".format(np.sqrt(2 / 3) * np.std(drift_corrected_diffflux_data) / np.mean(differential_flux_list)))
+
+# Construct numpy array of data, and ready lists of timestamps and their labels for use in the figures
+timestamp_ticks  =  np.linspace(1, num_of_images, num_of_images)
+timestamp_ticks_labels  =  timestamps
+
+output_requirements_data  =  output_requirements(aperture_data_list, diffflux_percentage_dev, num_of_images,
+requirement_input)
+linear_model_x_function  =  output_requirements_data[0]
+linear_model_y_function  =  output_requirements_data[1]
+fit_query_pts_x  =  output_requirements_data[2]
+fit_query_pts_y  =  output_requirements_data[3]
+
+plot_variations(camera, aperture_data_list, differential_flux_list, diffflux_percentage_dev, fit_query_pts_x,
+fit_query_pts_y, linear_model_x_function, linear_model_y_function, timestamp_ticks,
+drift_corrected_diffflux_data)
+uncorrectable_variations_plot(camera, aperture_data_list, differential_flux_list, timestamp_ticks)
+\end{mintedbox}
+\clearpage
+\textbf{plots.py}
+\begin{mintedbox}{python}
+import ccd
+import matplotlib.pyplot as plt
+import pubplot as pp
+import utilities as util
+import numpy as np
+
+
+def gauss_dist_plot(detector: ccd, figure_directory: str, bias_sequence: str):
+"""
+A method for plotting the distribution in bias frames
+to show that there is a 1/sqrt(N) reduction in the noise
+for the master bias frame, in comparison to the individual
+arbitrarily chosen bias frame
+"""
+
+# Start by plotting the distribution of an individual bias frame
+data_series  =  util.list_data(bias_sequence)
+filepath  =  util.get_path(bias_sequence + data_series[0])
+hdul, header, imagedata  =  util.fits_handler(filepath)
+
+bias_dist  =  imagedata.flatten()
+n, bins, patches  =  plt.hist(bias_dist, bins  =  1000, color  =  'dodgerblue', width  =  0.8,
+label  =  "Arbitrary individual bias frame")
+gaussdata  =  np.linspace(240, 375, 1000)
+gaussheight  =  np.amax(n)
+gaussmean  =  float(np.mean(imagedata))
+gausswidth  =  float(np.std(bias_dist))
+
+plt.plot(gaussdata, util.gaussian(gaussdata, gaussheight, gaussmean, gausswidth), c  =  'navy',
+label  =  "Gauss. dist.")
+
+individual_gauss_width  =  gausswidth
+print("\nThe found width of the ADU distribution is ", individual_gauss_width, " ADUs")
+print("This corresponds to a readout noise of ", individual_gauss_width * 0.28 * np.sqrt(8 * np.log(2)))
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+# Then plot the distribution of the master bias frame with reduced noise
+bias_dist  =  detector.master_bias.flatten()
+n, bins, patches  =  plt.hist(bias_dist, bins  =  350, color  =  'steelblue', width  =  0.4, label  =  "Master bias frame")
+gaussheight  =  np.amax(n)
+gaussmean  =  float(np.mean(bias_dist))
+gausswidth  =  float(np.std(bias_dist))
+
+plt.plot(gaussdata, util.gaussian(gaussdata, gaussheight, gaussmean, gausswidth), c  =  'k', ls  =  "--",
+label  =  "Reduced wdith gauss. dist.")
+
+print("The found, reduced width of the ADU distribution is ", gausswidth, " ADUs")
+print("It should be equal to ", individual_gauss_width / np.sqrt(300))
+print("This corresponds to a readout noise of ", gausswidth * 0.28 * np.sqrt(8 * np.log(2)))
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+plt.legend(bbox_to_anchor  =  (1, 1), loc  =  "upper left")
+pp.pubplot("$\mathbf{Bias\;\;distribution:}$ " + detector.name, "Bias value", "Arb. units.",
+figure_directory + "gauss_bias.png", legend  =  False, xlim  =  [260, 350])
+
+
+def master_frame_plot(image: np.ndarray, figurename: str, title: str, label: str, filename: str,
+raisetitle: bool  =  False, scaling  =  None):
+"""
+A method that will produce a plot of a given master frame (bias, dark or flat).
+
+:param np.ndarray image:
+- np.ndarray representing the image
+:param str figurename:
+- str representing the figurename
+:param str title:
+- str representing the title of the figure for printing
+:parameter str label:
+- The detector name used as a label in the plot
+:param str filename:
+- str representing the name of the file to be printed to
+:param bool raisetitle:
+- bool that toggles raising of the title in the figure
+"""
+
+pp.plot_image(image, title, "x", "y", "detector: " + label, filename, figurename, raisetitle  =  raisetitle,
+scale  =  scaling)
+
+
+def noise_plot(detector: ccd, figure_directory: str, dark_current_data  =  None, readout_noise_data  =  None):
+"""
+A method that will produce a plot of the stability data
+from the ccd.dark_current_versus_temperature() and ccd.readout_noise_versus_temperature() methods
+"""
+
+plt.plot(dark_current_data[:, 0], dark_current_data[:, 1], ls  =  '--', c  =  'k', lw  =  1, marker  =  'o', markersize  =  3,
+label  =  "Dark current")
+plt.ylim(-0.1, 3)
+pp.pubplot("$\mathbf{Dark\;current\;}$ " + detector.name, "Temperature [$^\circ$C]", "$\mathbf{e}^-$/s/pixel",
+figure_directory + "darkcurrent_versus_temperature" + detector.datastorage_filename_append + ".png",
+legend  =  True, legendlocation  =  "upper left")
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+plt.plot(readout_noise_data[:, 0], readout_noise_data[:, 1], ls  =  '--', c  =  'k', lw  =  1, marker  =  'o',
+markersize  =  3, label  =  "Readout noise")
+plt.ylim(3, 14)
+pp.pubplot("$\mathbf{Readout\;noise\;}$" + detector.name, "Temperature [$^\circ$C]",
+"Readout Noise [RMS $\mathbf{e}^-$/pixel]",
+figure_directory + "readoutnoise_versus_temperature" + detector.datastorage_filename_append + ".png",
+legend  =  True, legendlocation  =  "upper left")
+
+
+def gain_plot(detector: ccd, figure_directory: str, gain_data  =  None):
+plt.errorbar(gain_data[:, 0], gain_data[:, 1], yerr  =  gain_data[:, 2], ls  =  '--', c  =  'k', lw  =  1, marker  =  'o',
+markersize  =  3, label  =  "Gain factor", capsize  =  2)
+pp.pubplot("$\mathbf{Gain\;Factor\;}$ " + detector.name, "Temperature [$^\circ$C]", "Gain factor",
+figure_directory + "gain_versus_temperature" + detector.datastorage_filename_append + ".png",
+legend  =  True)
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+
+def linearity_plot(detector: ccd, figure_directory: str, linearity_data  =  None):
+"""
+A method that will produce a plot of the stability data
+from the ccd.linearity_estimation() and ccd.linearity_deviations() methods
+"""
+
+# Plot the linearity data as a function of exposure times, and plot the ideal linear relation
+plt.errorbar(linearity_data[:, 3], linearity_data[:, 1], yerr  =  linearity_data[:, 2], ls  =  '--', c  =  'k', lw  =  1,
+marker  =  'o', markersize  =  3, label  =  detector.name, capsize  =  2)
+plt.plot(linearity_data[:, 3], np.zeros(len(linearity_data[:, 3])), ls  =  '-', c  =  'dodgerblue', lw  =  1,
+label  =  "Ideal linear relation")
+pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%",
+figure_directory + "linearity_notimecal" + detector.datastorage_filename_append + ".png",
+legendlocation  =  "lower left")
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+plt.errorbar(linearity_data[:, 3], linearity_data[:, 1], yerr  =  linearity_data[:, 2], ls  =  '--', c  =  'k', lw  =  1,
+marker  =  'o', markersize  =  3, label  =  detector.name, capsize  =  2)
+plt.plot(linearity_data[:, 3], np.zeros(len(linearity_data[:, 3])), ls  =  '-', c  =  'dodgerblue', lw  =  1,
+label  =  "Ideal linear relation")
+pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU / pixel", "Deviation in \%",
+figure_directory + "linearity_zoom_notimecal" + detector.datastorage_filename_append + ".png",
+legendlocation  =  "lower left", xlim  =  [0, 60e3], ylim  =  [-7.5, 3])
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+
+"""
+def lightsource_stability_plot():
+"""
+# A method that will produce a plot of the stability data
+# from the ccd.lightsource_stability() method
+"""
+
+params  =  {'legend.fontsize': 7, 'legend.handlelength': 2}
+plt.rcParams.update(params)
+
+new  =  0
+for exposure in range(0, 29):
+if exposure < =  10:
+plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls = '-', lw = 1, label = "No. " + str(exposure))
+if 20 > exposure > 10:
+plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls = '--', lw = 1, label = "No. " + str(exposure))
+if exposure > =  20:
+plt.plot(np.asarray(range(0, 100)), stabillity_data[exposure, :], ls = '-.', lw = 1, label = "No. " + str(exposure))
+
+plt.legend(bbox_to_anchor = (1, 1), loc = "upper left")
+pp.pubplot("$\mathbf{Lightsource\;\;stabillity}$", "Repeat no.", "\%- dev. from seq. mean", figure_directory + "lightsource.png", legend = False)
+"""
+
+
+def lightsource_stability_from_datafile_plot(detector: ccd, figure_directory: str, analysis_data_path: str):
+"""
+A method that will produce a plot of the stability data
+from the ccd.lightsource_stability() method
+"""
+
+filename  =  "lightsource_stability" + detector.datastorage_filename_append + ".txt"
+fullpath_lightsource_stability_data  =  analysis_data_path + filename
+stability_data  =  np.loadtxt(fullpath_lightsource_stability_data)
+
+for exposure in range(0, 10):
+plt.plot(np.asarray(range(0, 100)), stability_data[exposure, :], ls  =  '-', lw  =  1,
+label  =  str(exposure + 1) + " s")
+
+plt.legend(bbox_to_anchor  =  (1, 1), loc  =  "upper left", fancybox  =  False, framealpha  =  1, edgecolor  =  'inherit',
+fontsize  =  10)
+pp.pubplot("$\mathbf{Lightsource\;\;stabillity}$", "Repeat no.", "\%- dev. from seq. mean",
+figure_directory + "lightsource_1to10" + detector.datastorage_filename_append + ".png", legend  =  False)
+
+exp_time  =  0
+for exposure in range(11, 20):
+plt.plot(np.asarray(range(0, 99)), stability_data[exposure, :-1], ls  =  '-', lw  =  1,
+label  =  str(10 * (exp_time + 1) + 10) + " s")
+exp_time + =  1
+
+plt.legend(bbox_to_anchor  =  (1, 1), loc  =  "upper left", fancybox  =  False, framealpha  =  1, edgecolor  =  'inherit',
+fontsize  =  10)
+pp.pubplot("$\mathbf{Lightsource\;\;stabillity}$", "Repeat no.", "\%- dev. from seq. mean",
+figure_directory + "lightsource_20to100" + detector.datastorage_filename_append + ".png", legend  =  False,
+xlim  =  [0, 100])
+
+exp_time  =  0
+for exposure in range(20, 29):
+plt.plot(np.asarray(range(0, 100)), stability_data[exposure, :], ls  =  '-', lw  =  1,
+label  =  str(100 + (exp_time + 1)) + " s")
+exp_time + =  1
+
+plt.legend(bbox_to_anchor  =  (1, 1), loc  =  "upper left", fancybox  =  False, framealpha  =  1, edgecolor  =  'inherit',
+fontsize  =  10)
+pp.pubplot("$\mathbf{Lightsource\;\;stabillity}$", "Repeat no.", "\%- dev. from seq. mean",
+figure_directory + "lightsource_101to110" + detector.datastorage_filename_append + ".png",
+legend  =  False, xlim  =  [0, 100])
+
+
+"""
+def ron_dist_plot():
+plt.figure()
+i  =  0
+temperatures  =  [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+for dist in ron_dists_vs_temp:
+n, bins, patches  =  plt.hist(dist, bins = 500, width = 0.8, label =  str(temperatures[i]) + "s")
+i + =  1
+
+plt.legend(bbox_to_anchor = (1, 1), loc = "upper left")
+pp.pubplot("$\mathbf{Readout\;\;noise\;\;distributions}$ ", "Bias value", "Arb. units.", figure_directory + "ron_dists.png", legend = False, xlim = [300, 475])
+"""
+
+
+def time_calibration_plot(detector: ccd, time_calibration, figure_directory: str):
+time_cal_linearity_array  =  time_calibration[0]
+time_cal_linear_model_data  =  time_calibration[1]
+time_cal_corrected_data  =  time_calibration[2]
+time_cal_new_linear_model  =  time_calibration[3]
+time_cal_deviations  =  time_calibration[4]
+time_cal_errors  =  time_calibration[5]
+time_cal_new_deviations  =  time_calibration[6]
+
+plt.plot(time_cal_linearity_array[:, 0], time_cal_linear_model_data, ls  =  '-', c  =  'dodgerblue', lw  =  1,
+label  =  "Ideal relationship")
+plt.errorbar(time_cal_linearity_array[:, 0], time_cal_linearity_array[:, 1], yerr  =  time_cal_linearity_array[:, 2],
+ls  =  '--', c  =  'k', lw  =  1, marker  =  'o', markersize  =  3, label  =  detector.name,
+capsize  =  2)  # + "$-10.0^\circ $ C")
+plt.plot(time_cal_corrected_data, time_cal_linearity_array[:, 1], ls  =  '--', c  =  'r', lw  =  1, marker  =  'o',
+markersize  =  3, label  =  "Corrected data")
+plt.plot(time_cal_corrected_data, time_cal_new_linear_model, ls  =  '-', c  =  'red', lw  =  1,
+label  =  "New ideal relationship")
+
+pp.pubplot("$\mathbf{Time calibration}$ ", "Exposure time [s]", "Mean ADU/pixel",
+"time_calibration" + detector.datastorage_filename_append + ".png",
+legendlocation  =  "lower right")  # xlim = [0, 2], ylim = [0,   1])
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------- #
+
+# Plot the relative linearity deviations and the ideal relation
+plt.errorbar(time_cal_linearity_array[:, 1], time_cal_deviations, yerr  =  time_cal_errors[:], ls  =  '--', c  =  'k',
+lw  =  1, marker  =  'o', markersize  =  3, label  =  detector.name, capsize  =  2)
+plt.plot(time_cal_linearity_array[:, 1], np.zeros(len(time_cal_linearity_array[:, 1])), ls  =  '-', c  =  'dodgerblue',
+lw  =  1, label  =  "Ideal relation")
+plt.plot(time_cal_linearity_array[:, 1], time_cal_new_deviations, ls  =  '--', c  =  'r', lw  =  1, marker  =  'o',
+markersize  =  3, label  =  detector.name)
+
+pp.pubplot("$\mathbf{Linearity}$ $-10.0^\circ $ C ", "Mean ADU/pixel", "Percentage deviation ",
+figure_directory + "time_calibration_deviations" + detector.datastorage_filename_append + ".png",
+legendlocation  =  "upper left")
+
+
+def shutter_test_plot(detector: ccd, shutter_test: str):
+filepath  =  util.get_path(shutter_test[:-1])
+hdul, header, imagedata  =  util.fits_handler(filepath)
+pp.plot_image(detector.bias_correction(imagedata), "Shuttertest", "x", "y", "detector: " + detector.name,
+"shutter_test" + detector.datastorage_filename_append + ".png", "shutter_test", scale  =  400)
+
+
+def hot_pixels_plot(detector: ccd):
+hot_pixel_data  =  detector.hot_pixel_data
+plt.plot(hot_pixel_data[0], hot_pixel_data[1], '.', c  =  "k", markersize  =  2.5, label  =  'Data')
+plt.plot([0, 1e3], [0, 1e3], c  =  "dodgerblue", label  =  'Ideal relationship')
+pp.pubplot("Hot pixels", "$e^-$/sec [90s]", "$e^-$/sec [1000s]",
+"hot_pixels_test" + detector.datastorage_filename_append + ".png", xlim  =  [0.5, 100.0],
+ylim  =  [0.5, 200], legendlocation  =  "lower right")
+
+mask  =  detector.hot_pixel_mask
+padding  =  10
+for first_id in range(padding, len(mask[:, 0])):
+for second_id in range(padding, len(mask[0, :])):
+if mask[first_id, second_id]  =  =  1:
+for new_first_id in range(first_id - padding, first_id):
+for new_second_id in range(second_id - padding, second_id):
+mask[new_first_id, new_second_id]  =  1
+
+pp.plot_image(mask, "Hot pixel mask", "x", "y", "detector: " + detector.name,
+"hot_pixel_mask" + detector.datastorage_filename_append + ".png", "hot_pixel_mask")
+
+
+def produce_plots(detector: ccd,
+figure_directory: str,
+analysis_data_path: str,
+linearity_data  =  None,
+dark_current_data  =  None,
+readout_noise_data  =  None,
+gain_data  =  None,
+time_calibration  =  None,
+shutter_test: str  =  None,
+hot_pixels  =  False,
+lightsource_stabillity  =  False,
+bias_sequence: str  =  None,
+bias_frame_scaling: float  =  None
+):
+"""
+A method that will produce all the relevant plots, from the data constructed
+from the characterization procedure.
+"""
+print("\nProducing plots for CCD: " + detector.name + " ...")
+
+if bias_sequence is not None:
+gauss_dist_plot(detector, figure_directory, bias_sequence)
+if shutter_test is not None:
+shutter_test_plot(detector, shutter_test)
+if hot_pixels:
+hot_pixels_plot(detector)
+
+master_frame_plot(detector.master_bias, "master_bias_fig", "$\mathbf{Master\;bias\;frame}$ ", detector.name,
+figure_directory + "master_bias" + detector.datastorage_filename_append + ".png", scaling  =  70)
+master_frame_plot(detector.master_dark, "master_dark_fig", "$\mathbf{Master\;dark\;current\;frame}$ ",
+detector.name, figure_directory + "master_dark" + detector.datastorage_filename_append + ".png",
+raisetitle  =  True)
+master_frame_plot(detector.master_flat, "master_flat_fig", "$\mathbf{Master\;flat\;field\;frame}$ ", detector.name,
+figure_directory + "master_flat" + detector.datastorage_filename_append + ".png")
+
+if (dark_current_data is not None) and (readout_noise_data is not None):
+gain_plot(detector, figure_directory, gain_data)
+noise_plot(detector, figure_directory, dark_current_data, readout_noise_data)
+# if time_calibration is not None:
+# time_calibration_plot(detector, time_calibration, figure_directory)
+if linearity_data is not None:
+linearity_plot(detector, figure_directory, linearity_data)
+
+if lightsource_stabillity:
+lightsource_stability_from_datafile_plot(detector, figure_directory, analysis_data_path)
+# ron_dist_plot(detector)
+
+\end{mintedbox}
+\clearpage
+\textbf{utilities.py}
+\begin{mintedbox}{python}
+"""
+###############################################
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# -----       By Marc Breiner Sørensen        ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# ----- Implemented:           August    2021 ----- #
+# ----- Last edit:      29th   October   2021 ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+###############################################
+"""
+import os
+import pathlib
+import numpy as np
+import astropy
+from astropy.io import fits
+import matplotlib.pyplot as plt
+from pathlib import Path, PureWindowsPath, PurePosixPath
+
+
+def print_txt_file(filename: str, data_to_print: np.ndarray or list, which_directory: str  =  None):
+"""
+Simple method to open a file, print the data from an
+np.ndarray to it, and close the file again
+
+:param str filename:
+- String representing the filename
+:param np.ndarray or list data_to_print:
+- np.ndarray holding the data to print
+:param str which_directory:
+- String that represents the path of a directory other than the current one
+where the default is none, meaning current directory
+"""
+
+if which_directory is not None:
+file  =  open(which_directory + filename, "w")
+np.savetxt(file, np.asarray(data_to_print), newline = '\n')
+file.close()
+else:
+file  =  open(filename, "w")
+np.savetxt(file, np.asarray(data_to_print), newline = '\n')
+file.close()
+
+def get_path(path: str):
+"""
+This function returns the absolute path of a file
+
+:parameter str path:
+- path to the file, specified as a string datatype
+:returns: PureWindowsPath or PurePosixPath object:
+- type depends on the operating system in use
+
+"""
+
+def get_project_root() -> Path:
+"""Returns project root folder."""
+return Path(__file__).parent.parent
+
+return get_project_root().joinpath(path)
+
+
+def complete_path(dir_path: str, here: bool  =  True):
+"""
+Method to complete a path, given only a string that represents
+the name of a directory in the same folder as this program
+
+:parameter str dir_path:
+- path to the directory, specified as a string datatype
+:param here:
+- If not using the current directory, send as False, and
+give a full path as dir_path
+:returns str completed_path:
+- The completed path as a string
+"""
+if here:
+path_here        =    str(pathlib.Path().absolute())
+completed_path   =    path_here + "/" + dir_path + "/"
+else:
+completed_path   =    dir_path + "/"
+
+return completed_path
+
+
+def fits_handler(filepath: PureWindowsPath or PurePosixPath, scalelimit: float  =  None, show: bool  =  False):
+"""
+This function handles the loading and plotting of a FITS file
+
+:parameter path filepath:
+- The absolute path to the file of interest
+:parameter dbl scalelimit:
+- Upper limit of the normalization of the image produced, numerical value
+:returns:
+- hdulist, an HDU list, an astropy type
+- header, the header information from the HDU list
+- imagedata, 2D list (matrix) of image data numerical values
+:parameter bool show:
+- A bool that enables showing of the images if set to true
+"""
+hdulist      =    astropy.io.fits.open(filepath)
+header       =    hdulist[0].header
+imagedata    =    hdulist[0].data
+
+if show:
+plt.imshow(imagedata, vmin = 0, vmax = scalelimit, cmap = 'gray')
+plt.colorbar()
+plt.savefig("test.pdf")
+
+return hdulist, header, imagedata
+
+
+def get_dims(filepath: PureWindowsPath or PurePosixPath):
+"""
+This is a helper function that returns the dimensions of
+the data we are interested in, found at the location of
+filepath
+
+:parameter filepath:
+- The path of the (series of) data that we are
+interested in obtaining the dimensionality of
+:returns tuple extracted_dims:
+- A tuple of [a, b, ....] fit for numpy, that
+represents the dimensionality of the data
+"""
+hdul, header, imagedata  =  fits_handler(filepath)
+extracted_dims  =  imagedata.shape
+return extracted_dims
+
+
+def list_data(dirpath: PureWindowsPath or PurePosixPath):
+"""
+This is a helper function that returns a list of filenames
+of the data, in the data series found in the directory
+specified by dirpath.
+
+:parameter dirpath:
+- The path of the directory containing the (series of)
+data that we wish to list the filenames of
+:returns list data_list:
+- A list of filenames found in the directory specified
+by dirpath
+"""
+data_list  =  os.listdir(dirpath)
+data_list.sort()
+
+return data_list
+
+
+def repeat_sequence_ordered_data(num_of_datapoints_input:       int     ,
+num_of_repeats_input:          int     ,
+where_is_repeat_num_in_string: list    ,
+data_series_list:              list        ):
+"""
+A method that will reorder the data_sequence. When loaded, data from a folder
+is sorted according to names. It is instead necessary to reorder the data
+in a structured format, where repeats of a data point (the repeat sequence) is
+grouped together.
+
+:parameter int num_of_datapoints_input:
+- The number of repeat sequences
+:parameter int num_of_repeats_input:
+- The number of repeats in a repeat sequence (the length of the sequence)
+:parameter list where_is_repeat_num_in_string:
+- An index telling the method where to find the repeat num in the filename string
+:parameter list data_series_list:
+- A list of the data series, constructed from the list_data() method above
+:returns:
+- Restructured data set of repeat sequences, where repeats of a datapoint
+are grouped together in ascending order.
+"""
+reordered_data  =  np.empty([num_of_datapoints_input, num_of_repeats_input], dtype = object)
+
+from_id_in_str   =    where_is_repeat_num_in_string[0]
+to_id_in_str     =    where_is_repeat_num_in_string[1]
+index  =  0
+for imageid in data_series_list:
+repeat_num  =  int(imageid[from_id_in_str : to_id_in_str])
+reordered_data[index][repeat_num]  =  str(imageid)
+index + =  1
+if index  =  =  num_of_datapoints_input:
+index  =  0
+
+return reordered_data
+
+
+def compute_errorbar(filelist: list, dirpath: str):
+"""
+Method that will construct errorbars for a data sequence.
+If a series of data consists of N datapoints, each constructed
+from a repeat sequence of M images, this method will compute
+the M individual image means, associate these with a gaussian
+distribution, of which the width will represent the error in
+the n'th data points of the N lenght data series.
+
+:parameter list filelist:
+- A list of images in the repeat sequence, constructed by
+the list_data() method above
+:parameter str dirpath:
+- The path of the directory containing the (series of)
+data that we wish to list the filenames of
+:returns float errorbar:
+- Computed errorbar for the datapoint that is to be constructed
+from the M images in the repeat sequence
+"""
+distribution_of_image_means  =  []
+
+for imageid in filelist:
+filepath  =  get_path(dirpath + imageid)
+hdul, header, imagedata  =  fits_handler(filepath)
+distribution_of_image_means.append(np.mean(imagedata))
+hdul.close()
+
+errorbar  =  np.std(np.asarray(distribution_of_image_means))
+return errorbar
+
+
+def mean_image(filelist: list, dirpath: str):
+"""
+This is a helper function that returns the mean image from
+a data series of images in .fit(s) file format. Use list_data()
+to generate parameter filelist
+
+:parameter filelist:
+- A list containing filenames to be imported by
+fits_handler() as images, type np.ndarray numpy arrays,
+which will then be meaned over. Generate with list_data()
+:parameter dirpath:
+- The path of the directory containing the images we wish
+to mean over. A sequence of data in the form of .fit(s)
+files. Use list_data() in conjunction to obtain filelist
+:returns np.ndarray mean_image_array:
+- The mean image constructed form the data series
+"""
+dim_path             =    get_path(dirpath + filelist[0])
+image_shape          =    get_dims(dim_path)
+number_of_images     =    len(filelist)
+mean_image_array     =    np.zeros(image_shape)
+
+for imageid in filelist:
+filepath                     =    get_path(dirpath + imageid)
+hdul, header, imagedata      =    fits_handler(filepath)
+
+mean_image_array + =  imagedata
+
+hdul.close()
+
+mean_image_array / =  number_of_images
+return mean_image_array
+
+
+def gaussian(data: np.ndarray or list, height: float, mean: float, width: float):
+"""
+A method that represents a gaussian/normal distribution. For a list
+of data the gaussian function value is computed at each bin value.
+The distribution is defined according to the wikipedia article on
+normal distributions.
+
+:parameter np.ndarray or list data:
+- Data set from which to construct distribution
+:parameter float height:
+- The normalization/heigh of the distribution at the mean
+:parameter float mean:
+- The mean, around which the distribution is centered
+:parameter float width:
+- The width of the distribution, around the mean, defined
+from the standard deviation of the distribution
+:returns:
+"""
+gaussian_distribution    =    height * np.exp(-((data - mean) ** 2) / (2 * (width ** 2)))
+
+return gaussian_distribution
+\end{mintedbox}
+\clearpage
+\textbf{pubplot.py}
+\begin{mintedbox}{python}
+"""
+###############################################
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# -----       By Marc Breiner Sørensen        ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+# ----- Implemented:           August    2021 ----- #
+# ----- Last edit:      23rd   September 2021 ----- #
+# --------------------------------------------------------------------------------------------------------------------------------- #
+###############################################
+"""
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+import matplotlib.lines as mlines
+
+kwargs  =  {'fontweight': 'bold'}
+
+
+def plot_image( image           : np.ndarray    ,
+title           : str           ,
+xlabel          : str           ,
+ylabel          : str           ,
+input_label     : str           ,
+filename        : str           ,
+figure_name     : str    =  None  ,
+scale           : float  =  None  ,
+show            : bool   =  False ,
+raisetitle      : bool   =  False ):
+
+"""
+A helper function to pubplot() in case we are plotting 2D images
+in stead of ordinary functions etc.
+
+:parameter np.ndarray image:
+- The image which is to be plotted as a figure.
+:parameter str title:
+- The title of the figure
+:parameter str xlabel:
+- The label on the first axis
+:parameter str ylabel:
+- The label on the second axis
+:parameter str input_label:
+- The camera name used as a label in the plot
+:parameter str filename:
+- The filename to be printed to
+:parameter str figure_name:
+- A figure name.
+:parameter float scale:
+- A cutoff above which data will not be included in the plot.
+:parameter bool show:
+- Toggle showing of the plot during runtime
+:param bool raisetitle:
+- bool that toggles raising of the title in the figure
+"""
+
+plt.figure(figure_name)
+ax  =  plt.gca()
+if scale:
+im  =  ax.imshow(image, cmap = 'jet', vmax  =  scale)
+else:
+im  =  ax.imshow(image, cmap = 'gray')
+
+# create an axes on the right side of ax. The width of cax will be 5%
+# of ax and the padding between cax and ax will be fixed at 0.05 inch.
+divider  =  make_axes_locatable(ax)
+cax  =  divider.append_axes("right", size = "5%", pad = 0.05)
+
+plt.colorbar(im, cax = cax)
+
+plt.style.use(['science', 'ieee', 'vibrant'])
+font  =  {'family': 'serif',
+	'serif': 'helvet',
+	'weight': 'bold',
+	'size': 10}
+plt.rc('font', **font)
+plt.rc('text', usetex  =  True)
+
+if raisetitle:
+ax.set_title(title, {'fontsize': 12, 'fontweight': 'black'},  y  =  1.06)
+else:
+ax.set_title(title, {'fontsize': 12, 'fontweight': 'black'})
+
+ax.set_xlabel(xlabel, **kwargs)
+ax.set_ylabel(ylabel, **kwargs)
+
+# white_line   =   mlines.Line2D([], [], color  =  'white', label  =  input_label)
+# plt.legend(handles  =  [white_line], bbox_to_anchor  =  (1, 1), loc  =  "upper left", fancybox  =  False, framealpha  =  1, edgecolor  =  'inherit')
+
+if show:
+plt.show()
+
+plt.savefig(filename, dpi  =  300)
+plt.close()
+
+
+# For publication worthy plotting ----------------------------------------------
+def pubplot(title           : str           ,
+xlabel          : str           ,
+ylabel          : str           ,
+filename        : str           ,
+show            : bool    =   False ,
+xlim            : list    =   None  ,
+ylim            : list    =   None  ,
+legend          : bool    =   True  ,
+legendlocation  : str     =   None  ,
+grid            : bool    =   True   ):
+"""
+
+:parameter str title:
+- The title of the figure
+:parameter str xlabel:
+- The label on the first axis
+:parameter str ylabel:
+- The label on the second axis
+:parameter str filename:
+- The filename to be printed to
+:parameter bool show:
+- Toggle showing of the plot during runtime
+:parameter tuple xlim:
+- A tuple of form [a, b] which is the interval on the first axis
+within which data is to be plotted
+:parameter tuple ylim:
+- A tuple of form [a, b] which is the interval on the second axis
+within which data is to be plotted
+:parameter bool legend:
+- Toggle showing of the legend
+:parameter str legendlocation:
+- A string with the location specification for the legend
+:parameter bool grid:
+- Toggle figure grid
+"""
+
+# Adjust a few plot parameters
+plt.style.use(['science', 'ieee', 'vibrant'])
+font   =   {'family': 'serif',
+	'serif': 'helvet',
+	'weight': 'bold',
+	'size': 10}
+plt.rc('font', **font)
+plt.rc('text', usetex  =  True)
+
+plt.title(title, {'fontsize': 12, 'fontweight': 'black'})
+plt.xlabel(xlabel, {'fontsize': 10, 'fontweight': 'black'})
+plt.ylabel(ylabel, {'fontsize': 10, 'fontweight': 'black'})
+plt.xticks(fontsize  =  10)
+plt.yticks(fontsize  =  10)
+
+if legend:
+plt.legend(loc  =  legendlocation, fancybox  =  False, framealpha  =  1, edgecolor  =  'inherit')
+if grid:
+plt.grid(b  =  True, which  =  'major', axis  =  'both', alpha  =  0.3)  # Include a grid!
+if show:
+plt.show()
+else:
+pass
+
+if xlim is not None:
+plt.xlim(xlim[0], xlim[1])
+if ylim is not None:
+plt.ylim(ylim[0], ylim[1])
+
+plt.savefig(filename, dpi  =  200)
+plt.close()
+return
+\end{mintedbox}
+
+\end{document}

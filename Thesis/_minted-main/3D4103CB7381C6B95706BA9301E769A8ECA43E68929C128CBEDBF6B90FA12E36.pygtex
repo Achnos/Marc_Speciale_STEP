@@ -1,0 +1,168 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}       By Marc Breiner Sørensen        \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Implemented:           October   2019 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Last edit:         23. September 2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k+kn}{as} \PYG{n+nn}{plt}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{from} \PYG{n+nn}{mpl\PYGZus{}toolkits.axes\PYGZus{}grid1} \PYG{k+kn}{import} \PYG{n}{make\PYGZus{}axes\PYGZus{}locatable}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.lines} \PYG{k+kn}{as} \PYG{n+nn}{mlines}
+
+\PYG{n}{kwargs} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}fontweight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}bold\PYGZsq{}}\PYG{p}{\PYGZcb{}}
+
+
+\PYG{k}{def} \PYG{n+nf}{plot\PYGZus{}image}\PYG{p}{(} \PYG{n}{image}           \PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}    \PYG{p}{,}
+\PYG{n}{title}           \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{xlabel}          \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{ylabel}          \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{input\PYGZus{}label}     \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{filename}        \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{figure\PYGZus{}name}     \PYG{p}{:} \PYG{n+nb}{str}   \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{scale}           \PYG{p}{:} \PYG{n+nb}{float} \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{show}            \PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=} \PYG{n+nb+bp}{False} \PYG{p}{,}
+\PYG{n}{raisetitle}      \PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=} \PYG{n+nb+bp}{False} \PYG{p}{):}
+
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{A helper function to pubplot() in case we are plotting 2D images}
+\PYG{l+s+sd}{in stead of ordinary functions etc.}
+
+\PYG{l+s+sd}{:parameter np.ndarray image:}
+\PYG{l+s+sd}{\PYGZhy{} The image which is to be plotted as a figure.}
+\PYG{l+s+sd}{:parameter str title:}
+\PYG{l+s+sd}{\PYGZhy{} The title of the figure}
+\PYG{l+s+sd}{:parameter str xlabel:}
+\PYG{l+s+sd}{\PYGZhy{} The label on the first axis}
+\PYG{l+s+sd}{:parameter str ylabel:}
+\PYG{l+s+sd}{\PYGZhy{} The label on the second axis}
+\PYG{l+s+sd}{:parameter str input\PYGZus{}label:}
+\PYG{l+s+sd}{\PYGZhy{} The camera name used as a label in the plot}
+\PYG{l+s+sd}{:parameter str filename:}
+\PYG{l+s+sd}{\PYGZhy{} The filename to be printed to}
+\PYG{l+s+sd}{:parameter str figure\PYGZus{}name:}
+\PYG{l+s+sd}{\PYGZhy{} A figure name.}
+\PYG{l+s+sd}{:parameter float scale:}
+\PYG{l+s+sd}{\PYGZhy{} A cutoff above which data will not be included in the plot.}
+\PYG{l+s+sd}{:parameter bool show:}
+\PYG{l+s+sd}{\PYGZhy{} Toggle showing of the plot during runtime}
+\PYG{l+s+sd}{:param bool raisetitle:}
+\PYG{l+s+sd}{\PYGZhy{} bool that toggles raising of the title in the figure}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{figure\PYGZus{}name}\PYG{p}{)}
+\PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{gca}\PYG{p}{()}
+\PYG{k}{if} \PYG{n}{scale}\PYG{p}{:}
+\PYG{n}{im} \PYG{o}{=} \PYG{n}{ax}\PYG{o}{.}\PYG{n}{imshow}\PYG{p}{(}\PYG{n}{image}\PYG{p}{,} \PYG{n}{cmap}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}jet\PYGZsq{}}\PYG{p}{,} \PYG{n}{vmax} \PYG{o}{=} \PYG{n}{scale}\PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{im} \PYG{o}{=} \PYG{n}{ax}\PYG{o}{.}\PYG{n}{imshow}\PYG{p}{(}\PYG{n}{image}\PYG{p}{,} \PYG{n}{cmap}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}gray\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} create an axes on the right side of ax. The width of cax will be 5\PYGZpc{}}
+\PYG{c+c1}{\PYGZsh{} of ax and the padding between cax and ax will be fixed at 0.05 inch.}
+\PYG{n}{divider} \PYG{o}{=} \PYG{n}{make\PYGZus{}axes\PYGZus{}locatable}\PYG{p}{(}\PYG{n}{ax}\PYG{p}{)}
+\PYG{n}{cax} \PYG{o}{=} \PYG{n}{divider}\PYG{o}{.}\PYG{n}{append\PYGZus{}axes}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}right\PYGZdq{}}\PYG{p}{,} \PYG{n}{size}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}5\PYGZpc{}\PYGZdq{}}\PYG{p}{,} \PYG{n}{pad}\PYG{o}{=}\PYG{l+m+mf}{0.05}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{colorbar}\PYG{p}{(}\PYG{n}{im}\PYG{p}{,} \PYG{n}{cax}\PYG{o}{=}\PYG{n}{cax}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{style}\PYG{o}{.}\PYG{n}{use}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}science\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}ieee\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}vibrant\PYGZsq{}}\PYG{p}{])}
+\PYG{n}{font} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}family\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}serif\PYGZsq{}}\PYG{p}{,}
+	\PYG{l+s+s1}{\PYGZsq{}serif\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}helvet\PYGZsq{}}\PYG{p}{,}
+	\PYG{l+s+s1}{\PYGZsq{}weight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}bold\PYGZsq{}}\PYG{p}{,}
+	\PYG{l+s+s1}{\PYGZsq{}size\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{10}\PYG{p}{\PYGZcb{}}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{rc}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}font\PYGZsq{}}\PYG{p}{,} \PYG{o}{**}\PYG{n}{font}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{rc}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}text\PYGZsq{}}\PYG{p}{,} \PYG{n}{usetex}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n}{raisetitle}\PYG{p}{:}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{set\PYGZus{}title}\PYG{p}{(}\PYG{n}{title}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}fontsize\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}fontweight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}black\PYGZsq{}}\PYG{p}{\PYGZcb{},}  \PYG{n}{y}\PYG{o}{=}\PYG{l+m+mf}{1.06}\PYG{p}{)}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{set\PYGZus{}title}\PYG{p}{(}\PYG{n}{title}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}fontsize\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}fontweight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}black\PYGZsq{}}\PYG{p}{\PYGZcb{})}
+
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{set\PYGZus{}xlabel}\PYG{p}{(}\PYG{n}{xlabel}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{)}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{set\PYGZus{}ylabel}\PYG{p}{(}\PYG{n}{ylabel}\PYG{p}{,} \PYG{o}{**}\PYG{n}{kwargs}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} white\PYGZus{}line = mlines.Line2D([], [], color=\PYGZsq{}white\PYGZsq{}, label=input\PYGZus{}label)}
+\PYG{c+c1}{\PYGZsh{} plt.legend(handles=[white\PYGZus{}line], bbox\PYGZus{}to\PYGZus{}anchor=(1, 1), loc=\PYGZdq{}upper left\PYGZdq{}, fancybox=False, framealpha=1, edgecolor=\PYGZsq{}inherit\PYGZsq{})}
+
+\PYG{k}{if} \PYG{n}{show}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{n}{dpi}\PYG{o}{=}\PYG{l+m+mi}{300}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+
+
+\PYG{c+c1}{\PYGZsh{} For publication worthy plotting \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{k}{def} \PYG{n+nf}{pubplot}\PYG{p}{(}\PYG{n}{title}           \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{xlabel}          \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{ylabel}          \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{filename}        \PYG{p}{:} \PYG{n+nb}{str}           \PYG{p}{,}
+\PYG{n}{show}            \PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=} \PYG{n+nb+bp}{False} \PYG{p}{,}
+\PYG{n}{xlim}            \PYG{p}{:} \PYG{n+nb}{list}  \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{ylim}            \PYG{p}{:} \PYG{n+nb}{list}  \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{legend}          \PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=} \PYG{n+nb+bp}{True}  \PYG{p}{,}
+\PYG{n}{legendlocation}  \PYG{p}{:} \PYG{n+nb}{str}   \PYG{o}{=} \PYG{n+nb+bp}{None}  \PYG{p}{,}
+\PYG{n}{grid}            \PYG{p}{:} \PYG{n+nb}{bool}  \PYG{o}{=} \PYG{n+nb+bp}{True}   \PYG{p}{):}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{l+s+sd}{:parameter str title:}
+\PYG{l+s+sd}{\PYGZhy{} The title of the figure}
+\PYG{l+s+sd}{:parameter str xlabel:}
+\PYG{l+s+sd}{\PYGZhy{} The label on the first axis}
+\PYG{l+s+sd}{:parameter str ylabel:}
+\PYG{l+s+sd}{\PYGZhy{} The label on the second axis}
+\PYG{l+s+sd}{:parameter str filename:}
+\PYG{l+s+sd}{\PYGZhy{} The filename to be printed to}
+\PYG{l+s+sd}{:parameter bool show:}
+\PYG{l+s+sd}{\PYGZhy{} Toggle showing of the plot during runtime}
+\PYG{l+s+sd}{:parameter tuple xlim:}
+\PYG{l+s+sd}{\PYGZhy{} A tuple of form [a, b] which is the interval on the first axis}
+\PYG{l+s+sd}{within which data is to be plotted}
+\PYG{l+s+sd}{:parameter tuple ylim:}
+\PYG{l+s+sd}{\PYGZhy{} A tuple of form [a, b] which is the interval on the second axis}
+\PYG{l+s+sd}{within which data is to be plotted}
+\PYG{l+s+sd}{:parameter bool legend:}
+\PYG{l+s+sd}{\PYGZhy{} Toggle showing of the legend}
+\PYG{l+s+sd}{:parameter str legendlocation:}
+\PYG{l+s+sd}{\PYGZhy{} A string with the location specification for the legend}
+\PYG{l+s+sd}{:parameter bool grid:}
+\PYG{l+s+sd}{\PYGZhy{} Toggle figure grid}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{c+c1}{\PYGZsh{} Adjust a few plot parameters}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{style}\PYG{o}{.}\PYG{n}{use}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}science\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}ieee\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}vibrant\PYGZsq{}}\PYG{p}{])}
+\PYG{n}{font} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}family\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}serif\PYGZsq{}}\PYG{p}{,}
+	\PYG{l+s+s1}{\PYGZsq{}serif\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}helvet\PYGZsq{}}\PYG{p}{,}
+	\PYG{l+s+s1}{\PYGZsq{}weight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}bold\PYGZsq{}}\PYG{p}{,}
+	\PYG{l+s+s1}{\PYGZsq{}size\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{10}\PYG{p}{\PYGZcb{}}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{rc}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}font\PYGZsq{}}\PYG{p}{,} \PYG{o}{**}\PYG{n}{font}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{rc}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}text\PYGZsq{}}\PYG{p}{,} \PYG{n}{usetex}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{n}{title}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}fontsize\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{12}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}fontweight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}black\PYGZsq{}}\PYG{p}{\PYGZcb{})}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{n}{xlabel}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}fontsize\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}fontweight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}black\PYGZsq{}}\PYG{p}{\PYGZcb{})}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{n}{ylabel}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s+s1}{\PYGZsq{}fontsize\PYGZsq{}}\PYG{p}{:} \PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}fontweight\PYGZsq{}}\PYG{p}{:} \PYG{l+s+s1}{\PYGZsq{}black\PYGZsq{}}\PYG{p}{\PYGZcb{})}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xticks}\PYG{p}{(}\PYG{n}{fontsize}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{yticks}\PYG{p}{(}\PYG{n}{fontsize}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
+
+\PYG{k}{if} \PYG{n}{legend}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{loc}\PYG{o}{=}\PYG{n}{legendlocation}\PYG{p}{,} \PYG{n}{fancybox}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{,} \PYG{n}{framealpha}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{edgecolor}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}inherit\PYGZsq{}}\PYG{p}{)}
+\PYG{k}{if} \PYG{n}{grid}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{n}{b}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{which}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}major\PYGZsq{}}\PYG{p}{,} \PYG{n}{axis}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}both\PYGZsq{}}\PYG{p}{,} \PYG{n}{alpha}\PYG{o}{=}\PYG{l+m+mf}{0.3}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Include a grid!}
+\PYG{k}{if} \PYG{n}{show}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\PYG{k}{else}\PYG{p}{:}
+\PYG{k}{pass}
+
+\PYG{k}{if} \PYG{n}{xlim} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlim}\PYG{p}{(}\PYG{n}{xlim}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{xlim}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{k}{if} \PYG{n}{ylim} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylim}\PYG{p}{(}\PYG{n}{ylim}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{ylim}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{savefig}\PYG{p}{(}\PYG{n}{filename}\PYG{p}{,} \PYG{n}{dpi}\PYG{o}{=}\PYG{l+m+mi}{200}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{close}\PYG{p}{()}
+\PYG{k}{return}
+
+	
+\end{Verbatim}

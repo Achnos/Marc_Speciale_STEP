@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+		\PYG{k}{if} \PYG{n}{transactions}\PYG{p}{:} \PYG{n}{Transaction}\PYG{o}{.}\PYG{n}{create\PYGZus{}transactions}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{} if transactions = \PYGZdq{}true\PYGZdq{}}
+		\PYG{n}{node}\PYG{o}{.}\PYG{n}{generate\PYGZus{}emptyState}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{} empty state for all nodes}
+		\PYG{n}{S}\PYG{o}{.}\PYG{n}{initial\PYGZus{}events}\PYG{p}{()} \PYG{c+c1}{\PYGZsh{} initiate initial events to start with}
+		
+		\PYG{k}{while} \PYG{o+ow}{not} \PYG{n}{queue}\PYG{o}{.}\PYG{n}{isEmpty}\PYG{p}{()} \PYG{o+ow}{and} \PYG{n}{clock} \PYG{o}{\PYGZlt{}=} \PYG{n}{targetTime}\PYG{p}{:}
+		\PYG{n}{next\PYGZus{}e} \PYG{o}{=} \PYG{n}{queue}\PYG{o}{.}\PYG{n}{get\PYGZus{}next\PYGZus{}event}\PYG{p}{()}
+		\PYG{n}{clock} \PYG{o}{=} \PYG{n}{next\PYGZus{}e}\PYG{o}{.}\PYG{n}{time} \PYG{c+c1}{\PYGZsh{} move clock to the time of the event}
+		\PYG{n}{Event}\PYG{o}{.}\PYG{n}{execute\PYGZus{}event}\PYG{p}{(}\PYG{n}{next\PYGZus{}e}\PYG{p}{)}
+		\PYG{n}{Queue}\PYG{o}{.}\PYG{n}{remove\PYGZus{}event}\PYG{p}{(}\PYG{n}{next\PYGZus{}e}\PYG{p}{)}
+		
+		\PYG{k}{print} \PYG{n}{results}
+	
+\end{Verbatim}

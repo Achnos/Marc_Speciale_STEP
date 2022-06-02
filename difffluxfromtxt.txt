@@ -1,0 +1,74 @@
+
+def differential_flux_fromtxt(camera: ccd, path_of_data_series: str, aperture_positions: list, aperture_radius: float, annulus_radii: list):
+    print("\nAnalyzing the differential flux.")
+    tmplist = []
+    fluxlist = []
+    data_series = util.list_data(path_of_data_series)
+
+    id = 0
+    for imageid in data_series:
+        filepath                    =   util.get_path(path_of_data_series + imageid)
+        hdul, header, imagedata     =   util.fits_handler(filepath)
+        imagedata_corrected         =   camera.hot_pixel_correction(camera.flat_field_correction(camera.bias_correction(imagedata)))
+
+        x_init = (aperture_positions[:][id][0], aperture_positions[:][id][2])
+        y_init = (aperture_positions[:][id][1], aperture_positions[:][id][3])
+        x_pos, y_pos = centroid_sources(imagedata_corrected, x_init, y_init, box_size=2*aperture_radius, centroid_func=centroid_com)
+
+        aperture = CircularAperture([(aperture_positions[:][id][0], aperture_positions[:][id][1]), (aperture_positions[:][id][2], aperture_positions[:][id][3])], r = aperture_radius)
+        annulus_aperture = CircularAnnulus([(aperture_positions[:][id][0], aperture_positions[:][id][1]), (aperture_positions[:][id][2], aperture_positions[:][id][3])], r_in = annulus_radii[0], r_out = annulus_radii[1])
+        aperatures = [aperture, annulus_aperture]
+        phot_table = aperture_photometry(imagedata_corrected, aperatures)
+        for col in phot_table.colnames:
+            phot_table[col].info.format = '%.8g'
+        #print(phot_table)
+
+        """
+            The aperture_sum_0 column refers to the first aperture in the list of input apertures (i.e., the circular aperture)
+            and the aperture_sum_1 column refers to the second aperture (i.e., the circular annulus).
+            Note that we cannot simply subtract the aperture sums because the apertures have different areas.
+        """
+
+        bkg_mean = phot_table['aperture_sum_1'] / annulus_aperture.area
+        bkg_sum = bkg_mean * aperture.area
+        final_sum = phot_table['aperture_sum_0'] - bkg_sum
+        phot_table['residual_aperture_sum'] = final_sum
+        phot_table['residual_aperture_sum'].info.format = '%.3g'  # for consistent table output
+        #print(phot_table['residual_aperture_sum'])
+
+        differential_flux = phot_table['residual_aperture_sum'][0] / phot_table['residual_aperture_sum'][1]
+        tmplist.append(differential_flux)
+        fluxlist.append([phot_table['residual_aperture_sum'][0], x_pos[0], y_pos[0]])
+        id += 1
+
+    diffs = np.diff(np.asarray(tmplist))
+    print(diffs)
+    fluxlist = np.asarray(fluxlist)
+
+    plt.plot(fluxlist[:, 1], tmplist[:], '.', label="Flux")
+    pp.pubplot("Flux dep. on X pos.", "X pixel pos.", "Differential corrected flux", "fluxVsX.png", legend=False)
+    plt.plot(fluxlist[:, 1], tmplist[:], '.', label="Flux")
+    pp.pubplot("Flux dep. on X pos.", "X pixel pos.", "Differential corrected flux", "fluxVsX.png", legend=False)
+
+    plt.plot(fluxlist[:, 2], tmplist[:], '.', label="Flux")
+    pp.pubplot("Flux dep. on Y pos.", "Y pixel pos.", "Differential corrected flux", "fluxVsY.png", legend=False)
+
+    plt.plot(fluxlist[:, 0], tmplist[:], label="Flux")
+    pp.pubplot("Diff. flux dep. on raw flux", "Differential corrected flux", "Raw flux corrected", "fluxVsB.png", legend=False)
+
+    dX = np.subtract(fluxlist[:, 1], np.mean(fluxlist[:, 1]))
+    dY = np.subtract(fluxlist[:, 2], np.mean(fluxlist[:, 2]))
+    dB = np.subtract(fluxlist[:, 0], np.mean(fluxlist[:, 0]))
+    y = tmplist
+    M = np.asarray(np.transpose(np.asarray([np.ones(len(dX)), dX, dY, dB])))
+    p, res, rnk, s = lstsq(M, y)
+    print(p, res, rnk, s)
+    fit = p[0] + dX*p[1] + dY*p[2] + dB*p[3]
+    plt.plot(np.linspace(1, 11, 11), tmplist[:], label="Differential flux")
+    plt.plot(np.linspace(1, 11, 11), fit, label="Fit to diff. flux")
+    plt.plot(np.linspace(1, 11, 11), np.subtract(tmplist[:], fit), label="Diff. flux minus fit")
+    pp.pubplot("Diff. flux. vs image no.", "Image no.", "Flux", "fluxfit.png", legend=True)
+
+    error = np.std(np.subtract(tmplist[:], fit))
+    print(error)
+    #plt.plot(tmplist[])

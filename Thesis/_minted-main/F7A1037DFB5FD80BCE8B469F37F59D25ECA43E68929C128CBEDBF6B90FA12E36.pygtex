@@ -1,0 +1,347 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}       By Marc Breiner Sørensen        \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Implemented:           August    2021 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} Last edit:         8.  April     2022 \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+\PYG{l+s+sd}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{k+kn}{import} \PYG{n+nn}{matplotlib.pyplot} \PYG{k+kn}{as} \PYG{n+nn}{plt}
+\PYG{k+kn}{import} \PYG{n+nn}{utilities} \PYG{k+kn}{as} \PYG{n+nn}{util}
+\PYG{k+kn}{import} \PYG{n+nn}{ccd}
+\PYG{k+kn}{import} \PYG{n+nn}{pubplot} \PYG{k+kn}{as} \PYG{n+nn}{pp}
+\PYG{k+kn}{from} \PYG{n+nn}{scipy.linalg} \PYG{k+kn}{import} \PYG{n}{lstsq}
+\PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k+kn}{as} \PYG{n+nn}{np}
+\PYG{k+kn}{from} \PYG{n+nn}{photutils.aperture} \PYG{k+kn}{import} \PYG{n}{aperture\PYGZus{}photometry}
+\PYG{k+kn}{from} \PYG{n+nn}{photutils.aperture} \PYG{k+kn}{import} \PYG{n}{CircularAperture}
+\PYG{k+kn}{from} \PYG{n+nn}{photutils.aperture} \PYG{k+kn}{import} \PYG{n}{CircularAnnulus}
+\PYG{k+kn}{from} \PYG{n+nn}{photutils.centroids} \PYG{k+kn}{import} \PYG{n}{centroid\PYGZus{}sources}\PYG{p}{,} \PYG{n}{centroid\PYGZus{}com}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{style}\PYG{o}{.}\PYG{n}{use}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}science\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}ieee\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}vibrant\PYGZsq{}}\PYG{p}{])}
+
+
+\PYG{k}{def} \PYG{n+nf}{compute\PYGZus{}noise}\PYG{p}{(}\PYG{n}{camera}                \PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}  \PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}   \PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}areas}        \PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{annulus\PYGZus{}areas}         \PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}
+\PYG{p}{):}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Computing total noise...\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Total noise calculations}
+\PYG{c+c1}{\PYGZsh{} Compute the ratio of the areas of the apertures to annuli}
+\PYG{n}{area\PYGZus{}ratio}  \PYG{o}{=}  \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}areas}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}areas}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Compute the standard deviation of the photonic (and readout noise) distribution in the first aperture}
+\PYG{n}{count\PYGZus{}dist\PYGZus{}width\PYGZus{}first} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{area\PYGZus{}ratio}\PYG{p}{)} \PYG{o}{+} \PYG{n}{area\PYGZus{}ratio}\PYG{p}{)}
+\PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}areas}\PYG{p}{,}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{area\PYGZus{}ratio}\PYG{p}{),}
+\PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}level} \PYG{o}{**} \PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{p}{)}
+\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} eq (9.11.28) in Detector book}
+
+\PYG{c+c1}{\PYGZsh{} Compute, from the standard deviation, the relative error}
+\PYG{n}{count\PYGZus{}dist\PYGZus{}error\PYGZus{}first} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{count\PYGZus{}dist\PYGZus{}width\PYGZus{}first}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{*} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} eq (9.11.29)}
+
+\PYG{c+c1}{\PYGZsh{} Compute the standard deviation of the photonic (and readout noise) distribution in the second aperture}
+\PYG{n}{count\PYGZus{}dist\PYGZus{}width\PYGZus{}second} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{area\PYGZus{}ratio}\PYG{p}{)} \PYG{o}{+} \PYG{n}{area\PYGZus{}ratio}\PYG{p}{)}
+\PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}areas}\PYG{p}{,}
+\PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{add}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{area\PYGZus{}ratio}\PYG{p}{),}
+\PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor} \PYG{o}{*} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{readout\PYGZus{}noise\PYGZus{}level} \PYG{o}{**} \PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{p}{)}
+\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} eq (9.11.28) in Detector book}
+
+\PYG{c+c1}{\PYGZsh{} Compute, from the standard deviation, the relative error}
+\PYG{n}{count\PYGZus{}dist\PYGZus{}error\PYGZus{}second} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{count\PYGZus{}dist\PYGZus{}width\PYGZus{}second}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{*} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{gain\PYGZus{}factor}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} eq (9.11.29)}
+
+\PYG{n}{total\PYGZus{}noise} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(} \PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(} \PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{count\PYGZus{}dist\PYGZus{}error\PYGZus{}first}\PYG{p}{)} \PYG{o}{+} \PYG{n}{np}\PYG{o}{.}\PYG{n}{square}\PYG{p}{(}\PYG{n}{count\PYGZus{}dist\PYGZus{}error\PYGZus{}second}\PYG{p}{)} \PYG{p}{)} \PYG{p}{)}
+
+\PYG{k}{return} \PYG{n}{total\PYGZus{}noise}
+
+
+\PYG{k}{def} \PYG{n+nf}{differential\PYGZus{}aperture\PYGZus{}photometry}\PYG{p}{(}   \PYG{n}{camera}\PYG{p}{:}                 \PYG{n}{ccd}     \PYG{p}{,}
+\PYG{n}{data\PYGZus{}series}\PYG{p}{:}            \PYG{n+nb}{list}    \PYG{p}{,}
+\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:}    \PYG{n+nb}{str}     \PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{:}          \PYG{n+nb}{int}     \PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}positions}\PYG{p}{:}     \PYG{n+nb}{list}    \PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}radius}\PYG{p}{:}        \PYG{n+nb}{float}   \PYG{p}{,}
+\PYG{n}{annulus\PYGZus{}radii}\PYG{p}{:}          \PYG{n+nb}{list}
+\PYG{p}{):}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Performing aperture photometry with aperture positions:\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}   \PYGZdq{}}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}   Aperture radius: }\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{    \PYGZdq{}}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}radius}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}   Annulus radii:   }\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{    \PYGZdq{}}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}radii}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Prepare a set of lists for the data analysis below}
+\PYG{n}{differential\PYGZus{}flux\PYGZus{}data}              \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{timestamps}                          \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}                  \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{aperture\PYGZus{}areas}                      \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{annulus\PYGZus{}areas}                       \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}                \PYG{o}{=}   \PYG{p}{[]}
+\PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}                 \PYG{o}{=}   \PYG{p}{[]}
+
+\PYG{n+nb}{id} \PYG{o}{=} \PYG{l+m+mi}{0}
+\PYG{k}{for} \PYG{n}{imageid} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{):}
+\PYG{c+c1}{\PYGZsh{} Load the image, and correct it}
+\PYG{n}{filepath}                 \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{get\PYGZus{}path}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series} \PYG{o}{+} \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{n}{imageid}\PYG{p}{])}
+\PYG{n}{hdul}\PYG{p}{,} \PYG{n}{header}\PYG{p}{,} \PYG{n}{imagedata}  \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{fits\PYGZus{}handler}\PYG{p}{(}\PYG{n}{filepath}\PYG{p}{)}
+\PYG{n}{imagedata\PYGZus{}corrected}      \PYG{o}{=}   \PYG{n}{camera}\PYG{o}{.}\PYG{n}{hot\PYGZus{}pixel\PYGZus{}correction}\PYG{p}{(}\PYG{n}{camera}\PYG{o}{.}\PYG{n}{flat\PYGZus{}field\PYGZus{}correction}\PYG{p}{(}\PYG{n}{camera}\PYG{o}{.}\PYG{n}{bias\PYGZus{}correction}\PYG{p}{(}\PYG{n}{imagedata}\PYG{p}{)))}
+
+\PYG{c+c1}{\PYGZsh{} Append to a list of timestamps for use in the figure below}
+\PYG{k}{try}\PYG{p}{:}
+\PYG{n}{timestamp} \PYG{o}{=} \PYG{n+nb}{id}  \PYG{c+c1}{\PYGZsh{} =   header[\PYGZsq{}DATE\PYGZhy{}OBS\PYGZsq{}]}
+\PYG{n}{timestamps}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{timestamp}\PYG{p}{[}\PYG{l+m+mi}{11}\PYG{p}{:}\PYG{l+m+mi}{16}\PYG{p}{]))}
+\PYG{k}{except}\PYG{p}{:}
+\PYG{n}{timestamp} \PYG{o}{=} \PYG{n+nb}{id}
+\PYG{n}{timestamps}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{timestamp}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Initiallize the x and y positions of the apertures from the function call}
+\PYG{n}{aperture\PYGZus{}x\PYGZus{}position} \PYG{o}{=} \PYG{p}{(}\PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{])}  \PYG{c+c1}{\PYGZsh{} (first aperture x position, second aperture x position)}
+\PYG{n}{aperture\PYGZus{}y\PYGZus{}position} \PYG{o}{=} \PYG{p}{(}\PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{])}  \PYG{c+c1}{\PYGZsh{} (first aperture y position, second aperture y position)}
+\PYG{c+c1}{\PYGZsh{} Determine centroid positions of the light in the apertures}
+\PYG{n}{box\PYGZus{}size\PYGZus{}for\PYGZus{}centroid\PYGZus{}search} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{aperture\PYGZus{}radius}\PYG{p}{)}
+\PYG{n}{aperture\PYGZus{}centroid\PYGZus{}x\PYGZus{}pos}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}centroid\PYGZus{}y\PYGZus{}pos} \PYG{o}{=} \PYG{n}{centroid\PYGZus{}sources}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}corrected}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}x\PYGZus{}position}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}y\PYGZus{}position}\PYG{p}{,} \PYG{n}{box\PYGZus{}size}\PYG{o}{=}\PYG{n}{box\PYGZus{}size\PYGZus{}for\PYGZus{}centroid\PYGZus{}search}\PYG{p}{,} \PYG{n}{centroid\PYGZus{}func}\PYG{o}{=}\PYG{n}{centroid\PYGZus{}com}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Construct two apertures of same radii and two annuli of the same radii}
+\PYG{n}{aperture}            \PYG{o}{=}   \PYG{n}{CircularAperture}\PYG{p}{(} \PYG{p}{[}\PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]],} \PYG{n}{r}\PYG{o}{=}\PYG{n}{aperture\PYGZus{}radius}\PYG{p}{)}
+\PYG{n}{annulus}             \PYG{o}{=}   \PYG{n}{CircularAnnulus}\PYG{p}{(}  \PYG{p}{[}\PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]],} \PYG{n}{r\PYGZus{}in}\PYG{o}{=}\PYG{n}{annulus\PYGZus{}radii}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{r\PYGZus{}out}\PYG{o}{=}\PYG{n}{annulus\PYGZus{}radii}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{aperatures}          \PYG{o}{=}   \PYG{p}{[}\PYG{n}{aperture}\PYG{p}{,} \PYG{n}{annulus}\PYG{p}{]}  \PYG{c+c1}{\PYGZsh{} Collect the objects in a list}
+\PYG{n}{photometry\PYGZus{}table}    \PYG{o}{=}   \PYG{n}{aperture\PYGZus{}photometry}\PYG{p}{(}\PYG{n}{imagedata\PYGZus{}corrected}\PYG{p}{,} \PYG{n}{aperatures}\PYG{p}{)}  \PYG{c+c1}{\PYGZsh{} Do aperture photometry}
+\PYG{k}{for} \PYG{n}{col} \PYG{o+ow}{in} \PYG{n}{photometry\PYGZus{}table}\PYG{o}{.}\PYG{n}{colnames}\PYG{p}{:}
+\PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{n}{col}\PYG{p}{]}\PYG{o}{.}\PYG{n}{info}\PYG{o}{.}\PYG{n}{format} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}.8g}\PYG{l+s+s1}{\PYGZsq{}}
+
+\PYG{c+c1}{\PYGZsh{} The aperture\PYGZus{}sum\PYGZus{}0 column refers to the first aperture in the list of input apertures (i.e., the circular aperture)}
+\PYG{c+c1}{\PYGZsh{} and the aperture\PYGZus{}sum\PYGZus{}1 column refers to the second aperture (i.e., the circular annulus).}
+\PYG{c+c1}{\PYGZsh{} Note that we cannot simply subtract the aperture sums because the apertures have different areas.}
+\PYG{n}{annulus\PYGZus{}counts}                                          \PYG{o}{=}   \PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}aperture\PYGZus{}sum\PYGZus{}1\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{aperture\PYGZus{}counts}                                         \PYG{o}{=}   \PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}aperture\PYGZus{}sum\PYGZus{}0\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{background\PYGZus{}counts\PYGZus{}per\PYGZus{}pixel}                             \PYG{o}{=}   \PYG{n}{annulus\PYGZus{}counts} \PYG{o}{/} \PYG{n}{annulus}\PYG{o}{.}\PYG{n}{area}
+\PYG{n}{background\PYGZus{}counts\PYGZus{}in\PYGZus{}aperture}                           \PYG{o}{=}   \PYG{n}{background\PYGZus{}counts\PYGZus{}per\PYGZus{}pixel} \PYG{o}{*} \PYG{n}{aperture}\PYG{o}{.}\PYG{n}{area}
+\PYG{n}{aperture\PYGZus{}counts\PYGZus{}background\PYGZus{}subtracted}                   \PYG{o}{=}   \PYG{n}{aperture\PYGZus{}counts} \PYG{o}{\PYGZhy{}} \PYG{n}{background\PYGZus{}counts\PYGZus{}in\PYGZus{}aperture}
+\PYG{c+c1}{\PYGZsh{} Collect the corrected fluxes in a new table}
+\PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}residual\PYGZus{}aperture\PYGZus{}sum\PYGZsq{}}\PYG{p}{]}               \PYG{o}{=}   \PYG{n}{aperture\PYGZus{}counts\PYGZus{}background\PYGZus{}subtracted} \PYG{o}{/} \PYG{n}{aperture}\PYG{o}{.}\PYG{n}{area}  \PYG{c+c1}{\PYGZsh{} The flux per pixel}
+\PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}residual\PYGZus{}aperture\PYGZus{}sum\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{info}\PYG{o}{.}\PYG{n}{format}   \PYG{o}{=}   \PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}.3g}\PYG{l+s+s1}{\PYGZsq{}}  \PYG{c+c1}{\PYGZsh{} for consistent table output}
+\PYG{n}{differential\PYGZus{}flux}                                       \PYG{o}{=}   \PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}residual\PYGZus{}aperture\PYGZus{}sum\PYGZsq{}}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{/} \PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}residual\PYGZus{}aperture\PYGZus{}sum\PYGZsq{}}\PYG{p}{][}\PYG{l+m+mi}{1}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Fill out lists}
+\PYG{n}{differential\PYGZus{}flux\PYGZus{}data}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux}\PYG{p}{)}
+\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{photometry\PYGZus{}table}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}residual\PYGZus{}aperture\PYGZus{}sum\PYGZsq{}}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}centroid\PYGZus{}x\PYGZus{}pos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),} \PYG{n+nb}{float}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}centroid\PYGZus{}y\PYGZus{}pos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])])}
+\PYG{n}{aperture\PYGZus{}areas}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{aperture}\PYG{o}{.}\PYG{n}{area}\PYG{p}{)}
+\PYG{n}{annulus\PYGZus{}areas}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{annulus}\PYG{o}{.}\PYG{n}{area}\PYG{p}{)}
+\PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{aperture\PYGZus{}counts}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{aperture\PYGZus{}counts}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]])}
+\PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{([}\PYG{n}{annulus\PYGZus{}counts}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{annulus\PYGZus{}counts}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]])}
+
+\PYG{n+nb}{id} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+\PYG{c+c1}{\PYGZsh{} Convert to numpy arrays}
+\PYG{n}{aperture\PYGZus{}areas}          \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}areas}\PYG{p}{)}
+\PYG{n}{annulus\PYGZus{}areas}           \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{annulus\PYGZus{}areas}\PYG{p}{)}
+\PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}    \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{p}{)}
+\PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}     \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}\PYG{p}{)}
+\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}      \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{)}
+\PYG{n}{timestamps}              \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{timestamps}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Compute total noise in the experiment}
+\PYG{n}{total\PYGZus{}noise} \PYG{o}{=} \PYG{n}{compute\PYGZus{}noise}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}counts\PYGZus{}list}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}counts\PYGZus{}list}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}areas}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}areas}\PYG{p}{)}
+
+\PYG{k}{return} \PYG{p}{[}\PYG{n}{differential\PYGZus{}flux\PYGZus{}data}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{,} \PYG{n}{timestamps}\PYG{p}{,} \PYG{n}{total\PYGZus{}noise}\PYG{p}{]}
+
+
+\PYG{k}{def} \PYG{n+nf}{drift\PYGZus{}correct\PYGZus{}data}\PYG{p}{(}\PYG{n}{dataset}\PYG{p}{:} \PYG{n+nb}{list}\PYG{p}{):}
+\PYG{n}{num\PYGZus{}of\PYGZus{}datapoints} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{dataset}\PYG{p}{)}
+\PYG{n}{drift\PYGZus{}corrected\PYGZus{}data} \PYG{o}{=} \PYG{p}{[]}
+\PYG{k}{for} \PYG{n}{data\PYGZus{}id} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}datapoints} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{):}
+\PYG{n}{new\PYGZus{}datapoint} \PYG{o}{=} \PYG{n}{dataset}\PYG{p}{[}\PYG{n}{data\PYGZus{}id}\PYG{p}{]} \PYG{o}{\PYGZhy{}} \PYG{p}{((}\PYG{n}{dataset}\PYG{p}{[}\PYG{n}{data\PYGZus{}id} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{+} \PYG{n}{dataset}\PYG{p}{[}\PYG{n}{data\PYGZus{}id} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{])} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{drift\PYGZus{}corrected\PYGZus{}data}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{new\PYGZus{}datapoint}\PYG{p}{)}
+\PYG{k}{return} \PYG{n}{drift\PYGZus{}corrected\PYGZus{}data}
+
+
+\PYG{k}{def} \PYG{n+nf}{move\PYGZus{}tol\PYGZus{}pixel}\PYG{p}{(}\PYG{n}{requirement}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}movement}\PYG{p}{):}
+\PYG{k}{return} \PYG{n}{requirement} \PYG{o}{/} \PYG{n}{linear\PYGZus{}model\PYGZus{}movement}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+
+
+\PYG{k}{def} \PYG{n+nf}{output\PYGZus{}requirements}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{:} \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,}
+\PYG{n}{requirement\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{float}
+\PYG{p}{):}
+
+\PYG{c+c1}{\PYGZsh{} Fit a linear model to the flux variation as a function of positions}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}movement} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{polyfit}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}movement} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{polyfit}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}function} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{poly1d}\PYG{p}{(}\PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}movement}\PYG{p}{)}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}function} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{poly1d}\PYG{p}{(}\PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}movement}\PYG{p}{)}
+\PYG{n}{fitquery\PYGZus{}x} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{min}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]),} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{)}
+\PYG{n}{fitquery\PYGZus{}y} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{min}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{]),} \PYG{n}{np}\PYG{o}{.}\PYG{n}{max}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{]),} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Linear model fit to x movement: }\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}movement}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Linear model fit to y movement: }\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{ \PYGZdq{}}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}movement}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} For the flux to change at most ΔF = \PYGZdq{}}\PYG{p}{,} \PYG{n}{requirement\PYGZus{}input}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} We must require at most \PYGZdq{}}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}  Δx = \PYGZdq{}}\PYG{p}{,} \PYG{n}{move\PYGZus{}tol\PYGZus{}pixel}\PYG{p}{(}\PYG{n}{requirement\PYGZus{}input}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}movement}\PYG{p}{),} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{  Δy = \PYGZdq{}}\PYG{p}{,}
+\PYG{n}{move\PYGZus{}tol\PYGZus{}pixel}\PYG{p}{(}\PYG{n}{requirement\PYGZus{}input}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}movement}\PYG{p}{))}
+
+\PYG{k}{return} \PYG{p}{[}\PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}function}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}function}\PYG{p}{,} \PYG{n}{fitquery\PYGZus{}x}\PYG{p}{,} \PYG{n}{fitquery\PYGZus{}y}\PYG{p}{]}
+
+
+\PYG{k}{def} \PYG{n+nf}{plot\PYGZus{}variations}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{:}                         \PYG{n}{ccd}\PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{:}             \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{:}         \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{:}        \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}x}\PYG{p}{:}                \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}y}\PYG{p}{:}                \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}function}\PYG{p}{,}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}function}\PYG{p}{,}
+\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{:}                \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{drift\PYGZus{}corrected\PYGZus{}diffflux\PYGZus{}data}\PYG{p}{,}
+\PYG{p}{):}
+
+\PYG{c+c1}{\PYGZsh{} Plot the deviation in the differential flux as a function of x\PYGZhy{}movement}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}k\PYGZdq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Flux\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}x}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}function}\PYG{p}{(}\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}x}\PYG{p}{),} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{,} \PYG{n}{linewidth}\PYG{o}{=}\PYG{l+m+mf}{1.5}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Flux dep. on X pos.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}X pixel pos.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Diff. corr. flux deviation (\PYGZbs{}\PYGZpc{})\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}fluxVsX\PYGZdq{}} \PYG{o}{+} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Plot the deviation in the differential flux as a function of y\PYGZhy{}movement}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}k\PYGZdq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Flux\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}y}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}function}\PYG{p}{(}\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}y}\PYG{p}{),} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{,} \PYG{n}{linewidth}\PYG{o}{=}\PYG{l+m+mf}{1.5}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Flux dep. on Y pos.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Y pixel pos.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Diff. corr. flux deviation (\PYGZbs{}\PYGZpc{})\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}fluxVsY\PYGZdq{}} \PYG{o}{+} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Plot the deviation in the differential flux as a function of variations in the raw flux}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,}  \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}k\PYGZdq{}}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Flux\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Diff. flux dep. on raw flux\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Differential corrected flux\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Raw flux corrected\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}fluxVsB\PYGZdq{}} \PYG{o}{+} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Plot the differential flux as a function of time, as well as}
+\PYG{c+c1}{\PYGZsh{} the position as a function of time}
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{()}
+
+\PYG{c+c1}{\PYGZsh{} Construct extra axes to tidy up the plot a bit}
+\PYG{k}{def} \PYG{n+nf}{make\PYGZus{}patch\PYGZus{}spines\PYGZus{}invisible}\PYG{p}{(}\PYG{n}{ax}\PYG{p}{):}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{set\PYGZus{}frame\PYGZus{}on}\PYG{p}{(}\PYG{n+nb+bp}{True}\PYG{p}{)}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{patch}\PYG{o}{.}\PYG{n}{set\PYGZus{}visible}\PYG{p}{(}\PYG{n+nb+bp}{False}\PYG{p}{)}
+\PYG{k}{for} \PYG{n}{sp} \PYG{o+ow}{in} \PYG{n}{ax}\PYG{o}{.}\PYG{n}{spines}\PYG{o}{.}\PYG{n}{values}\PYG{p}{():}
+\PYG{n}{sp}\PYG{o}{.}\PYG{n}{set\PYGZus{}visible}\PYG{p}{(}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{host} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{()}
+\PYG{c+c1}{\PYGZsh{} Move axis out a bit}
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{subplots\PYGZus{}adjust}\PYG{p}{(}\PYG{n}{right}\PYG{o}{=}\PYG{l+m+mf}{0.75}\PYG{p}{)}
+
+\PYG{n}{par1} \PYG{o}{=} \PYG{n}{host}\PYG{o}{.}\PYG{n}{twinx}\PYG{p}{()}
+\PYG{n}{par2} \PYG{o}{=} \PYG{n}{host}\PYG{o}{.}\PYG{n}{twinx}\PYG{p}{()}
+\PYG{n}{par2}\PYG{o}{.}\PYG{n}{spines}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}right\PYGZdq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{set\PYGZus{}position}\PYG{p}{((}\PYG{l+s+s2}{\PYGZdq{}axes\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mf}{1.4}\PYG{p}{))}
+\PYG{n}{make\PYGZus{}patch\PYGZus{}spines\PYGZus{}invisible}\PYG{p}{(}\PYG{n}{par2}\PYG{p}{)}
+\PYG{n}{par2}\PYG{o}{.}\PYG{n}{spines}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}right\PYGZdq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{set\PYGZus{}visible}\PYG{p}{(}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+\PYG{n}{p1}\PYG{p}{,} \PYG{o}{=} \PYG{n}{host}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{drift\PYGZus{}corrected\PYGZus{}diffflux\PYGZus{}data}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}k\PYGZdq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Flux vs time\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{p2}\PYG{p}{,} \PYG{o}{=} \PYG{n}{par1}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}r\PYGZdq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}X pos. vs time\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{p3}\PYG{p}{,} \PYG{o}{=} \PYG{n}{par2}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{l+s+s1}{\PYGZsq{}.\PYGZsq{}}\PYG{p}{,} \PYG{n}{color}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}b\PYGZdq{}}\PYG{p}{,} \PYG{n}{markersize}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Y pos. vs time\PYGZdq{}}\PYG{p}{)}
+
+\PYG{l+s+sd}{\PYGZdq{}\PYGZdq{}\PYGZdq{}host.set\PYGZus{}xlim(0, 2)}
+\PYG{l+s+sd}{host.set\PYGZus{}ylim(0, 2)}
+\PYG{l+s+sd}{par1.set\PYGZus{}ylim(0, 4)}
+\PYG{l+s+sd}{par2.set\PYGZus{}ylim(1, 65)\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+\PYG{n}{host}\PYG{o}{.}\PYG{n}{set\PYGZus{}xlabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Timestamp\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{host}\PYG{o}{.}\PYG{n}{set\PYGZus{}ylabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Flux\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{par1}\PYG{o}{.}\PYG{n}{set\PYGZus{}ylabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}X pos.\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{par2}\PYG{o}{.}\PYG{n}{set\PYGZus{}ylabel}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Y pos.\PYGZdq{}}\PYG{p}{)}
+
+\PYG{n}{host}\PYG{o}{.}\PYG{n}{yaxis}\PYG{o}{.}\PYG{n}{label}\PYG{o}{.}\PYG{n}{set\PYGZus{}color}\PYG{p}{(}\PYG{n}{p1}\PYG{o}{.}\PYG{n}{get\PYGZus{}color}\PYG{p}{())}
+\PYG{n}{par1}\PYG{o}{.}\PYG{n}{yaxis}\PYG{o}{.}\PYG{n}{label}\PYG{o}{.}\PYG{n}{set\PYGZus{}color}\PYG{p}{(}\PYG{n}{p2}\PYG{o}{.}\PYG{n}{get\PYGZus{}color}\PYG{p}{())}
+\PYG{n}{par2}\PYG{o}{.}\PYG{n}{yaxis}\PYG{o}{.}\PYG{n}{label}\PYG{o}{.}\PYG{n}{set\PYGZus{}color}\PYG{p}{(}\PYG{n}{p3}\PYG{o}{.}\PYG{n}{get\PYGZus{}color}\PYG{p}{())}
+
+\PYG{n}{tkw} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{(}\PYG{n}{size}\PYG{o}{=}\PYG{l+m+mi}{4}\PYG{p}{,} \PYG{n}{width}\PYG{o}{=}\PYG{l+m+mf}{1.5}\PYG{p}{)}
+\PYG{n}{host}\PYG{o}{.}\PYG{n}{tick\PYGZus{}params}\PYG{p}{(}\PYG{n}{axis}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}y\PYGZsq{}}\PYG{p}{,} \PYG{n}{colors}\PYG{o}{=}\PYG{n}{p1}\PYG{o}{.}\PYG{n}{get\PYGZus{}color}\PYG{p}{(),} \PYG{o}{**}\PYG{n}{tkw}\PYG{p}{)}
+\PYG{n}{par1}\PYG{o}{.}\PYG{n}{tick\PYGZus{}params}\PYG{p}{(}\PYG{n}{axis}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}y\PYGZsq{}}\PYG{p}{,} \PYG{n}{colors}\PYG{o}{=}\PYG{n}{p2}\PYG{o}{.}\PYG{n}{get\PYGZus{}color}\PYG{p}{(),} \PYG{o}{**}\PYG{n}{tkw}\PYG{p}{)}
+\PYG{n}{par2}\PYG{o}{.}\PYG{n}{tick\PYGZus{}params}\PYG{p}{(}\PYG{n}{axis}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}y\PYGZsq{}}\PYG{p}{,} \PYG{n}{colors}\PYG{o}{=}\PYG{n}{p3}\PYG{o}{.}\PYG{n}{get\PYGZus{}color}\PYG{p}{(),} \PYG{o}{**}\PYG{n}{tkw}\PYG{p}{)}
+\PYG{n}{host}\PYG{o}{.}\PYG{n}{tick\PYGZus{}params}\PYG{p}{(}\PYG{n}{axis}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}x\PYGZsq{}}\PYG{p}{,} \PYG{o}{**}\PYG{n}{tkw}\PYG{p}{)}
+\PYG{n}{lines} \PYG{o}{=} \PYG{p}{[}\PYG{n}{p1}\PYG{p}{,} \PYG{n}{p2}\PYG{p}{,} \PYG{n}{p3}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Move legend outside}
+\PYG{n}{host}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{lines}\PYG{p}{,} \PYG{p}{[}\PYG{n}{l}\PYG{o}{.}\PYG{n}{get\PYGZus{}label}\PYG{p}{()} \PYG{k}{for} \PYG{n}{l} \PYG{o+ow}{in} \PYG{n}{lines}\PYG{p}{],} \PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mf}{1.5}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}upper left\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Print the plot nicely}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Flux and position as a function of time\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Timestamp\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Y pos.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}fluxposvtimecorr\PYGZdq{}} \PYG{o}{+} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{uncorrectable\PYGZus{}variations\PYGZus{}plot}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{:}                   \PYG{n}{ccd}\PYG{p}{,}
+\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{:}       \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{:}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}\PYG{p}{,}
+\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{:}          \PYG{n}{np}\PYG{o}{.}\PYG{n}{ndarray}
+\PYG{p}{):}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} Analyzing data, and constructing linear fit...\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Begin analysis of corrections}
+\PYG{n}{dX} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{]))}  \PYG{c+c1}{\PYGZsh{} Changes in x positions}
+\PYG{n}{dY} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{2}\PYG{p}{]))}  \PYG{c+c1}{\PYGZsh{} Changes in y positions}
+\PYG{n}{dB} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{]))}  \PYG{c+c1}{\PYGZsh{} Changes in flux}
+\PYG{n}{y} \PYG{o}{=} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}
+
+\PYG{c+c1}{\PYGZsh{} Construct a linear fit in four parameters (first list of ones is the offset)}
+\PYG{n}{M} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{transpose}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{asarray}\PYG{p}{([}\PYG{n}{np}\PYG{o}{.}\PYG{n}{ones}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{dX}\PYG{p}{)),} \PYG{n}{dX}\PYG{p}{,} \PYG{n}{dY}\PYG{p}{,} \PYG{n}{dB}\PYG{p}{])))}
+\PYG{n}{p}\PYG{p}{,} \PYG{n}{res}\PYG{p}{,} \PYG{n}{rnk}\PYG{p}{,} \PYG{n}{s} \PYG{o}{=} \PYG{n}{lstsq}\PYG{p}{(}\PYG{n}{M}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Found linear coefficients are: \PYGZdq{}}\PYG{p}{,} \PYG{n}{p}\PYG{p}{,} \PYG{n}{res}\PYG{p}{,} \PYG{n}{rnk}\PYG{p}{,} \PYG{n}{s}\PYG{p}{)}
+\PYG{n}{fit} \PYG{o}{=} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{+} \PYG{n}{dX} \PYG{o}{*} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{+} \PYG{n}{dY} \PYG{o}{*} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{+} \PYG{n}{dB} \PYG{o}{*} \PYG{n}{p}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}
+
+\PYG{n}{mean} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{fit}\PYG{p}{))}
+\PYG{n}{error} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{fit}\PYG{p}{))}
+\PYG{n}{precision} \PYG{o}{=} \PYG{p}{((}\PYG{n}{error} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{mean} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{*} \PYG{l+m+mi}{100}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}The precision is \PYGZdq{}}\PYG{p}{,} \PYG{n}{precision}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} plot the differential flux as a function of time}
+\PYG{c+c1}{\PYGZsh{} as well as the fit to the flux as a function of time}
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{()}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{,} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Differential flux\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{,} \PYG{n}{fit}\PYG{p}{,} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Fit to diff. flux\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{plot}\PYG{p}{(}\PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{,} \PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{fit}\PYG{p}{),} \PYG{n}{label}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}Diff. flux minus fit\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{pp}\PYG{o}{.}\PYG{n}{pubplot}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Diff. flux. vs image no.\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Timestamp\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}Flux\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}fluxfit\PYGZdq{}} \PYG{o}{+} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{datastorage\PYGZus{}filename\PYGZus{}append} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}.png\PYGZdq{}}\PYG{p}{,} \PYG{n}{legend}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+
+
+\PYG{k}{def} \PYG{n+nf}{pointing\PYGZus{}requirements}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{:} \PYG{n}{ccd}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{:} \PYG{n+nb}{str}\PYG{p}{,} \PYG{n}{requirement\PYGZus{}input}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{:} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}radius}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}radii}\PYG{p}{:} \PYG{n+nb}{list}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{:} \PYG{n+nb}{int}\PYG{p}{,} \PYG{n}{exposure\PYGZus{}time}\PYG{p}{:} \PYG{n+nb}{float}\PYG{p}{,} \PYG{n}{cutoffs}\PYG{p}{:} \PYG{n+nb}{list} \PYG{o}{=} \PYG{n+nb+bp}{None}\PYG{p}{):}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{Analyzing the pointing requirements for detector: \PYGZdq{}}\PYG{p}{,} \PYG{n}{camera}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}...\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Prepare the data set}
+\PYG{n}{data\PYGZus{}series}     \PYG{o}{=}   \PYG{n}{util}\PYG{o}{.}\PYG{n}{list\PYGZus{}data}\PYG{p}{(}\PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{)}
+\PYG{k}{if} \PYG{n}{cutoffs} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+\PYG{c+c1}{\PYGZsh{} These cutoffs are for only applying the analysis to a subset of the data}
+\PYG{n}{first\PYGZus{}cutoff}    \PYG{o}{=}   \PYG{n}{cutoffs}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{last\PYGZus{}cutoff}     \PYG{o}{=}   \PYG{n}{cutoffs}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{c+c1}{\PYGZsh{} If a subset is defined, the number of images used will be less}
+\PYG{n}{num\PYGZus{}of\PYGZus{}images}   \PYG{o}{=}   \PYG{n}{last\PYGZus{}cutoff} \PYG{o}{\PYGZhy{}} \PYG{n}{first\PYGZus{}cutoff}
+\PYG{n}{data\PYGZus{}series}     \PYG{o}{=}   \PYG{n}{data\PYGZus{}series}\PYG{p}{[}\PYG{n}{first\PYGZus{}cutoff}\PYG{p}{:}\PYG{n}{last\PYGZus{}cutoff}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Perform differential aperture photometry, and gather data in a set of convenient arrays.}
+\PYG{n}{diff\PYGZus{}ap\PYGZus{}phot\PYGZus{}data}               \PYG{o}{=}   \PYG{n}{differential\PYGZus{}aperture\PYGZus{}photometry}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{,} \PYG{n}{data\PYGZus{}series}\PYG{p}{,} \PYG{n}{path\PYGZus{}of\PYGZus{}data\PYGZus{}series}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}positions}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}radius}\PYG{p}{,} \PYG{n}{annulus\PYGZus{}radii}\PYG{p}{)}
+\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}          \PYG{o}{=}   \PYG{n}{diff\PYGZus{}ap\PYGZus{}phot\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}    \PYG{c+c1}{\PYGZsh{} The list of computed differential fluxes (as a function of timestamps)}
+\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}              \PYG{o}{=}   \PYG{n}{diff\PYGZus{}ap\PYGZus{}phot\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}    \PYG{c+c1}{\PYGZsh{} Aperture photometry data [actual flux in first aperture, x position of first aperture, y position of first aperture]}
+\PYG{n}{timestamps}                      \PYG{o}{=}   \PYG{n}{diff\PYGZus{}ap\PYGZus{}phot\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}    \PYG{c+c1}{\PYGZsh{} A list of timestamps}
+\PYG{n}{total\PYGZus{}noise}                     \PYG{o}{=}   \PYG{n}{diff\PYGZus{}ap\PYGZus{}phot\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}    \PYG{c+c1}{\PYGZsh{} A float representing the computed total noise in the dataset}
+
+\PYG{c+c1}{\PYGZsh{} Correct the differential flux for drifts, so it is only noise, and we may compare with noise computed above}
+\PYG{n}{drift\PYGZus{}corrected\PYGZus{}diffflux\PYGZus{}data}   \PYG{o}{=}   \PYG{n}{drift\PYGZus{}correct\PYGZus{}data}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{)}
+\PYG{c+c1}{\PYGZsh{} Convert differential flux to a percentage deviation from the first data point in the list}
+\PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{multiply}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{divide}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{subtract}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]),} \PYG{l+m+mi}{100}\PYG{p}{)}
+
+
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} The relative photonic\PYGZhy{} (and readout\PYGZhy{}) noise is \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZob{}0:.10f\PYGZcb{}\PYGZdq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{total\PYGZus{}noise}\PYG{p}{))}
+\PYG{k}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{} The standard deviation of the drift corrected flux is \PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}\PYGZob{}0:.10f\PYGZcb{}\PYGZdq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{sqrt}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{/}\PYG{l+m+mi}{3}\PYG{p}{)} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{std}\PYG{p}{(}\PYG{n}{drift\PYGZus{}corrected\PYGZus{}diffflux\PYGZus{}data}\PYG{p}{)} \PYG{o}{/} \PYG{n}{np}\PYG{o}{.}\PYG{n}{mean}\PYG{p}{(}\PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{)} \PYG{p}{))}
+
+\PYG{c+c1}{\PYGZsh{} Construct numpy array of data, and ready lists of timestamps and their labels for use in the figures}
+\PYG{n}{timestamp\PYGZus{}ticks}         \PYG{o}{=}   \PYG{n}{np}\PYG{o}{.}\PYG{n}{linspace}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{)}
+\PYG{n}{timestamp\PYGZus{}ticks\PYGZus{}labels}  \PYG{o}{=}   \PYG{n}{timestamps}
+
+\PYG{n}{output\PYGZus{}requirements\PYGZus{}data}    \PYG{o}{=}   \PYG{n}{output\PYGZus{}requirements}\PYG{p}{(}\PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{,} \PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{,} \PYG{n}{num\PYGZus{}of\PYGZus{}images}\PYG{p}{,} \PYG{n}{requirement\PYGZus{}input}\PYG{p}{)}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}function}     \PYG{o}{=}   \PYG{n}{output\PYGZus{}requirements\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+\PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}function}     \PYG{o}{=}   \PYG{n}{output\PYGZus{}requirements\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}x}             \PYG{o}{=}   \PYG{n}{output\PYGZus{}requirements\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]}
+\PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}y}             \PYG{o}{=}   \PYG{n}{output\PYGZus{}requirements\PYGZus{}data}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]}
+
+\PYG{n}{plot\PYGZus{}variations}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{,} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{diffflux\PYGZus{}percentage\PYGZus{}dev}\PYG{p}{,} \PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}x}\PYG{p}{,} \PYG{n}{fit\PYGZus{}query\PYGZus{}pts\PYGZus{}y}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}x\PYGZus{}function}\PYG{p}{,} \PYG{n}{linear\PYGZus{}model\PYGZus{}y\PYGZus{}function}\PYG{p}{,} \PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{,} \PYG{n}{drift\PYGZus{}corrected\PYGZus{}diffflux\PYGZus{}data}\PYG{p}{)}
+\PYG{n}{uncorrectable\PYGZus{}variations\PYGZus{}plot}\PYG{p}{(}\PYG{n}{camera}\PYG{p}{,} \PYG{n}{aperture\PYGZus{}data\PYGZus{}list}\PYG{p}{,} \PYG{n}{differential\PYGZus{}flux\PYGZus{}list}\PYG{p}{,} \PYG{n}{timestamp\PYGZus{}ticks}\PYG{p}{)}
+	
+\end{Verbatim}
