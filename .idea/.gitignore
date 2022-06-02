@@ -1,6 +1,7 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/data_from_characterization/readout_noise_distribution_versus_temperature_atikcam.txt
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
